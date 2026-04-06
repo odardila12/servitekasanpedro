@@ -1,27 +1,181 @@
-# Agent Teams Lite — Agent Skills Index
+# Orchestrator + SDD — Skill Index
 
-When working on this project, load the relevant skill(s) BEFORE writing any code.
+## 29 Skills Available
 
-## How to Use
+### SDD Workflow (8)
 
-1. Check the trigger column to find skills that match your current task
-2. Load the skill by reading the SKILL.md file at the listed path
-3. Follow ALL patterns and rules from the loaded skill
-4. Multiple skills can apply simultaneously
+| Skill | Trigger | Purpose |
+|-------|---------|---------|
+| `sdd-init` | `/sdd-init` | Bootstrap project, initialize SDD context |
+| `sdd-explore` | `/sdd-explore <topic>` | Investigation, codebase analysis, clarify requirements |
+| `sdd-propose` | After explore | Change proposal (intent, scope, approach) |
+| `sdd-spec` | After propose | Technical specification (requirements, scenarios) |
+| `sdd-design` | After propose | Technical design (architecture, decisions) |
+| `sdd-tasks` | After spec+design | Breakdown into tasks |
+| `sdd-apply` | `/sdd-apply [batch]` | Code implementation |
+| `sdd-verify` | After apply | Validation against specs and design |
+| `sdd-archive` | After verify | Archive and persist change |
 
-## Skills
+### Design & UI (5)
 
-| Skill | Trigger | Path |
-|-------|---------|------|
-| `sdd-init` | When initializing SDD in a project, or user says "sdd init". | [`skills/sdd-init/SKILL.md`](skills/sdd-init/SKILL.md) |
-| `sdd-explore` | When thinking through a feature, investigating the codebase, or clarifying requirements. | [`skills/sdd-explore/SKILL.md`](skills/sdd-explore/SKILL.md) |
-| `sdd-propose` | When creating or updating a change proposal with intent, scope, and approach. | [`skills/sdd-propose/SKILL.md`](skills/sdd-propose/SKILL.md) |
-| `sdd-spec` | When writing or updating specifications with requirements and scenarios. | [`skills/sdd-spec/SKILL.md`](skills/sdd-spec/SKILL.md) |
-| `sdd-design` | When writing or updating technical design with architecture decisions. | [`skills/sdd-design/SKILL.md`](skills/sdd-design/SKILL.md) |
-| `sdd-tasks` | When breaking down a change into implementation task checklist. | [`skills/sdd-tasks/SKILL.md`](skills/sdd-tasks/SKILL.md) |
-| `sdd-apply` | When implementing tasks, writing actual code following specs and design. | [`skills/sdd-apply/SKILL.md`](skills/sdd-apply/SKILL.md) |
-| `sdd-verify` | When validating that implementation matches specs, design, and tasks. | [`skills/sdd-verify/SKILL.md`](skills/sdd-verify/SKILL.md) |
-| `sdd-archive` | When archiving a completed change after implementation and verification. | [`skills/sdd-archive/SKILL.md`](skills/sdd-archive/SKILL.md) |
-| `skill-registry` | When creating or updating the skill registry for the project. | [`skills/skill-registry/SKILL.md`](skills/skill-registry/SKILL.md) |
-| `issue-creation` | When creating a GitHub issue, reporting a bug, or requesting a feature. | [`skills/issue-creation/SKILL.md`](skills/issue-creation/SKILL.md) |
-| `branch-pr` | When creating a pull request, opening a PR, or preparing changes for review. | [`skills/branch-pr/SKILL.md`](skills/branch-pr/SKILL.md) |
+| Skill | Purpose |
+|-------|---------|
+| `frontend-design` | Design methodology, anti-AI-slop, typography, color, layout, motion |
+| `ui-ux-pro-max` | 161 color palettes, 57 Google Font pairings, 67+ UI styles |
+| `web-design-guidelines` | Validation against Vercel Web Interface Guidelines |
+| `building-components` | Modern and accessible component patterns |
+| `shadcn-ui` | React + Tailwind library with accessibility |
+
+### Performance & QA (3)
+
+| Skill | Purpose |
+|-------|---------|
+| `vercel-react-best-practices` | 62 optimization rules Next.js/React, Core Web Vitals |
+| `playwright-cli` | Browser automation, screenshots, visual testing |
+| `chrome-bridge-automation` | Vision-driven QA (requires Midscene + Gemini API) |
+
+### Deploy (1)
+
+| Skill | Purpose |
+|-------|---------|
+| `vercel-deploy` | Deploy to Vercel sandbox (no account) |
+
+### Research & Copy (3)
+
+| Skill | Purpose |
+|-------|---------|
+| `web-reader` | Analysis of reference URLs |
+| `deep-research` | Systematic web research |
+| `humanizer` | Elimination of AI patterns in copy |
+
+### SEO (1)
+
+| Skill | Purpose |
+|-------|---------|
+| `seo-audit` | Meta tags, headings, alt text, structured data |
+
+### Reverse Engineering (1)
+
+| Skill | Purpose |
+|-------|---------|
+| `clone-website` | Reverse-engineering and rebuild of websites |
+
+### Debugging & Observability (2)
+
+| Skill | Purpose |
+|-------|---------|
+| `systematic-debugging` | Debugging methodology: reproduce → root cause → fix |
+| `last30days-skill` | Activity tracking last 30 days |
+
+### Design Engineering (1)
+
+| Skill | Purpose |
+|-------|---------|
+| `emil-design-eng` | Advanced design architecture |
+
+### Workflow (4)
+
+| Skill | Purpose |
+|-------|---------|
+| `skill-registry` | Skill registry administration |
+| `branch-pr` | GitHub workflow (branches, PRs) |
+| `issue-creation` | GitHub issue creation |
+
+---
+
+## Standard SDD Flows
+
+### Landing Page
+```
+/sdd-new "landing-page-{name}"
+  → explore: industry, competition
+  → propose: design system + architecture
+  → /sdd-ff: spec → design → tasks
+  → /sdd-apply: construction + QA
+  → /sdd-verify: validation
+  → deploy
+```
+
+### Feature Implementation
+```
+/sdd-new "feature-name"
+  → explore: codebase, dependencies, constraints
+  → propose: architecture, tradeoffs
+  → /sdd-ff: spec → design → tasks
+  → /sdd-apply [batch-1, batch-2, ...]: parallelism
+  → /sdd-verify: testing, validation
+  → /sdd-archive: persistence
+```
+
+### Debugging
+```
+/sdd-explore "issue-description"
+  → systematic-debugging: reproduce, root cause, proposal
+  → /sdd-apply: fix implementation
+  → /sdd-verify: validation
+  → /sdd-archive: documentation
+```
+
+---
+
+## Configuration
+
+### Required (None)
+Orchestrator + SDD works without external dependencies.
+
+### Optional: Midscene (Chrome-Bridge Automation)
+
+**Requirements:**
+- Chrome Extension: https://chromewebstore.google.com/detail/midscene/fnkhekmgjgnnempgbjahhhknalpepbed
+- Gemini API key
+
+**Configuration (.env):**
+```
+MIDSCENE_MODEL_API_KEY="<your-gemini-api-key>"
+MIDSCENE_MODEL_NAME="gemini-3-flash"
+MIDSCENE_MODEL_BASE_URL="https://generativelanguage.googleapis.com/v1beta/openai/"
+MIDSCENE_MODEL_FAMILY="gemini"
+```
+
+**Fallback:** `playwright-cli` (no config, free).
+
+### Optional: GitHub CLI (branch-pr)
+
+```bash
+# Install
+brew install gh
+
+# Authenticate
+gh auth login
+```
+
+---
+
+## Architecture
+
+```
+User
+    ↓
+Orchestrator (coordinator)
+    ↓
+Sub-agents (parallel execution)
+    ├─ sdd-explore / sdd-propose
+    ├─ sdd-spec / sdd-design
+    ├─ sdd-tasks / sdd-apply
+    ├─ frontend-design / ui-ux-pro-max
+    ├─ playwright-cli / chrome-bridge
+    └─ ... (more skills as needed)
+    ↓
+Result
+```
+
+---
+
+## Engram Memory
+
+All changes, decisions, bugs persist automatically via engram.
+
+Recovery in next sessions:
+- `mem_search` by keywords
+- `mem_context` by session
+- `mem_session_summary` at end

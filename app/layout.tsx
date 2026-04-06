@@ -1,39 +1,29 @@
-import type { Metadata, Viewport } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const _inter = Inter({ subsets: ["latin"], display: "swap" });
-const _geistMono = Geist_Mono({ subsets: ["latin"], display: "swap" });
+import type { Metadata } from 'next';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import { Navigation } from '@/components/layout/Navigation';
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: "Serviteka San Pedro | Premium Auto Parts & Service Center",
-  description:
-    "Premium automotive parts, tires, batteries, lubricants and professional installation services. Find the right part for your vehicle at Serviteka San Pedro.",
-  keywords: [
-    "auto parts",
-    "tires",
-    "batteries",
-    "lubricants",
-    "car service",
-    "San Pedro",
-    "Serviteka",
-  ],
-};
-
-export const viewport: Viewport = {
-  themeColor: "#1a1f3a",
-  width: "device-width",
-  initialScale: 1,
+  title: 'AutoPlanet - Llantas, Baterías y Accesorios Automotrices',
+  description: 'Compra llantas, baterías, lubricantes y accesorios automotrices en línea con envío rápido.',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="es">
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="es" className="scroll-smooth">
+      <body className="bg-neutral-50">
+        <Header cartCount={0} />
+        <Navigation />
+        <main className="min-h-screen">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -10,6 +10,11 @@
 !.yarn/releases
 !.yarn/versions
 
+/docs
+AGENTS.md
+GEMINI.md
+CLAUDE.md
+
 # testing
 /coverage
 
@@ -39,26 +44,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Playwright & agent verification artifacts (root only)
-/*.png
-/*.jpg
-/*.jpeg
-.playwright-mcp/
-.agent/
-screenshots/
-/playground/
-
-# Diagnostic & verification reports
-RESUMEN_DIAGNOSTICO.txt
-network-requests.txt
-*.txt
-
-# Agent documentation (internal only, not for git)
-QUICK_REFERENCE*
-
-# IDE & debugging
-.vscode/
-.idea/
-
-services.json

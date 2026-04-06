@@ -1,108 +1,36 @@
-# Serviteka - Tienda de Repuestos Automotrices Premium
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Plataforma moderna de e-commerce para la venta de repuestos automotrices de calidad. Construida con Next.js 16 y tecnologías modernas.
+## Getting Started
 
-## Características
-
-- Catálogo organizado por categorías (Llantas, Baterías, Lubricantes, Accesorios)
-- Sistema de filtrado avanzado por marca y precio
-- Interfaz responsiva y optimizada para móvil
-- Componentes accesibles basados en Radix UI
-- Integración con WhatsApp
-- Carrito de compras (en desarrollo)
-
-## Tecnologías
-
-- **Next.js 16** - React framework con App Router
-- **React 19** - Librería UI
-- **TypeScript** - Tipado estático
-- **Tailwind CSS 4** - Utilidades de estilo
-- **Radix UI + shadcn** - Componentes accesibles
-- **Lucide React** - Iconografía
-
-## Instalación
+First, run the development server:
 
 ```bash
-# Clonar repositorio
-git clone <repo-url>
-
-# Instalar dependencias
-pnpm install
-
-# Ejecutar en desarrollo
+npm run dev
+# or
+yarn dev
+# or
 pnpm dev
+# or
+bun dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Estructura de Proyecto
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```
-serviteka/
-├── app/                    # Páginas y rutas
-│   ├── page.tsx           # Página principal
-│   ├── llantas/           # Categoría: Llantas
-│   ├── baterias/          # Categoría: Baterías
-│   ├── lubricantes/       # Categoría: Lubricantes
-│   ├── accesorios/        # Categoría: Accesorios
-│   └── cart/              # Carrito
-├── components/            # Componentes React
-│   ├── ui/               # Componentes primitivos (shadcn)
-│   ├── features/         # Componentes de features
-│   ├── layout/           # Componentes de layout
-│   └── common/           # Componentes comunes
-├── lib/                   # Utilidades y tipos
-│   ├── constants.ts      # Datos estáticos
-│   ├── types.ts          # Tipos TypeScript
-│   ├── utils.ts          # Funciones auxiliares
-│   └── api.ts            # Configuración API
-├── hooks/                 # Custom React hooks
-├── docs/                  # Documentación
-│   └── ARCHITECTURE.md    # Guía de arquitectura
-└── public/               # Activos estáticos
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Para documentación completa, ver [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+## Learn More
 
-## Desarrollo
+To learn more about Next.js, take a look at the following resources:
 
-### Agregar una nueva categoría
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-1. Crear `/app/[nueva-categoria]/page.tsx`
-2. Actualizar `CATEGORIES` en `lib/constants.ts`
-3. El sitio carga automáticamente
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-### Agregar un nuevo componente
+## Deploy on Vercel
 
-1. Crear archivo en `/components/[tipo]/nombre.tsx`
-2. Exportar como función nombrada
-3. Importar donde sea necesario
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-### Compilar
-
-```bash
-pnpm build   # Build para producción
-pnpm tsc --noEmit  # Verificar errores TypeScript
-```
-
-## Scripts
-
-```bash
-pnpm dev       # Ejecutar servidor de desarrollo
-pnpm build     # Hacer build para producción
-pnpm start     # Ejecutar build de producción
-pnpm lint      # Ejecutar linter (si aplica)
-```
-
-## Próximos Pasos
-
-- [ ] Integración con base de datos
-- [ ] Sistema de autenticación
-- [ ] Carrito persistente
-- [ ] Procesamiento de pagos
-- [ ] Admin dashboard
-- [ ] Tests automatizados
-
-## Licencia
-
-Propietario. Todos los derechos reservados.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
