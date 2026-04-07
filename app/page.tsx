@@ -2,7 +2,7 @@
 
 import { HeroCarousel } from '@/components/sections/HeroCarousel';
 import { Categories } from '@/components/sections/Categories';
-import { BrandSection } from '@/components/sections/BrandSection';
+import { BrandCarousel } from '@/components/sections/BrandCarousel';
 import { PaymentMethodsSection } from '@/components/sections/PaymentMethodsSection';
 import { LocationSection } from '@/components/sections/LocationSection';
 import { FeaturedProducts } from '@/components/sections/FeaturedProducts';
@@ -13,7 +13,7 @@ export default function Home() {
       <HeroCarousel />
       <Categories />
       <FeaturedProducts />
-      <BrandSection />
+      <BrandCarousel />
       <PaymentMethodsSection />
       <LocationSection />
     </div>
