@@ -83,11 +83,23 @@ export function Header({ onSearch }: HeaderProps) {
             <button
               onClick={openCart}
               aria-label={`Carrito de compras${itemCount > 0 ? ` - ${itemCount} artículos` : ''}`}
-              className="relative text-white hover:text-[#f4c430] transition-colors duration-300 group"
+              className="relative text-white hover:text-white transition-all duration-300 group flex items-center justify-center p-2 rounded-lg hover:bg-white/15"
             >
-              <span className="text-2xl group-hover:scale-110 inline-block transition-transform duration-300">🛒</span>
+              <svg 
+                className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m10 0l2-9m-12 9h16m-8-10l1-4" 
+                />
+              </svg>
               {itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-sm">
+                <span className="absolute top-0 right-0 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-lg">
                   {itemCount > 99 ? '99+' : itemCount}
                 </span>
               )}
