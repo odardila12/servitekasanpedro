@@ -83,11 +83,12 @@ export default function ShowcasePage() {
       <section className="container space-y-6">
         <h2 className="text-3xl font-bold">Product Card</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SAMPLE_PRODUCTS.slice(0, 4).map((product) => (
+          {SAMPLE_PRODUCTS.slice(0, 4).map((product, index) => (
             <ProductCard
               key={product.id}
               {...product}
               onAddToCart={(id) => alert(`Producto ${id} agregado`)}
+              priority={index < 4}
             />
           ))}
         </div>

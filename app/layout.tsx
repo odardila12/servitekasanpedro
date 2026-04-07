@@ -15,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="scroll-smooth">
-      <body className="bg-neutral-50">
+    <html lang="es" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <body className="bg-neutral-50" suppressHydrationWarning>
         <Header cartCount={0} />
         <Navigation />
         <main className="min-h-screen">

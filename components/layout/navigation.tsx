@@ -16,13 +16,13 @@ const navItems: NavItem[] = [
 
 export function Navigation() {
   return (
-    <nav className="hidden lg:block bg-white border-b border-neutral-200">
-      <div className="container flex gap-8 py-3">
+    <nav className="hidden lg:block glass-panel border-t-0 rounded-none rounded-b-2xl shadow-sm z-40 relative max-w-7xl mx-auto -mt-1">
+      <div className="container flex gap-8 py-4 px-6 justify-center">
         {navItems.map((item) => (
           <a
             key={item.href}
             href={item.href}
-            className="text-sm font-semibold text-neutral-700 hover:text-primary transition-colors"
+            className="text-sm font-bold text-navy-700 hover:text-primary transition-all duration-300 uppercase tracking-wider relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left pb-1"
           >
             {item.label}
           </a>

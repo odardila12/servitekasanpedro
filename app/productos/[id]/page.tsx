@@ -9,12 +9,35 @@ import { ProductGrid } from '@/components/product/ProductGrid';
 import { SAMPLE_PRODUCTS } from '@/lib/constants';
 import { useParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { generateBoldPaymentLink } from '@/lib/payments/bold';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const productId = params.id as string;
   const product = SAMPLE_PRODUCTS.find((p) => p.id === productId);
   const [quantity, setQuantity] = React.useState(1);
+  const [isProcessingPayment, setIsProcessingPayment] = React.useState(false);
+
+  const handleBuyWithBold = async () => {
+    if (!product) return;
+    
+    setIsProcessingPayment(true);
+    try {
+      const paymentUrl = await generateBoldPaymentLink({
+        amount: product.price * quantity,
+        description: `${quantity}x ${product.name}`,
+        currency: 'COP'
+      });
+      
+      // Redirect to Bold checkout
+      window.location.href = paymentUrl;
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Hubo un error al procesar el pago con Bold.');
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
 
   if (!product) {
     return (
@@ -64,6 +87,7 @@ export default function ProductDetailPage() {
               src={product.image}
               alt={product.name}
               fill
+              priority
               className="object-cover"
             />
             {discountPercent > 0 && (
@@ -144,6 +168,16 @@ export default function ProductDetailPage() {
                 }
               >
                 AGREGAR AL CARRITO
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full bg-[#1a3a52] text-white border-none hover:bg-[#254d6d]"
+                onClick={handleBuyWithBold}
+                disabled={isProcessingPayment}
+              >
+                {isProcessingPayment ? 'PROCESANDO...' : 'COMPRAR CON BOLD'}
               </Button>
 
               <Button variant="outline" size="lg" className="w-full">

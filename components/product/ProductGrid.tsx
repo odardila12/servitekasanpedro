@@ -25,7 +25,7 @@ export function ProductGrid({ products, onAddToCart, className }: ProductGridPro
   return (
     <div className={cn(
       'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
-      'gap-2 lg:gap-5',
+      'gap-4 lg:gap-6',
       className
     )}>
       {products.map((product, index) => (
@@ -37,6 +37,7 @@ export function ProductGrid({ products, onAddToCart, className }: ProductGridPro
           <ProductCard
             {...product}
             onAddToCart={onAddToCart}
+            priority={index < 4}
           />
         </div>
       ))}

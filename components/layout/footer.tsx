@@ -1,60 +1,65 @@
 'use client';
 
+import Link from 'next/link';
+
 export function Footer() {
   return (
-    <footer className="bg-neutral-900 text-white mt-16">
-      <div className="container py-12">
+    <footer className="bg-[#1a3a52] text-neutral-300 mt-20 relative overflow-hidden">
+      {/* Decorative gradient orb */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#f4c430]/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
+      
+      <div className="container py-16 relative z-10">
         {/* Footer Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-12">
           {/* Column 1 - About */}
           <div>
-            <h4 className="font-bold text-lg mb-4">AutoPlanet</h4>
-            <p className="text-sm text-neutral-400">
-              Tu tienda online de confianza para llantas, baterías, lubricantes y accesorios automotrices.
+            <h4 className="font-bold text-2xl mb-6 text-[#f4c430] tracking-tight">Serviteka</h4>
+            <p className="text-sm leading-relaxed text-white/80">
+              Tu centro automotriz de confianza en San Pedro. Expertos en llantas, baterías, lubricantes y servicio técnico especializado.
             </p>
           </div>
 
           {/* Column 2 - Shop */}
           <div>
-            <h4 className="font-bold text-lg mb-4">Comprar</h4>
-            <ul className="text-sm space-y-2">
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Llantas</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Baterías</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Lubricantes</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Accesorios</a></li>
+            <h4 className="font-bold text-lg mb-6 text-[#f4c430]">Servicios</h4>
+            <ul className="text-sm space-y-3">
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Llantas y Alineación</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Baterías y Sistema Eléctrico</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Cambio de Aceite</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Accesorios</Link></li>
             </ul>
           </div>
 
           {/* Column 3 - Support */}
           <div>
-            <h4 className="font-bold text-lg mb-4">Soporte</h4>
-            <ul className="text-sm space-y-2">
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Centro de Ayuda</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Rastrear Pedido</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Devoluciones</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Contacto</a></li>
+            <h4 className="font-bold text-lg mb-6 text-[#f4c430]">Soporte</h4>
+            <ul className="text-sm space-y-3">
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Centro de Ayuda</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Rastrear Pedido</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Devoluciones</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Contacto</Link></li>
             </ul>
           </div>
 
           {/* Column 4 - Legal */}
           <div>
-            <h4 className="font-bold text-lg mb-4">Legal</h4>
-            <ul className="text-sm space-y-2">
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Términos de Servicio</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Privacidad</a></li>
-              <li><a href="#" className="text-neutral-400 hover:text-primary transition-colors">Cookies</a></li>
+            <h4 className="font-bold text-lg mb-6 text-[#f4c430]">Legal</h4>
+            <ul className="text-sm space-y-3">
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Términos de Servicio</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Privacidad</Link></li>
+              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Cookies</Link></li>
             </ul>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-neutral-800 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-neutral-400">
-            <p>&copy; 2026 AutoPlanet. Todos los derechos reservados.</p>
-            <div className="flex gap-4 mt-4 sm:mt-0">
-              <a href="#" className="hover:text-primary transition-colors">Facebook</a>
-              <a href="#" className="hover:text-primary transition-colors">Instagram</a>
-              <a href="#" className="hover:text-primary transition-colors">Twitter</a>
+        <div className="border-t border-white/10 py-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-white/70">
+            <p>&copy; {new Date().getFullYear()} Serviteka San Pedro. Todos los derechos reservados.</p>
+            <div className="flex gap-6 mt-6 sm:mt-0">
+              <Link href="#" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">Facebook</Link>
+              <Link href="#" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">Instagram</Link>
+              <Link href="#" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">WhatsApp</Link>
             </div>
           </div>
         </div>

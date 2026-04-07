@@ -16,6 +16,7 @@ interface ProductCardProps {
   reviews?: number;
   badge?: string;
   onAddToCart?: (id: string) => void;
+  priority?: boolean;
 }
 
 export function ProductCard({
@@ -28,6 +29,7 @@ export function ProductCard({
   reviews = 0,
   badge,
   onAddToCart,
+  priority = false,
 }: ProductCardProps) {
   const [isHovering, setIsHovering] = React.useState(false);
   const discountPercent = originalPrice
@@ -37,8 +39,8 @@ export function ProductCard({
   return (
     <div
       className={cn(
-        'bg-white rounded-lg overflow-hidden transition-all duration-300',
-        isHovering ? 'shadow-lg' : 'shadow-sm'
+        'bg-white rounded-2xl overflow-hidden transition-all duration-300',
+        'shadow-md hover:shadow-xl hover:-translate-y-1'
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -49,8 +51,9 @@ export function ProductCard({
           src={image}
           alt={name}
           fill
+          priority={priority}
           className={cn(
-            'object-cover transition-transform duration-500',
+            'object-cover transition-transform duration-300',
             isHovering ? 'scale-105' : 'scale-100'
           )}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -63,12 +66,12 @@ export function ProductCard({
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-5">
         {/* Product Name */}
         <h3 className={cn(
-          'font-semibold text-base text-neutral-900 min-h-12 overflow-hidden',
+          'font-semibold text-base text-neutral-900 min-h-12',
           'transition-colors duration-300',
-          isHovering ? 'text-primary' : ''
+          isHovering ? 'text-[#1a3a52]' : ''
         )}>
           {name}
         </h3>
@@ -80,7 +83,7 @@ export function ProductCard({
 
         {/* Price */}
         <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-xl font-black text-cta">
+          <span className="text-xl font-black text-[#1a3a52]">
             ${price.toLocaleString('es-CO')}
           </span>
           {originalPrice && (
@@ -94,8 +97,8 @@ export function ProductCard({
         <button
           onClick={() => onAddToCart?.(id)}
           className={cn(
-            'w-full mt-4 py-3 px-4 bg-cta text-white font-bold rounded-full',
-            'transition-all duration-300 hover:bg-cta-700 active:scale-95',
+            'w-full mt-4 py-3 px-4 bg-[#f4c430] text-[#1a3a52] font-bold rounded-xl',
+            'transition-all duration-300 hover:bg-[#e3b52d] hover:shadow-md active:scale-95',
             'text-sm'
           )}
         >

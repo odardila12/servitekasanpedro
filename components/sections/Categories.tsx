@@ -13,7 +13,7 @@ export function Categories() {
   };
 
   return (
-    <section className="py-12 sm:py-16 bg-white">
+    <section className="py-12 sm:py-16 bg-slate-50">
       <div className="container">
         {/* Header */}
         <div className="text-center mb-12">
@@ -32,23 +32,30 @@ export function Categories() {
               key={category.slug}
               href={`/categoria/${category.slug}`}
               className={cn(
-                'group flex flex-col items-center justify-center p-6 sm:p-8',
-                'bg-neutral-50 rounded-lg hover:bg-primary-50',
-                'transition-all duration-300 hover:shadow-lg'
+                'group flex flex-col items-center justify-center p-8 sm:p-10 relative overflow-hidden',
+                'bg-white/70 backdrop-blur-md border border-white/50 rounded-xl',
+                'shadow-sm hover:shadow-lg',
+                'transition-transform duration-300 hover:scale-105'
               )}
             >
+              {/* Hover gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* Decorative border */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-[#f4c430] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+
               {/* Icon */}
-              <div className="text-4xl sm:text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-5xl sm:text-6xl mb-6 relative z-10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 filter drop-shadow-md">
                 {categoryIcons[category.slug] || '📦'}
               </div>
 
               {/* Name */}
-              <h3 className="font-bold text-center text-neutral-900 group-hover:text-primary transition-colors">
+              <h3 className="font-bold text-lg text-center text-[#1a3a52] transition-colors relative z-10 tracking-tight">
                 {category.name}
               </h3>
 
               {/* Count */}
-              <p className="text-sm text-neutral-500 mt-2">
+              <p className="text-sm font-medium text-slate-500 mt-3 bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full group-hover:bg-white group-hover:shadow-sm transition-all duration-300 relative z-10">
                 {category.count} productos
               </p>
             </a>
