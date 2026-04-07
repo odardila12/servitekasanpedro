@@ -26,19 +26,6 @@ export function Header({ onSearch }: HeaderProps) {
 
   return (
     <>
-      {/* Pre-header (hidden on mobile) */}
-      <div className="hidden sm:block bg-[#112636] text-white text-sm py-2 px-4">
-        <div className="container flex justify-between items-center">
-          <div className="flex gap-6 text-xs text-neutral-300">
-            <span>Envío gratis en compras mayores a $200.000</span>
-            <span>Garantía de satisfacción</span>
-          </div>
-          <div className="flex gap-4 text-xs font-medium">
-            <Link href="/puntos-atencion" className="hover:text-[#f4c430] transition-colors duration-300">Puntos de Atención</Link>
-          </div>
-        </div>
-      </div>
-
       {/* Main Header */}
       <header suppressHydrationWarning className={cn(
         'sticky top-0 z-50 transition-all duration-300',
