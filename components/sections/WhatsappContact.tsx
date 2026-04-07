@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { MessageCircle } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface WhatsappContactProps {
@@ -51,7 +51,13 @@ export function WhatsappContact({
           )}
         >
           {/* Icon */}
-          <MessageCircle className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+          <Image
+            src="/icons8-whatsapp.svg"
+            alt="WhatsApp"
+            width={32}
+            height={32}
+            className="w-7 h-7 sm:w-8 sm:h-8"
+          />
 
           {/* Pulse animation ring */}
           <span className="absolute inset-0 rounded-full bg-[#39a935] animate-pulse opacity-30" />
