@@ -81,12 +81,7 @@ export function Header({ onSearch }: HeaderProps) {
           {/* Right Actions */}
           <div className="flex items-center gap-4 sm:gap-6">
 
-            {/* Search Dropdown (Desktop) */}
-            <SearchDropdown
-              className="hidden sm:flex w-48 lg:w-64"
-              inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#f4c430] focus:bg-white/20 transition-all duration-300 pr-8"
-              placeholder="Buscar..."
-            />
+
 
             {/* CTA Button */}
             <Link
