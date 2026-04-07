@@ -26,19 +26,6 @@ export function Header({ onSearch }: HeaderProps) {
 
   return (
     <>
-      {/* Pre-header (hidden on mobile) */}
-      <div className="hidden sm:block bg-[#112636] text-white text-sm py-2 px-4">
-        <div className="container flex justify-between items-center">
-          <div className="flex gap-6 text-xs text-neutral-300">
-            <span>Envío gratis en compras mayores a $200.000</span>
-            <span>Garantía de satisfacción</span>
-          </div>
-          <div className="flex gap-4 text-xs font-medium">
-            <Link href="/puntos-atencion" className="hover:text-[#f4c430] transition-colors duration-300">Puntos de Atención</Link>
-          </div>
-        </div>
-      </div>
-
       {/* Main Header */}
       <header suppressHydrationWarning className={cn(
         'sticky top-0 z-50 transition-all duration-300',
@@ -81,12 +68,7 @@ export function Header({ onSearch }: HeaderProps) {
           {/* Right Actions */}
           <div className="flex items-center gap-4 sm:gap-6">
 
-            {/* Search Dropdown (Desktop) */}
-            <SearchDropdown
-              className="hidden sm:flex w-48 lg:w-64"
-              inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#f4c430] focus:bg-white/20 transition-all duration-300 pr-8"
-              placeholder="Buscar..."
-            />
+
 
             {/* CTA Button */}
             <Link
@@ -101,11 +83,21 @@ export function Header({ onSearch }: HeaderProps) {
             <button
               onClick={openCart}
               aria-label={`Carrito de compras${itemCount > 0 ? ` - ${itemCount} artículos` : ''}`}
-              className="relative text-white hover:text-[#f4c430] transition-colors duration-300 group"
+              className="relative text-white hover:text-[#f4c430] transition-all duration-300 group flex items-center justify-center p-2.5 rounded-full bg-white/10 hover:bg-white/20"
             >
-              <span className="text-2xl group-hover:scale-110 inline-block transition-transform duration-300">🛒</span>
+              <svg 
+                className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth={2}
+                viewBox="0 0 24 24"
+              >
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
               {itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-sm">
+                <span className="absolute -top-1 -right-1 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-lg border-2 border-[#1a3a52]">
                   {itemCount > 99 ? '99+' : itemCount}
                 </span>
               )}

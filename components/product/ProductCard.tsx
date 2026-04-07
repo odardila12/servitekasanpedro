@@ -112,84 +112,10 @@ export function ProductCard({
           </div>
         )}
 
-        {/* Arrow navigation */}
-        {hasMultipleImages && (
-          <>
-            <button
-              onClick={goPrev}
-              aria-label="Imagen anterior"
-              className={cn(
-                'absolute left-2 top-1/2 -translate-y-1/2 z-10',
-                'w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm',
-                'flex items-center justify-center shadow-md',
-                'opacity-0 group-hover:opacity-100 transition-opacity duration-200',
-                'hover:bg-white active:scale-90 text-[#1a3a52] font-bold text-lg leading-none'
-              )}
-            >
-              &#8249;
-            </button>
-            <button
-              onClick={goNext}
-              aria-label="Imagen siguiente"
-              className={cn(
-                'absolute right-2 top-1/2 -translate-y-1/2 z-10',
-                'w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm',
-                'flex items-center justify-center shadow-md',
-                'opacity-0 group-hover:opacity-100 transition-opacity duration-200',
-                'hover:bg-white active:scale-90 text-[#1a3a52] font-bold text-lg leading-none'
-              )}
-            >
-              &#8250;
-            </button>
-          </>
-        )}
 
-        {/* Dot indicators */}
-        {hasMultipleImages && (
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-            {galleryImages.map((_, i) => (
-              <button
-                key={i}
-                onClick={(e) => { e.stopPropagation(); goToIndex(i); }}
-                aria-label={`Ver imagen ${i + 1}`}
-                className={cn(
-                  'rounded-full transition-all duration-200',
-                  i === activeIndex
-                    ? 'w-4 h-1.5 bg-white'
-                    : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/80'
-                )}
-              />
-            ))}
-          </div>
-        )}
       </div>
 
-      {/* Thumbnails */}
-      {hasMultipleImages && (
-        <div className="flex gap-1.5 px-3 pt-2.5">
-          {galleryImages.map((src, i) => (
-            <button
-              key={i}
-              onClick={() => goToIndex(i)}
-              aria-label={`Miniatura ${i + 1}`}
-              className={cn(
-                'relative flex-1 h-12 rounded-lg overflow-hidden transition-all duration-200',
-                i === activeIndex
-                  ? 'ring-2 ring-[#1a3a52] ring-offset-1'
-                  : 'opacity-60 hover:opacity-90'
-              )}
-            >
-              <Image
-                src={src}
-                alt={`${name} miniatura ${i + 1}`}
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
-            </button>
-          ))}
-        </div>
-      )}
+
 
       {/* Content */}
       <div className={cn('px-5 pb-5', hasMultipleImages ? 'pt-3' : 'pt-5')}>

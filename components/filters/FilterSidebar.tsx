@@ -46,7 +46,7 @@ export function FilterSidebar({
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed md:static top-0 left-0 h-full w-64 bg-white z-50',
+          'sticky md:static top-0 left-0 max-h-screen w-64 bg-white z-40',
           'transition-transform duration-300 md:transition-none',
           'border-r border-neutral-200 p-4 md:p-6',
           'overflow-y-auto',
