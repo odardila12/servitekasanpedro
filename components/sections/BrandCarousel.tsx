@@ -32,11 +32,6 @@ export function BrandCarousel({ brands = BRANDS }: BrandCarouselProps) {
     slidesToScroll: 1,
     skipSnaps: false,
     containScroll: 'trimSnaps',
-    breakpoints: {
-      '(max-width: 640px)': { slidesToScroll: 1 },
-      '(min-width: 641px) and (max-width: 1024px)': { slidesToScroll: 2 },
-      '(min-width: 1025px)': { slidesToScroll: 3 },
-    },
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -125,11 +120,11 @@ export function BrandCarousel({ brands = BRANDS }: BrandCarouselProps) {
         >
           {/* Embla Carousel */}
           <div ref={emblaRef} className="overflow-hidden rounded-lg lg:rounded-xl">
-            <div className="flex">
+            <div className="flex gap-4 sm:gap-6 lg:gap-8">
               {brands.map((brand, index) => (
                 <div
                   key={index}
-                  className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-4 first:pl-0 sm:pl-6 lg:pl-8"
+                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 xl:w-1/5 min-w-0"
                 >
                   <div
                     className={cn(
