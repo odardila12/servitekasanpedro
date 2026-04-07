@@ -23,14 +23,14 @@ export function FeaturedProducts({
   }));
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20">
-      <div className="container">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="container px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-3">
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-3 sm:mb-4">
             {title}
           </h2>
-          <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
+          <p className="text-neutral-600 text-base sm:text-lg max-w-2xl mx-auto">
             {subtitle}
           </p>
         </div>

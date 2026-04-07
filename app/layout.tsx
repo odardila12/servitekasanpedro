@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Navigation } from '@/components/layout/Navigation';
 import { CartProvider } from '@/lib/contexts/CartContext';
 import { CartDrawer } from '@/components/cart/CartDrawer';
+import { WhatsappContact } from '@/components/sections/WhatsappContact';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <CartDrawer />
+          <WhatsappContact phoneNumber="573023456789" showLabel={true} />
         </CartProvider>
       </body>
     </html>

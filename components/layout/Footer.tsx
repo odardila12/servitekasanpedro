@@ -21,12 +21,12 @@ export function Footer() {
 
           {/* Column 2 - Shop */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-[#f4c430]">Servicios</h4>
+            <h4 className="font-bold text-lg mb-6 text-[#f4c430]">Categorías</h4>
             <ul className="text-sm space-y-3">
-              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Llantas y Alineación</Link></li>
-              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Baterías y Sistema Eléctrico</Link></li>
-              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Cambio de Aceite</Link></li>
-              <li><Link href="#" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Accesorios</Link></li>
+              <li><Link href="/categoria/llantas" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Llantas</Link></li>
+              <li><Link href="/categoria/baterias" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Baterías</Link></li>
+              <li><Link href="/categoria/lubricantes" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Lubricantes</Link></li>
+              <li><Link href="/productos" className="text-white/80 hover:text-[#f4c430] transition-colors duration-300 inline-block hover:translate-x-1 transform">Todos los Productos</Link></li>
             </ul>
           </div>
 

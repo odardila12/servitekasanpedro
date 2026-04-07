@@ -59,10 +59,9 @@ export function Header({ onSearch }: HeaderProps) {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 mx-8">
-            <Link href="/productos" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Llantas</Link>
+            <Link href="/categoria/llantas" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Llantas</Link>
             <Link href="/categoria/baterias" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Baterías</Link>
             <Link href="/categoria/lubricantes" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Lubricantes</Link>
-            <Link href="/categoria/accesorios" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Accesorios</Link>
           </nav>
 
           {/* Right Actions */}

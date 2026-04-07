@@ -9,8 +9,12 @@ export function Categories() {
     llantas: '🛞',
     baterias: '🔋',
     lubricantes: '🛢️',
-    accesorios: '🔧',
   };
+
+  // Filter to only show llantas, baterias, lubricantes (remove accesorios)
+  const filteredCategories = CATEGORIES.filter(
+    (cat) => cat.slug !== 'accesorios'
+  );
 
   return (
     <section className="py-12 sm:py-16 bg-slate-50">
@@ -26,8 +30,8 @@ export function Categories() {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {CATEGORIES.map((category) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
+          {filteredCategories.map((category) => (
             <a
               key={category.slug}
               href={`/categoria/${category.slug}`}
