@@ -72,7 +72,7 @@ export function SearchDropdown({
       <button
         type="button"
         onClick={() => navigate(query)}
-        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-[#f4c430] transition-colors duration-300"
+        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-[#FFB81C] transition-colors duration-200"
         aria-label="Buscar"
       >
         <span className="text-sm">🔍</span>

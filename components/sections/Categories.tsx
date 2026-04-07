@@ -39,27 +39,27 @@ export function Categories() {
                 'group flex flex-col items-center justify-center p-8 sm:p-10 relative overflow-hidden',
                 'bg-white/70 backdrop-blur-md border border-white/50 rounded-xl',
                 'shadow-sm hover:shadow-lg',
-                'transition-transform duration-300 hover:scale-105'
+                'transition-transform duration-200 hover:scale-105'
               )}
             >
               {/* Hover gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
               
               {/* Decorative border */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-[#f4c430] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-[#FFB81C] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
 
               {/* Icon */}
-              <div className="text-5xl sm:text-6xl mb-6 relative z-10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 filter drop-shadow-md">
+              <div className="text-5xl sm:text-6xl mb-6 relative z-10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-200 filter drop-shadow-md">
                 {categoryIcons[category.slug] || '📦'}
               </div>
 
               {/* Name */}
-              <h3 className="font-bold text-lg text-center text-[#1a3a52] transition-colors relative z-10 tracking-tight">
+              <h3 className="font-bold text-lg text-center text-[#0F3E99] transition-colors relative z-10 tracking-tight">
                 {category.name}
               </h3>
 
               {/* Count */}
-              <p className="text-sm font-medium text-slate-500 mt-3 bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full group-hover:bg-white group-hover:shadow-sm transition-all duration-300 relative z-10">
+              <p className="text-sm font-medium text-slate-500 mt-3 bg-white/50 backdrop-blur-sm px-3 py-1 rounded-full group-hover:bg-white group-hover:shadow-sm transition-all duration-200 relative z-10">
                 {category.count} productos
               </p>
             </a>

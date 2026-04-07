@@ -49,24 +49,24 @@ export function BrandSection({ brands = DEFAULT_BRANDS }: BrandSectionProps) {
               className={cn(
                 'flex flex-col items-center justify-center p-6 sm:p-8',
                 'bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg sm:rounded-xl',
-                'border border-slate-200/50 hover:border-[#f4c430]/50',
+                'border border-slate-200/50 hover:border-[#FFB81C]/50',
                 'shadow-sm hover:shadow-md',
-                'transition-all duration-300 hover:scale-105 hover:-translate-y-1',
+                'transition-all duration-200 hover:scale-105 hover:-translate-y-2',
                 'group cursor-pointer'
               )}
             >
               {/* Logo/Icon */}
-              <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-200">
                 {brand.logo}
               </div>
 
               {/* Brand Name */}
-              <h3 className="font-semibold text-sm sm:text-base text-center text-[#1a3a52] group-hover:text-[#f4c430] transition-colors duration-300">
+              <h3 className="font-semibold text-sm sm:text-base text-center text-[#0F3E99] group-hover:text-[#FFB81C] transition-colors duration-200">
                 {brand.name}
               </h3>
 
               {/* Decorative accent */}
-              <div className="w-0 h-0.5 bg-[#f4c430] mt-3 sm:mt-4 group-hover:w-full transition-all duration-300" />
+              <div className="w-0 h-0.5 bg-[#FFB81C] mt-3 sm:mt-4 group-hover:w-full transition-all duration-200" />
             </div>
           ))}
         </div>
@@ -74,7 +74,7 @@ export function BrandSection({ brands = DEFAULT_BRANDS }: BrandSectionProps) {
         {/* Trust Badge */}
         <div className="mt-12 sm:mt-16 lg:mt-20 text-center">
           <p className="text-neutral-600 text-sm sm:text-base">
-            <span className="font-semibold text-[#1a3a52]">+10 años</span> de experiencia distribuyendo productos de marcas líderes en el mercado automotriz.
+            <span className="font-semibold text-[#0F3E99]">+10 años</span> de experiencia distribuyendo productos de marcas líderes en el mercado automotriz.
           </p>
         </div>
       </div>

@@ -36,16 +36,16 @@ export function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Carrito de compras"
-        className="fixed right-0 top-0 z-50 h-full w-full max-w-md flex flex-col bg-[#0d2233] shadow-2xl"
+        className="fixed right-0 top-0 z-50 h-full w-full max-w-md flex flex-col bg-[#062854] shadow-2xl"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#1a3a52]">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#0F3E99]">
           <div className="flex items-center gap-3">
             <span className="text-2xl">🛒</span>
             <h2 className="text-xl font-bold text-white">
               Carrito
               {itemCount > 0 && (
-                <span className="ml-2 text-sm font-normal text-[#f4c430]">
+                <span className="ml-2 text-sm font-normal text-[#FFB81C]">
                   ({itemCount} {itemCount === 1 ? 'artículo' : 'artículos'})
                 </span>
               )}
@@ -53,7 +53,7 @@ export function CartDrawer() {
           </div>
           <button
             onClick={closeCart}
-            className="text-white/70 hover:text-[#f4c430] transition-colors duration-200 text-2xl leading-none p-1"
+            className="text-white/70 hover:text-[#FFB81C] transition-colors duration-200 text-2xl leading-none p-1"
             aria-label="Cerrar carrito"
           >
             ✕
@@ -69,7 +69,7 @@ export function CartDrawer() {
               <p className="text-white/40 text-sm">Agrega productos para continuar</p>
               <button
                 onClick={closeCart}
-                className="mt-4 px-6 py-3 bg-[#f4c430] text-[#1a3a52] font-bold rounded-xl hover:bg-yellow-300 transition-colors duration-200 text-sm"
+                className="mt-4 px-6 py-3 bg-[#FFB81C] text-[#0F3E99] font-bold rounded-xl hover:bg-yellow-300 transition-colors duration-200 text-sm"
               >
                 Seguir Comprando
               </button>
@@ -78,10 +78,10 @@ export function CartDrawer() {
             items.map((item) => (
               <div
                 key={item.id}
-                className="flex gap-3 bg-[#1a3a52] rounded-xl p-3 border border-white/10"
+                className="flex gap-3 bg-[#0F3E99] rounded-xl p-3 border border-white/10"
               >
                 {/* Product image */}
-                <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-[#0d2233]">
+                <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-[#062854]">
                   <Image
                     src={item.image}
                     alt={item.name}
@@ -98,26 +98,26 @@ export function CartDrawer() {
                   </p>
 
                   {/* Price per unit */}
-                  <p className="text-[#f4c430] text-xs font-medium mb-2">
+                  <p className="text-[#FFB81C] text-xs font-medium mb-2">
                     ${item.price.toLocaleString('es-CO')} c/u
                   </p>
 
                   {/* Quantity controls */}
                   <div className="flex items-center gap-2">
-                    <div className="flex items-center border border-[#f4c430]/40 rounded-lg overflow-hidden">
+                    <div className="flex items-center border border-[#FFB81C]/40 rounded-lg overflow-hidden">
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="w-8 h-8 flex items-center justify-center bg-[#0d2233] text-[#f4c430] font-bold hover:bg-[#f4c430] hover:text-[#1a3a52] transition-colors duration-200 text-lg leading-none"
+                        className="w-8 h-8 flex items-center justify-center bg-[#062854] text-[#FFB81C] font-bold hover:bg-[#FFB81C] hover:text-[#0F3E99] transition-colors duration-200 text-lg leading-none"
                         aria-label="Reducir cantidad"
                       >
                         −
                       </button>
-                      <span className="w-10 text-center text-white font-bold text-sm bg-[#0d2233] h-8 flex items-center justify-center border-x border-[#f4c430]/40">
+                      <span className="w-10 text-center text-white font-bold text-sm bg-[#062854] h-8 flex items-center justify-center border-x border-[#FFB81C]/40">
                         {item.quantity}
                       </span>
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="w-8 h-8 flex items-center justify-center bg-[#0d2233] text-[#f4c430] font-bold hover:bg-[#f4c430] hover:text-[#1a3a52] transition-colors duration-200 text-lg leading-none"
+                        className="w-8 h-8 flex items-center justify-center bg-[#062854] text-[#FFB81C] font-bold hover:bg-[#FFB81C] hover:text-[#0F3E99] transition-colors duration-200 text-lg leading-none"
                         aria-label="Aumentar cantidad"
                       >
                         +
@@ -148,11 +148,11 @@ export function CartDrawer() {
 
         {/* Footer — only shown when cart has items */}
         {items.length > 0 && (
-          <div className="border-t border-white/10 bg-[#1a3a52] px-5 py-5 space-y-4">
+          <div className="border-t border-white/10 bg-[#0F3E99] px-5 py-5 space-y-4">
             {/* Total row */}
             <div className="flex items-center justify-between">
               <span className="text-white/70 font-medium text-base">Total</span>
-              <span className="text-[#f4c430] font-black text-2xl">
+              <span className="text-[#FFB81C] font-black text-2xl">
                 ${total.toLocaleString('es-CO')}
               </span>
             </div>
@@ -161,7 +161,7 @@ export function CartDrawer() {
             <Link
               href="/checkout"
               onClick={closeCart}
-              className="block w-full py-4 text-center bg-[#f4c430] text-[#1a3a52] font-black text-base rounded-xl hover:bg-yellow-300 transition-colors duration-200 shadow-lg shadow-[#f4c430]/20"
+              className="block w-full py-4 text-center bg-[#FFB81C] text-[#0F3E99] font-black text-base rounded-xl hover:bg-yellow-300 transition-colors duration-200 shadow-lg shadow-[#FFB81C]/20"
             >
               Proceder al Pago →
             </Link>

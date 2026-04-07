@@ -79,8 +79,8 @@ export function ProductCard({
   return (
     <div
       className={cn(
-        'bg-white rounded-2xl overflow-hidden transition-all duration-300',
-        'shadow-md hover:shadow-xl hover:-translate-y-1'
+        'bg-white rounded-3xl overflow-hidden transition-all duration-200',
+        'shadow-sm hover:shadow-lg hover:-translate-y-2'
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -107,7 +107,7 @@ export function ProductCard({
 
         {/* In-cart indicator */}
         {inCart && (
-          <div className="absolute top-2 right-2 bg-[#1a3a52] text-[#f4c430] text-xs font-bold px-2 py-1 rounded-full shadow-md z-10">
+          <div className="absolute top-3 right-3 bg-[#0F3E99] text-[#FFB81C] text-xs font-bold px-3 py-2 rounded-full shadow-md z-10">
             x{cartItem.quantity}
           </div>
         )}
@@ -118,13 +118,14 @@ export function ProductCard({
 
 
       {/* Content */}
-      <div className={cn('px-5 pb-5', hasMultipleImages ? 'pt-3' : 'pt-5')}>
+      <div className={cn('px-6 pb-6', hasMultipleImages ? 'pt-4' : 'pt-6')}>
         {/* Product Name */}
         <h3 className={cn(
           'font-semibold text-base text-neutral-900 min-h-12',
-          'transition-colors duration-300',
-          isHovering ? 'text-[#1a3a52]' : ''
-        )}>
+          'transition-colors duration-200',
+          isHovering ? 'text-[#0F3E99]' : ''
+        )}
+        style={{ letterSpacing: '0.01em' }}>
           {name}
         </h3>
 
@@ -134,8 +135,8 @@ export function ProductCard({
         )}
 
         {/* Price */}
-        <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-xl font-black text-[#1a3a52]">
+        <div className="mt-4 flex items-baseline gap-3">
+          <span className="text-2xl font-bold text-[#0F3E99]">
             ${price.toLocaleString('es-CO')}
           </span>
           {originalPrice && (
@@ -149,14 +150,15 @@ export function ProductCard({
         <button
           onClick={handleAddToCart}
           className={cn(
-            'w-full mt-4 py-3 px-4 font-bold rounded-xl',
-            'transition-all duration-300 active:scale-95 text-sm',
+            'w-full mt-6 py-4 px-4 font-bold rounded-2xl',
+            'transition-all duration-200 active:scale-95 text-sm',
             justAdded
-              ? 'bg-green-500 text-white shadow-md shadow-green-200'
+              ? 'bg-green-500 text-white shadow-md'
               : inCart
-              ? 'bg-[#1a3a52] text-[#f4c430] hover:bg-[#0d2233] shadow-md'
-              : 'bg-[#f4c430] text-[#1a3a52] hover:bg-[#e3b52d] hover:shadow-md'
+              ? 'bg-[#0F3E99] text-[#FFB81C] hover:bg-opacity-90 shadow-md'
+              : 'bg-[#FFB81C] text-[#0F3E99] hover:bg-opacity-90 hover:shadow-md'
           )}
+          style={{ letterSpacing: '0.02em' }}
         >
           {justAdded
             ? '✓ AGREGADO'

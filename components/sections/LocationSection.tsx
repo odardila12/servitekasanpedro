@@ -39,12 +39,12 @@ export function LocationSection({
               {/* Address */}
               <div className="flex gap-4 sm:gap-6">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#f4c430]/20 text-[#f4c430]">
+                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#FFB81C]/20 text-[#FFB81C]">
                     <MapPin className="w-6 h-6 sm:w-8 sm:h-8" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg sm:text-xl text-[#1a3a52] mb-1 sm:mb-2">
+                  <h3 className="font-bold text-lg sm:text-xl text-[#0F3E99] mb-1 sm:mb-2">
                     Dirección
                   </h3>
                   <p className="text-neutral-700 text-base sm:text-lg leading-relaxed">
@@ -56,17 +56,17 @@ export function LocationSection({
               {/* Phone */}
               <div className="flex gap-4 sm:gap-6">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#f4c430]/20 text-[#f4c430]">
+                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#FFB81C]/20 text-[#FFB81C]">
                     <Phone className="w-6 h-6 sm:w-8 sm:h-8" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg sm:text-xl text-[#1a3a52] mb-1 sm:mb-2">
+                  <h3 className="font-bold text-lg sm:text-xl text-[#0F3E99] mb-1 sm:mb-2">
                     Teléfono
                   </h3>
                   <a
                     href={`tel:${phone}`}
-                    className="text-neutral-700 hover:text-[#f4c430] text-base sm:text-lg transition-colors duration-300 font-medium"
+                    className="text-neutral-700 hover:text-[#FFB81C] text-base sm:text-lg transition-colors duration-200 font-medium"
                   >
                     {phone}
                   </a>
@@ -76,17 +76,17 @@ export function LocationSection({
               {/* Email */}
               <div className="flex gap-4 sm:gap-6">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#f4c430]/20 text-[#f4c430]">
+                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#FFB81C]/20 text-[#FFB81C]">
                     <Mail className="w-6 h-6 sm:w-8 sm:h-8" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg sm:text-xl text-[#1a3a52] mb-1 sm:mb-2">
+                  <h3 className="font-bold text-lg sm:text-xl text-[#0F3E99] mb-1 sm:mb-2">
                     Email
                   </h3>
                   <a
                     href={`mailto:${email}`}
-                    className="text-neutral-700 hover:text-[#f4c430] text-base sm:text-lg transition-colors duration-300 font-medium"
+                    className="text-neutral-700 hover:text-[#FFB81C] text-base sm:text-lg transition-colors duration-200 font-medium"
                   >
                     {email}
                   </a>
@@ -96,12 +96,12 @@ export function LocationSection({
               {/* Hours */}
               <div className="flex gap-4 sm:gap-6">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#f4c430]/20 text-[#f4c430]">
+                  <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-[#FFB81C]/20 text-[#FFB81C]">
                     <Clock className="w-6 h-6 sm:w-8 sm:h-8" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg sm:text-xl text-[#1a3a52] mb-1 sm:mb-2">
+                  <h3 className="font-bold text-lg sm:text-xl text-[#0F3E99] mb-1 sm:mb-2">
                     Horario
                   </h3>
                   <p className="text-neutral-700 text-base sm:text-lg leading-relaxed">

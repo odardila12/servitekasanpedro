@@ -28,40 +28,41 @@ export function Header({ onSearch }: HeaderProps) {
     <>
       {/* Main Header */}
       <header suppressHydrationWarning className={cn(
-        'sticky top-0 z-50 transition-all duration-300',
+        'sticky top-0 z-50 transition-all duration-200',
         isSticky
-          ? 'py-3 bg-[#1a3a52]/80 backdrop-blur-md shadow-lg border-b border-white/10'
-          : 'py-5 bg-[#1a3a52] border-b border-white/5'
+          ? 'py-4 bg-[#0F3E99]/95 backdrop-blur-md shadow-md border-b border-neutral-200'
+          : 'py-6 bg-[#0F3E99] border-b border-neutral-200'
       )}>
-        <div className="container flex items-center justify-between h-14">
+        <div className="container flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/favicon.png"
                 alt="Serviteka San Pedro"
-                width={40}
-                height={40}
+                width={44}
+                height={44}
                 className={cn(
-                  'rounded-md transition-all duration-300',
-                  isSticky ? 'w-8 h-8' : 'w-10 h-10'
+                  'rounded-lg transition-all duration-200',
+                  isSticky ? 'w-10 h-10' : 'w-11 h-11'
                 )}
                 priority
               />
               <span className={cn(
-                'font-bold text-white transition-all duration-300 tracking-tight',
-                isSticky ? 'text-base' : 'text-lg'
-              )}>
-                Servi<span className="text-[#f4c430]">teka</span> San Pedro
+                'font-bold text-white transition-all duration-200',
+                isSticky ? 'text-lg' : 'text-xl'
+              )}
+              style={{ letterSpacing: '0.01em' }}>
+                Servi<span className="text-[#FFB81C]">teka</span> San Pedro
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 mx-8">
-            <Link href="/categoria/llantas" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Llantas</Link>
-            <Link href="/categoria/baterias" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Baterías</Link>
-            <Link href="/categoria/lubricantes" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300">Lubricantes</Link>
+          <nav className="hidden md:flex items-center gap-10 mx-10">
+            <Link href="/categoria/llantas" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Llantas</Link>
+            <Link href="/categoria/baterias" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Baterías</Link>
+            <Link href="/categoria/lubricantes" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Lubricantes</Link>
           </nav>
 
           {/* Right Actions */}
@@ -70,12 +71,12 @@ export function Header({ onSearch }: HeaderProps) {
             <button
               onClick={openCart}
               aria-label={`Carrito de compras${itemCount > 0 ? ` - ${itemCount} artículos` : ''}`}
-              className="relative text-white hover:text-[#f4c430] transition-all duration-300 group flex items-center justify-center p-2.5 rounded-full bg-white/10 hover:bg-white/20"
+              className="relative text-white hover:text-[#FFB81C] transition-all duration-200 group flex items-center justify-center p-3 rounded-full bg-white/10 hover:bg-white/15"
             >
-              <svg 
-                className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" 
-                fill="none" 
-                stroke="currentColor" 
+              <svg
+                className="w-6 h-6 group-hover:scale-110 transition-transform duration-200"
+                fill="none"
+                stroke="currentColor"
                 strokeWidth={2}
                 viewBox="0 0 24 24"
               >
@@ -84,7 +85,7 @@ export function Header({ onSearch }: HeaderProps) {
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
               {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-lg border-2 border-[#1a3a52]">
+                <span className="absolute -top-2 -right-2 bg-[#FFB81C] text-[#0F3E99] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-md border-2 border-[#0F3E99]">
                   {itemCount > 99 ? '99+' : itemCount}
                 </span>
               )}
@@ -93,7 +94,7 @@ export function Header({ onSearch }: HeaderProps) {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-white text-2xl hover:text-[#f4c430] transition-colors duration-300 ml-2"
+              className="md:hidden text-white text-2xl hover:text-[#FFB81C] transition-colors duration-200 ml-2"
             >
               ☰
             </button>
@@ -101,27 +102,26 @@ export function Header({ onSearch }: HeaderProps) {
         </div>
 
         {/* Mobile Search (visible only on mobile) */}
-        <div className="sm:hidden px-4 pb-2 pt-2">
+        <div className="sm:hidden px-6 pb-3 pt-3">
           <SearchDropdown
             className="w-full"
-            inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#f4c430] focus:bg-white/20 transition-all duration-300 pr-8"
+            inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-[#FFB81C] focus:bg-white/15 transition-all duration-200 pr-8"
             placeholder="Buscar..."
           />
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <nav className="md:hidden bg-[#1a3a52] border-t border-white/10 py-3 absolute w-full left-0 shadow-xl">
-            <div className="container flex flex-col gap-1">
-              <Link href="/productos" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-white/5">Llantas</Link>
-              <Link href="/categoria/baterias" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-white/5">Baterías</Link>
-              <Link href="/categoria/lubricantes" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-white/5">Lubricantes</Link>
-              <Link href="/categoria/accesorios" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-white/5">Accesorios</Link>
-              <div className="px-4 pt-4 pb-2 border-t border-white/10 mt-2">
+          <nav className="md:hidden bg-[#0F3E99] border-t border-white/20 py-4 absolute w-full left-0 shadow-lg">
+            <div className="container flex flex-col gap-2">
+              <Link href="/productos" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Llantas</Link>
+              <Link href="/categoria/baterias" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Baterías</Link>
+              <Link href="/categoria/lubricantes" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Lubricantes</Link>
+              <Link href="/categoria/accesorios" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Accesorios</Link>
+              <div className="px-4 pt-4 pb-2 border-t border-white/20 mt-2">
                 <Link
                   href="/puntos-atencion"
-                  className="flex items-center justify-center w-full bg-[#f4c430] text-[#1a3a52] font-bold px-5 py-3 rounded-2xl hover:bg-white transition-colors duration-300"
-                  style={{ borderRadius: '12px' }}
+                  className="flex items-center justify-center w-full bg-[#FFB81C] text-[#0F3E99] font-bold px-5 py-4 rounded-2xl hover:bg-opacity-90 transition-colors duration-200"
                 >
                   Puntos de Atención
                 </Link>

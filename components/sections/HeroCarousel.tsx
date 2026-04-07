@@ -126,14 +126,14 @@ export function HeroCarousel({
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Button
-              className="bg-[#f4c430] text-[#1a3a52] font-bold border-2 border-[#f4c430] shadow-[0_4px_20px_rgba(244,196,48,0.4)] hover:shadow-[0_6px_30px_rgba(244,196,48,0.6)] hover:bg-[#f0b800] px-6 sm:px-8 py-3 sm:py-4 rounded-2xl hover:scale-105 transition-all duration-300 text-sm sm:text-base"
+              className="bg-[#FFB81C] text-[#0F3E99] font-bold border-2 border-[#FFB81C] shadow-[0_4px_20px_rgba(255,184,28,0.4)] hover:shadow-[0_6px_30px_rgba(255,184,28,0.6)] hover:bg-opacity-90 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl hover:scale-105 transition-all duration-200 text-sm sm:text-base"
               onClick={() => (window.location.href = slide.ctaHref)}
             >
               {slide.ctaText}
             </Button>
             <Button
               variant="outline"
-              className="bg-white/15 backdrop-blur-md text-white border-2 border-white/40 hover:bg-white/25 hover:border-white/60 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-300 shadow-lg text-sm sm:text-base"
+              className="bg-white/15 backdrop-blur-md text-white border-2 border-white/40 hover:bg-white/25 hover:border-white/60 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-200 shadow-lg text-sm sm:text-base"
               onClick={() => (window.location.href = '/puntos-atencion')}
             >
               Puntos de Atención
@@ -146,7 +146,7 @@ export function HeroCarousel({
       <button
         onClick={goToPrev}
         aria-label="Diapositiva anterior"
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 text-white border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 text-white border border-white/20 hover:border-white/40 transition-all duration-200 hover:scale-110 backdrop-blur-sm shadow-lg"
       >
         <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
@@ -154,7 +154,7 @@ export function HeroCarousel({
       <button
         onClick={goToNext}
         aria-label="Siguiente diapositiva"
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 text-white border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 text-white border border-white/20 hover:border-white/40 transition-all duration-200 hover:scale-110 backdrop-blur-sm shadow-lg"
       >
         <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>

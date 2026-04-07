@@ -122,19 +122,19 @@ export function HeroSection({
           )}
         >
           {slide.badge && (
-            <span className="inline-block py-1 px-3 rounded-full bg-white/15 text-white border border-white/30 text-sm font-bold tracking-widest uppercase mb-6 backdrop-blur-md shadow-sm">
+            <span className="inline-block py-2 px-4 rounded-full bg-white/15 text-white border border-white/30 text-xs font-bold tracking-widest uppercase mb-8 backdrop-blur-md shadow-sm">
               {slide.badge}
             </span>
           )}
-          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight drop-shadow-lg">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight drop-shadow-lg" style={{ letterSpacing: '-0.02em' }}>
             {slide.title}
           </h2>
-          <p className="text-lg sm:text-2xl mb-10 text-slate-100 font-light max-w-2xl drop-shadow-md">
+          <p className="text-lg sm:text-xl mb-12 text-slate-100 font-normal max-w-2xl drop-shadow-md leading-relaxed">
             {slide.subtitle}
           </p>
           <div className="flex gap-4">
             <Button
-              className="bg-[#f4c430] text-[#1a3a52] font-bold border-2 border-[#f4c430] shadow-[0_4px_20px_rgba(244,196,48,0.4)] hover:shadow-[0_6px_30px_rgba(244,196,48,0.6)] hover:bg-[#f0b800] text-lg px-8 py-6 rounded-2xl hover:scale-105 transition-all duration-300"
+              className="bg-[#FFB81C] text-[#0F3E99] font-bold border-2 border-[#FFB81C] shadow-[0_4px_20px_rgba(255,184,28,0.4)] hover:shadow-[0_6px_30px_rgba(255,184,28,0.6)] hover:bg-opacity-90 text-base px-10 py-4 rounded-2xl hover:scale-105 transition-all duration-200"
               size="lg"
               onClick={() => (window.location.href = slide.ctaHref)}
             >
@@ -142,7 +142,7 @@ export function HeroSection({
             </Button>
             <Button
               variant="outline"
-              className="bg-white/15 backdrop-blur-md text-white border-2 border-white/40 hover:bg-white/25 hover:border-white/60 text-lg px-8 py-6 rounded-2xl transition-all duration-300 shadow-lg"
+              className="bg-white/15 backdrop-blur-md text-white border-2 border-white/40 hover:bg-white/25 hover:border-white/60 text-base px-10 py-4 rounded-2xl transition-all duration-200 shadow-lg"
               size="lg"
               onClick={() => (window.location.href = '/puntos-atencion')}
             >
@@ -156,31 +156,31 @@ export function HeroSection({
       <button
         onClick={goToPrev}
         aria-label="Imagen anterior"
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 text-white border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg"
+        className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/50 hover:bg-black/70 text-white border border-white/30 hover:border-white/50 transition-all duration-200 hover:scale-110 backdrop-blur-sm shadow-lg"
       >
-        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+        <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
       </button>
 
       {/* Right Arrow */}
       <button
         onClick={goToNext}
         aria-label="Siguiente imagen"
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/60 text-white border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg"
+        className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/50 hover:bg-black/70 text-white border border-white/30 hover:border-white/50 transition-all duration-200 hover:scale-110 backdrop-blur-sm shadow-lg"
       >
-        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
       </button>
 
       {/* Dots / Bullets */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2 items-center">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-3 items-center">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => goToSlide(i)}
             aria-label={`Ir a imagen ${i + 1}`}
             className={cn(
-              'transition-all duration-300 rounded-full',
+              'transition-all duration-200 rounded-full',
               i === currentIndex
-                ? 'w-8 h-3 bg-[#f4c430] shadow-[0_0_8px_rgba(244,196,48,0.7)]'
+                ? 'w-8 h-3 bg-[#FFB81C] shadow-[0_0_8px_rgba(255,184,28,0.8)]'
                 : 'w-3 h-3 bg-white/50 hover:bg-white/80'
             )}
           />
@@ -188,7 +188,7 @@ export function HeroSection({
       </div>
 
       {/* Slide counter (optional, subtle) */}
-      <div className="absolute bottom-6 right-4 sm:right-6 z-10 text-white/50 text-sm font-mono">
+      <div className="absolute bottom-8 right-6 sm:right-8 z-10 text-white/60 text-xs font-mono font-medium">
         {currentIndex + 1} / {slides.length}
       </div>
     </section>
