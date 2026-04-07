@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Color Tokens - Serviteka Navy/Gold (Modernizado) */
+  /* Color Tokens - Serviteka San Pedro Navy/Gold (Modernizado) */
   --color-primary: #1a3a52; /* Azul Navy Oscuro */
   --color-primary-50: #ebf1f6;
   --color-primary-100: #d0e0ed;

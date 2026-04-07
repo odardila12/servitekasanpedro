@@ -38,7 +38,7 @@ export function Header({ onSearch }: HeaderProps) {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-3">
               <Image
-                src="/favicon.ico"
+                src="/favicon.png"
                 alt="Serviteka San Pedro"
                 width={40}
                 height={40}

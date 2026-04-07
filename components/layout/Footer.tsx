@@ -16,8 +16,8 @@ export function Footer() {
           <div>
             <div className="mb-6">
               <Image
-                src="/favicon.ico"
-                alt="Serviteka Logo"
+                src="/favicon.png"
+                alt="Logo de Serviteka San Pedro"
                 width={40}
                 height={40}
                 className="w-10 h-10 rounded-md"

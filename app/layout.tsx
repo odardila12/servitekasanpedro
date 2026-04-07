@@ -10,6 +10,10 @@ import '@/styles/globals.css';
 export const metadata: Metadata = {
   title: 'Serviteka San Pedro - Llantas, Baterías y Accesorios Automotrices',
   description: 'Serviteka San Pedro: expertos en llantas, baterías, lubricantes y servicio técnico automotriz de primera calidad.',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+  },
 };
 
 export default function RootLayout({
@@ -28,7 +32,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <CartDrawer />
-          <WhatsappContact phoneNumber="573023456789" showLabel={true} />
+          <WhatsappContact phoneNumber="573023456789" message="Hola, tengo una pregunta sobre los productos de Serviteka San Pedro" />
         </CartProvider>
       </body>
     </html>
