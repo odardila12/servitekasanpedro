@@ -83,23 +83,21 @@ export function Header({ onSearch }: HeaderProps) {
             <button
               onClick={openCart}
               aria-label={`Carrito de compras${itemCount > 0 ? ` - ${itemCount} artículos` : ''}`}
-              className="relative text-white hover:text-white transition-all duration-300 group flex items-center justify-center p-2 rounded-lg hover:bg-white/15"
+              className="relative text-white hover:text-[#f4c430] transition-all duration-300 group flex items-center justify-center p-2.5 rounded-full bg-white/10 hover:bg-white/20"
             >
               <svg 
                 className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" 
                 fill="none" 
                 stroke="currentColor" 
+                strokeWidth={2}
                 viewBox="0 0 24 24"
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m10 0l2-9m-12 9h16m-8-10l1-4" 
-                />
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
               </svg>
               {itemCount > 0 && (
-                <span className="absolute top-0 right-0 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-lg">
+                <span className="absolute -top-1 -right-1 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-lg border-2 border-[#1a3a52]">
                   {itemCount > 99 ? '99+' : itemCount}
                 </span>
               )}
