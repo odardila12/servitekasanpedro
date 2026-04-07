@@ -13,6 +13,7 @@ interface ProductCardProps {
   price: number;
   originalPrice?: number;
   image: string;
+  images?: string[];
   rating?: number;
   reviews?: number;
   badge?: string;
@@ -27,6 +28,7 @@ export function ProductCard({
   price,
   originalPrice,
   image,
+  images,
   rating = 0,
   reviews = 0,
   badge,
@@ -35,6 +37,10 @@ export function ProductCard({
   const { addToCart, items } = useCart();
   const [isHovering, setIsHovering] = React.useState(false);
   const [justAdded, setJustAdded] = React.useState(false);
+
+  const galleryImages = images && images.length > 0 ? images : [image];
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
 
   const discountPercent = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
@@ -49,6 +55,27 @@ export function ProductCard({
     setTimeout(() => setJustAdded(false), 1500);
   }
 
+  const goToIndex = (index: number) => {
+    if (index === activeIndex || isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveIndex(index);
+      setIsTransitioning(false);
+    }, 150);
+  };
+
+  const goPrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    goToIndex((activeIndex - 1 + galleryImages.length) % galleryImages.length);
+  };
+
+  const goNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    goToIndex((activeIndex + 1) % galleryImages.length);
+  };
+
+  const hasMultipleImages = galleryImages.length > 1;
+
   return (
     <div
       className={cn(
@@ -59,15 +86,16 @@ export function ProductCard({
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Image Container */}
-      <div className="relative h-64 bg-neutral-100 overflow-hidden">
+      <div className="relative h-56 bg-neutral-100 overflow-hidden group">
         <Image
-          src={image}
-          alt={name}
+          src={galleryImages[activeIndex]}
+          alt={`${name} - imagen ${activeIndex + 1}`}
           fill
           priority={priority}
           className={cn(
-            'object-cover transition-transform duration-300',
-            isHovering ? 'scale-105' : 'scale-100'
+            'object-cover transition-all duration-300',
+            isHovering && !isTransitioning ? 'scale-105' : 'scale-100',
+            isTransitioning ? 'opacity-0' : 'opacity-100'
           )}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
@@ -79,14 +107,92 @@ export function ProductCard({
 
         {/* In-cart indicator */}
         {inCart && (
-          <div className="absolute top-2 right-2 bg-[#1a3a52] text-[#f4c430] text-xs font-bold px-2 py-1 rounded-full shadow-md">
+          <div className="absolute top-2 right-2 bg-[#1a3a52] text-[#f4c430] text-xs font-bold px-2 py-1 rounded-full shadow-md z-10">
             x{cartItem.quantity}
+          </div>
+        )}
+
+        {/* Arrow navigation */}
+        {hasMultipleImages && (
+          <>
+            <button
+              onClick={goPrev}
+              aria-label="Imagen anterior"
+              className={cn(
+                'absolute left-2 top-1/2 -translate-y-1/2 z-10',
+                'w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm',
+                'flex items-center justify-center shadow-md',
+                'opacity-0 group-hover:opacity-100 transition-opacity duration-200',
+                'hover:bg-white active:scale-90 text-[#1a3a52] font-bold text-lg leading-none'
+              )}
+            >
+              &#8249;
+            </button>
+            <button
+              onClick={goNext}
+              aria-label="Imagen siguiente"
+              className={cn(
+                'absolute right-2 top-1/2 -translate-y-1/2 z-10',
+                'w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm',
+                'flex items-center justify-center shadow-md',
+                'opacity-0 group-hover:opacity-100 transition-opacity duration-200',
+                'hover:bg-white active:scale-90 text-[#1a3a52] font-bold text-lg leading-none'
+              )}
+            >
+              &#8250;
+            </button>
+          </>
+        )}
+
+        {/* Dot indicators */}
+        {hasMultipleImages && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+            {galleryImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => { e.stopPropagation(); goToIndex(i); }}
+                aria-label={`Ver imagen ${i + 1}`}
+                className={cn(
+                  'rounded-full transition-all duration-200',
+                  i === activeIndex
+                    ? 'w-4 h-1.5 bg-white'
+                    : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/80'
+                )}
+              />
+            ))}
           </div>
         )}
       </div>
 
+      {/* Thumbnails */}
+      {hasMultipleImages && (
+        <div className="flex gap-1.5 px-3 pt-2.5">
+          {galleryImages.map((src, i) => (
+            <button
+              key={i}
+              onClick={() => goToIndex(i)}
+              aria-label={`Miniatura ${i + 1}`}
+              className={cn(
+                'relative flex-1 h-12 rounded-lg overflow-hidden transition-all duration-200',
+                i === activeIndex
+                  ? 'ring-2 ring-[#1a3a52] ring-offset-1'
+                  : 'opacity-60 hover:opacity-90'
+              )}
+            >
+              <Image
+                src={src}
+                alt={`${name} miniatura ${i + 1}`}
+                fill
+                className="object-cover"
+                sizes="80px"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Content */}
-      <div className="p-5">
+      <div className={cn('px-5 pb-5', hasMultipleImages ? 'pt-3' : 'pt-5')}>
         {/* Product Name */}
         <h3 className={cn(
           'font-semibold text-base text-neutral-900 min-h-12',

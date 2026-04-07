@@ -10,6 +10,7 @@ interface Product {
   price: number;
   originalPrice?: number;
   image: string;
+  images?: string[];
   rating?: number;
   reviews?: number;
   badge?: string;
