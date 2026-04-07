@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -13,7 +14,15 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-12">
           {/* Column 1 - About */}
           <div>
-            <h4 className="font-bold text-2xl mb-6 text-[#f4c430] tracking-tight">Serviteka</h4>
+            <div className="mb-6">
+              <Image
+                src="/favicon.ico"
+                alt="Serviteka Logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 rounded-md"
+              />
+            </div>
             <p className="text-sm leading-relaxed text-white/80">
               Tu centro automotriz de confianza en San Pedro. Expertos en llantas, baterías, lubricantes y servicio técnico especializado.
             </p>
