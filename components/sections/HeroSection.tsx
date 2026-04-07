@@ -110,9 +110,8 @@ export function HeroSection({
         </div>
       ))}
 
-      {/* Overlay - stronger for better contrast */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1a3a52]/95 to-[#2a5c84]/70 mix-blend-multiply" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1a3a52]/95 via-[#1a3a52]/30 to-transparent" />
+      {/* Subtle overlay only for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
 
       {/* Content */}
       <div className="absolute inset-0 flex flex-col items-start justify-center container">
