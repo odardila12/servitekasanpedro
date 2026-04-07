@@ -116,7 +116,7 @@ export function PaymentMethodsSection() {
             ¿Preguntas? Estamos aquí para ayudarte
           </p>
           <a
-            href="https://wa.me/573023456789"
+            href="https://wa.me/573205882008"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3 sm:py-4 bg-[#39a935] text-white font-bold rounded-xl sm:rounded-2xl hover:bg-[#2d8a29] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-sm sm:text-base"

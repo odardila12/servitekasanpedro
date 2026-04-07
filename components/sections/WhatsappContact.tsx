@@ -11,7 +11,7 @@ interface WhatsappContactProps {
 }
 
 export function WhatsappContact({
-  phoneNumber = '573023456789',
+  phoneNumber = '573205882008',
   message = 'Hola, tengo una pregunta sobre los productos de Serviteka San Pedro',
   position = 'bottom-right',
 }: WhatsappContactProps) {

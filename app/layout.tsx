@@ -32,7 +32,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <CartDrawer />
-          <WhatsappContact phoneNumber="573023456789" message="Hola, tengo una pregunta sobre los productos de Serviteka San Pedro" />
+          <WhatsappContact phoneNumber="573205882008" message="Hola, tengo una pregunta sobre los productos de Serviteka San Pedro" />
         </CartProvider>
       </body>
     </html>

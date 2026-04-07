@@ -16,6 +16,10 @@ GEMINI.md
 CLAUDE.md
 /skills
 
+test-results/
+/e2e
+/playwright-report
+
 # testing
 /coverage
 

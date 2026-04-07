@@ -14,14 +14,15 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-12">
           {/* Column 1 - About */}
           <div>
-            <div className="mb-6">
+            <div className="mb-6 flex items-center gap-4">
               <Image
                 src="/favicon.png"
                 alt="Logo de Serviteka San Pedro"
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-md"
+                width={60}
+                height={60}
+                className="w-16 h-16 rounded-md flex-shrink-0"
               />
+              <h3 className="text-xl font-bold text-white">Serviteka San Pedro</h3>
             </div>
             <p className="text-sm leading-relaxed text-white/80">
               Tu centro automotriz de confianza en San Pedro. Expertos en llantas, baterías, lubricantes y servicio técnico especializado.

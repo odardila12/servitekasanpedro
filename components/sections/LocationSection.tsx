@@ -14,7 +14,7 @@ interface LocationSectionProps {
 
 export function LocationSection({
   address = 'Cra. 29 #39-01, Sur Orient, Barranquilla, Atlántico',
-  phone = '+57 302 3456789',
+  phone = '+57 320 5882008',
   email = 'sanpedro@serviteka.com',
   hours = 'Lun - Sab: 8:00 AM - 6:00 PM | Dom: 9:00 AM - 2:00 PM',
   mapsEmbedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.3156282846047!2d-74.79619!3d10.971111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42d0000000001%3A0x0!2sBarranquilla%2C%20Atlantico!5e0!3m2!1ses!2sco!4v1234567890',

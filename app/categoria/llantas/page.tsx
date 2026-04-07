@@ -90,7 +90,7 @@ export default function LlantasPage() {
             Nuestros expertos están disponibles para ayudarte a elegir las llantas perfectas para tu vehículo.
           </p>
           <a
-            href="https://wa.me/573023456789"
+            href="https://wa.me/573205882008"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-8 py-4 bg-[#f4c430] text-[#1a3a52] font-bold rounded-lg hover:bg-[#f0b800] transition-all duration-300 hover:scale-105 shadow-lg"

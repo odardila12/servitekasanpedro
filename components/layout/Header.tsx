@@ -50,9 +50,9 @@ export function Header({ onSearch }: HeaderProps) {
               />
               <span className={cn(
                 'font-bold text-white transition-all duration-300 tracking-tight',
-                isSticky ? 'text-xl' : 'text-2xl'
+                isSticky ? 'text-base' : 'text-lg'
               )}>
-                Servi<span className="text-[#f4c430]">teka</span>
+                Servi<span className="text-[#f4c430]">teka</span> San Pedro
               </span>
             </Link>
           </div>
