@@ -66,18 +66,6 @@ export function Header({ onSearch }: HeaderProps) {
 
           {/* Right Actions */}
           <div className="flex items-center gap-4 sm:gap-6">
-
-
-
-            {/* CTA Button */}
-            <Link
-              href="/puntos-atencion"
-              className="hidden lg:flex items-center justify-center bg-[#f4c430] text-[#1a3a52] font-bold px-5 py-2 rounded-2xl hover:bg-white transition-colors duration-300"
-              style={{ borderRadius: '16px' }}
-            >
-              Puntos de Atención
-            </Link>
-
             {/* Cart Icon */}
             <button
               onClick={openCart}
