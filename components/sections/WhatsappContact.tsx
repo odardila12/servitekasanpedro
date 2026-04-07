@@ -42,7 +42,7 @@ export function WhatsappContact({
           onTouchEnd={() => setShowTooltip(false)}
           className={cn(
             'fixed z-40 flex items-center justify-center',
-            'w-14 h-14 sm:w-16 sm:h-16',
+            'w-12 h-12 sm:w-14 sm:h-14',
             'rounded-full shadow-2xl',
             'bg-[#39a935] hover:bg-[#2d8a29]',
             'transition-all duration-300 hover:scale-110',
@@ -54,9 +54,9 @@ export function WhatsappContact({
           <Image
             src="/icons8-whatsapp.svg"
             alt="WhatsApp"
-            width={32}
-            height={32}
-            className="w-7 h-7 sm:w-8 sm:h-8"
+            width={40}
+            height={40}
+            className="w-9 h-9 sm:w-10 sm:h-10"
           />
 
           {/* Pulse animation ring */}
