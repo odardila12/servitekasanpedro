@@ -164,32 +164,7 @@ export function ProductCard({
         )}
       </div>
 
-      {/* Thumbnails */}
-      {hasMultipleImages && (
-        <div className="flex gap-1.5 px-3 pt-2.5">
-          {galleryImages.map((src, i) => (
-            <button
-              key={i}
-              onClick={() => goToIndex(i)}
-              aria-label={`Miniatura ${i + 1}`}
-              className={cn(
-                'relative flex-1 h-12 rounded-lg overflow-hidden transition-all duration-200',
-                i === activeIndex
-                  ? 'ring-2 ring-[#1a3a52] ring-offset-1'
-                  : 'opacity-60 hover:opacity-90'
-              )}
-            >
-              <Image
-                src={src}
-                alt={`${name} miniatura ${i + 1}`}
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
-            </button>
-          ))}
-        </div>
-      )}
+
 
       {/* Content */}
       <div className={cn('px-5 pb-5', hasMultipleImages ? 'pt-3' : 'pt-5')}>
