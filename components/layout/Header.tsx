@@ -3,13 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import Image from 'next/image';
+import { SearchDropdown } from '@/components/search/SearchDropdown';
+import { useCart } from '@/lib/contexts/CartContext';
 
 interface HeaderProps {
-  cartCount?: number;
   onSearch?: (query: string) => void;
 }
 
-export function Header({ cartCount = 0, onSearch }: HeaderProps) {
+export function Header({ onSearch }: HeaderProps) {
+  const { itemCount, openCart } = useCart();
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -31,29 +34,39 @@ export function Header({ cartCount = 0, onSearch }: HeaderProps) {
             <span>Garantía de satisfacción</span>
           </div>
           <div className="flex gap-4 text-xs font-medium">
-            <Link href="/cuenta" className="hover:text-[#f4c430] transition-colors duration-300">Mi Cuenta</Link>
-            <Link href="/favoritos" className="hover:text-[#f4c430] transition-colors duration-300">Favoritos</Link>
+            <Link href="/puntos-atencion" className="hover:text-[#f4c430] transition-colors duration-300">Puntos de Atención</Link>
           </div>
         </div>
       </div>
 
       {/* Main Header */}
-      <header className={cn(
+      <header suppressHydrationWarning className={cn(
         'sticky top-0 z-50 transition-all duration-300',
-        isSticky 
-          ? 'py-3 bg-[#1a3a52]/80 backdrop-blur-md shadow-lg border-b border-white/10' 
+        isSticky
+          ? 'py-3 bg-[#1a3a52]/80 backdrop-blur-md shadow-lg border-b border-white/10'
           : 'py-5 bg-[#1a3a52] border-b border-white/5'
       )}>
         <div className="container flex items-center justify-between h-14">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/">
-              <h1 className={cn(
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/favicon.ico"
+                alt="Serviteka San Pedro"
+                width={40}
+                height={40}
+                className={cn(
+                  'rounded-md transition-all duration-300',
+                  isSticky ? 'w-8 h-8' : 'w-10 h-10'
+                )}
+                priority
+              />
+              <span className={cn(
                 'font-bold text-white transition-all duration-300 tracking-tight',
                 isSticky ? 'text-xl' : 'text-2xl'
               )}>
                 Servi<span className="text-[#f4c430]">teka</span>
-              </h1>
+              </span>
             </Link>
           </div>
 
@@ -67,39 +80,37 @@ export function Header({ cartCount = 0, onSearch }: HeaderProps) {
 
           {/* Right Actions */}
           <div className="flex items-center gap-4 sm:gap-6">
-            
-            {/* Search Icon / Bar (Simplified for space) */}
-            <div className="hidden sm:flex relative w-48 lg:w-64">
-              <input
-                type="text"
-                placeholder="Buscar..."
-                className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#f4c430] focus:bg-white/20 transition-all duration-300"
-                onChange={(e) => onSearch?.(e.target.value)}
-              />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-[#f4c430] transition-colors duration-300">
-                <span className="text-sm">🔍</span>
-              </button>
-            </div>
+
+            {/* Search Dropdown (Desktop) */}
+            <SearchDropdown
+              className="hidden sm:flex w-48 lg:w-64"
+              inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#f4c430] focus:bg-white/20 transition-all duration-300 pr-8"
+              placeholder="Buscar..."
+            />
 
             {/* CTA Button */}
-            <Link 
-              href="/citas" 
+            <Link
+              href="/puntos-atencion"
               className="hidden lg:flex items-center justify-center bg-[#f4c430] text-[#1a3a52] font-bold px-5 py-2 rounded-2xl hover:bg-white transition-colors duration-300"
               style={{ borderRadius: '16px' }}
             >
-              Agendar Cita
+              Puntos de Atención
             </Link>
 
             {/* Cart Icon */}
-            <button className="relative text-white hover:text-[#f4c430] transition-colors duration-300 group">
+            <button
+              onClick={openCart}
+              aria-label={`Carrito de compras${itemCount > 0 ? ` - ${itemCount} artículos` : ''}`}
+              className="relative text-white hover:text-[#f4c430] transition-colors duration-300 group"
+            >
               <span className="text-2xl group-hover:scale-110 inline-block transition-transform duration-300">🛒</span>
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-sm">
-                  {cartCount}
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#f4c430] text-[#1a3a52] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-sm">
+                  {itemCount > 99 ? '99+' : itemCount}
                 </span>
               )}
             </button>
-            
+
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -112,14 +123,11 @@ export function Header({ cartCount = 0, onSearch }: HeaderProps) {
 
         {/* Mobile Search (visible only on mobile) */}
         <div className="sm:hidden px-4 pb-2 pt-2">
-          <div className="relative w-full">
-            <input
-              type="text"
-              placeholder="Buscar..."
-              className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#f4c430] focus:bg-white/20 transition-all duration-300"
-              onChange={(e) => onSearch?.(e.target.value)}
-            />
-          </div>
+          <SearchDropdown
+            className="w-full"
+            inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#f4c430] focus:bg-white/20 transition-all duration-300 pr-8"
+            placeholder="Buscar..."
+          />
         </div>
 
         {/* Mobile Menu */}
@@ -131,12 +139,12 @@ export function Header({ cartCount = 0, onSearch }: HeaderProps) {
               <Link href="/categoria/lubricantes" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-white/5">Lubricantes</Link>
               <Link href="/categoria/accesorios" className="text-white hover:text-[#f4c430] font-medium transition-colors duration-300 py-2 px-4 rounded-lg hover:bg-white/5">Accesorios</Link>
               <div className="px-4 pt-4 pb-2 border-t border-white/10 mt-2">
-                <Link 
-                  href="/citas" 
+                <Link
+                  href="/puntos-atencion"
                   className="flex items-center justify-center w-full bg-[#f4c430] text-[#1a3a52] font-bold px-5 py-3 rounded-2xl hover:bg-white transition-colors duration-300"
                   style={{ borderRadius: '12px' }}
                 >
-                  Agendar Cita
+                  Puntos de Atención
                 </Link>
               </div>
             </div>

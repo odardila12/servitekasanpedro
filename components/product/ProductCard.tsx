@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/common/Badge';
 import { Rating } from '@/components/product/Rating';
+import { useCart } from '@/lib/contexts/CartContext';
 
 interface ProductCardProps {
   id: string;
@@ -15,6 +16,7 @@ interface ProductCardProps {
   rating?: number;
   reviews?: number;
   badge?: string;
+  /** @deprecated — cart is managed via CartContext; this prop is ignored */
   onAddToCart?: (id: string) => void;
   priority?: boolean;
 }
@@ -28,13 +30,24 @@ export function ProductCard({
   rating = 0,
   reviews = 0,
   badge,
-  onAddToCart,
   priority = false,
 }: ProductCardProps) {
+  const { addToCart, items } = useCart();
   const [isHovering, setIsHovering] = React.useState(false);
+  const [justAdded, setJustAdded] = React.useState(false);
+
   const discountPercent = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0;
+
+  const cartItem = items.find((item) => item.id === id);
+  const inCart = !!cartItem;
+
+  function handleAddToCart() {
+    addToCart({ id, name, price, image });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
+  }
 
   return (
     <div
@@ -62,6 +75,13 @@ export function ProductCard({
         {/* Badge */}
         {badge && (
           <Badge variant="sale" value={`-${discountPercent}%`} />
+        )}
+
+        {/* In-cart indicator */}
+        {inCart && (
+          <div className="absolute top-2 right-2 bg-[#1a3a52] text-[#f4c430] text-xs font-bold px-2 py-1 rounded-full shadow-md">
+            x{cartItem.quantity}
+          </div>
         )}
       </div>
 
@@ -95,14 +115,22 @@ export function ProductCard({
 
         {/* CTA Button */}
         <button
-          onClick={() => onAddToCart?.(id)}
+          onClick={handleAddToCart}
           className={cn(
-            'w-full mt-4 py-3 px-4 bg-[#f4c430] text-[#1a3a52] font-bold rounded-xl',
-            'transition-all duration-300 hover:bg-[#e3b52d] hover:shadow-md active:scale-95',
-            'text-sm'
+            'w-full mt-4 py-3 px-4 font-bold rounded-xl',
+            'transition-all duration-300 active:scale-95 text-sm',
+            justAdded
+              ? 'bg-green-500 text-white shadow-md shadow-green-200'
+              : inCart
+              ? 'bg-[#1a3a52] text-[#f4c430] hover:bg-[#0d2233] shadow-md'
+              : 'bg-[#f4c430] text-[#1a3a52] hover:bg-[#e3b52d] hover:shadow-md'
           )}
         >
-          AGREGAR
+          {justAdded
+            ? '✓ AGREGADO'
+            : inCart
+            ? `EN CARRITO (${cartItem.quantity})`
+            : 'AGREGAR'}
         </button>
       </div>
     </div>
