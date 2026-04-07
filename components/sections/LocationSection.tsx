@@ -17,7 +17,7 @@ export function LocationSection({
   phone = '+57 320 5882008',
   email = 'sanpedro@serviteka.com',
   hours = 'Lun - Sab: 8:00 AM - 6:00 PM | Dom: 9:00 AM - 2:00 PM',
-  mapsEmbedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.3156282846047!2d-74.79619!3d10.971111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42d0000000001%3A0x0!2sBarranquilla%2C%20Atlantico!5e0!3m2!1ses!2sco!4v1234567890',
+  mapsEmbedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.9212326772918!2d-74.7857002!3d10.969318000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42d001eff36a1%3A0x595a80c9d6377be3!2sSERVITEKA%20SAN%20PEDRO!5e0!3m2!1ses-419!2sco!4v1775589377958!5m2!1ses-419!2sco',
 }: LocationSectionProps) {
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white">

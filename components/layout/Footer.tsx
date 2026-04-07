@@ -67,9 +67,9 @@ export function Footer() {
           <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-white/70">
             <p>&copy; {new Date().getFullYear()} Serviteka San Pedro. Todos los derechos reservados.</p>
             <div className="flex gap-6 mt-6 sm:mt-0">
-              <Link href="#" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">Facebook</Link>
-              <Link href="#" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">Instagram</Link>
-              <Link href="#" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">WhatsApp</Link>
+              <a href="https://www.facebook.com/profile.php?id=61580380321916&locale=es_LA" target="_blank" rel="noopener noreferrer" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">Facebook</a>
+              <a href="https://www.instagram.com/serviteksanpedro/" target="_blank" rel="noopener noreferrer" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">Instagram</a>
+              <a href="https://wa.me/573205882008" target="_blank" rel="noopener noreferrer" className="hover:text-[#f4c430] transition-colors duration-300 hover:scale-110 transform">WhatsApp</a>
             </div>
           </div>
         </div>
