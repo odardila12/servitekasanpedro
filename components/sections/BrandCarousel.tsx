@@ -100,10 +100,10 @@ export function BrandCarousel({ brands = BRANDS }: BrandCarouselProps) {
   };
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section className="py-8 sm:py-12 lg:py-16 bg-white">
       <div className="container px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-12 lg:mb-16">
+        <div className="text-center mb-8 lg:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-3 sm:mb-4">
             Nuestras Marcas
           </h2>
@@ -119,28 +119,18 @@ export function BrandCarousel({ brands = BRANDS }: BrandCarouselProps) {
           onMouseLeave={handleMouseLeave}
         >
           {/* Embla Carousel */}
-          <div ref={emblaRef} className="overflow-hidden rounded-lg lg:rounded-xl">
-            <div className="flex gap-4 sm:gap-6 lg:gap-8">
+          <div ref={emblaRef} className="overflow-hidden">
+            <div className="flex gap-3 sm:gap-4 lg:gap-6">
               {brands.map((brand, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 xl:w-1/5 min-w-0"
+                  className="flex-shrink-0 w-1/2 sm:w-1/3 lg:w-1/4 xl:w-1/5 min-w-0 px-2"
                 >
-                  <div
-                    className={cn(
-                      'flex items-center justify-center p-6 sm:p-8 lg:p-10',
-                      'bg-gradient-to-br from-slate-50 to-slate-100',
-                      'rounded-lg sm:rounded-xl',
-                      'border border-slate-200/50 hover:border-[#FFB81C]/50',
-                      'shadow-sm hover:shadow-md',
-                      'transition-all duration-300 h-48 sm:h-56 lg:h-64',
-                      'group/item cursor-pointer'
-                    )}
-                  >
+                  <div className="flex items-center justify-center bg-white rounded-lg p-4 sm:p-5 lg:p-6 border border-slate-100 hover:border-slate-200 transition-colors">
                     <img
                       src={brand.logo}
                       alt={brand.name}
-                      className="max-w-[80%] max-h-[80%] object-contain group-hover/item:scale-110 transition-transform duration-300"
+                      className="w-full h-auto object-contain hover:opacity-80 transition-opacity duration-300 cursor-pointer"
                       loading="lazy"
                       onError={(e) => {
                         // Fallback to text if image fails to load
@@ -149,7 +139,7 @@ export function BrandCarousel({ brands = BRANDS }: BrandCarouselProps) {
                         const parent = target.parentElement;
                         if (parent) {
                           const textDiv = document.createElement('div');
-                          textDiv.className = 'text-center text-[#0F3E99] font-semibold';
+                          textDiv.className = 'text-center text-[#0F3E99] font-semibold text-sm';
                           textDiv.textContent = brand.name;
                           parent.appendChild(textDiv);
                         }
@@ -215,7 +205,7 @@ export function BrandCarousel({ brands = BRANDS }: BrandCarouselProps) {
         </div>
 
         {/* Indicator Dots */}
-        <div className="flex justify-center items-center gap-2 mt-8 sm:mt-10">
+        <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
           {scrollSnaps.map((_, index) => (
             <button
               key={index}
@@ -233,7 +223,7 @@ export function BrandCarousel({ brands = BRANDS }: BrandCarouselProps) {
         </div>
 
         {/* Trust Badge */}
-        <div className="mt-12 sm:mt-16 lg:mt-20 text-center">
+        <div className="mt-8 sm:mt-12 lg:mt-16 text-center">
           <p className="text-neutral-600 text-sm sm:text-base">
             <span className="font-semibold text-[#0F3E99]">+10 años</span> de experiencia distribuyendo productos de marcas líderes en el mercado automotriz.
           </p>
