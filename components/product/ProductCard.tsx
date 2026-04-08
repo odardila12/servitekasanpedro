@@ -34,7 +34,7 @@ export function ProductCard({
   badge,
   priority = false,
 }: ProductCardProps) {
-  const { items, addToCart, openCart, updateQuantity } = useCart();
+  const { items, addToCart, openCart, updateQuantity, removeFromCart } = useCart();
   const [isHovering, setIsHovering] = React.useState(false);
   const [justAdded, setJustAdded] = React.useState(false);
 
@@ -57,8 +57,12 @@ export function ProductCard({
   }
 
   function handleDecreaseQuantity() {
-    if (cartItem && cartItem.quantity > 1) {
-      updateQuantity(id, cartItem.quantity - 1);
+    if (cartItem) {
+      if (cartItem.quantity > 1) {
+        updateQuantity(id, cartItem.quantity - 1);
+      } else {
+        removeFromCart(id);
+      }
     }
   }
 
