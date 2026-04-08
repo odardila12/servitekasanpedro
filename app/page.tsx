@@ -1,6 +1,6 @@
 'use client';
 
-import { HeroCarousel } from '@/components/sections/HeroCarousel';
+import { CategoryCarousel } from '@/components/sections/CategoryCarousel';
 import { Categories } from '@/components/sections/Categories';
 import { BrandCarousel } from '@/components/sections/BrandCarousel';
 import { PaymentMethodsSection } from '@/components/sections/PaymentMethodsSection';
@@ -10,7 +10,7 @@ import { FeaturedProducts } from '@/components/sections/FeaturedProducts';
 export default function Home() {
   return (
     <div>
-      <HeroCarousel />
+      <CategoryCarousel />
       <Categories />
       <FeaturedProducts />
       <BrandCarousel />
