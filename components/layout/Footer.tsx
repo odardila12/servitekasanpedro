@@ -18,9 +18,9 @@ export function Footer() {
               <Image
                 src="/favicon.png"
                 alt="Logo de Serviteka San Pedro"
-                width={60}
+                width={84}
                 height={60}
-                className="w-16 h-16 rounded-md flex-shrink-0"
+                className="w-21 h-15 rounded-md flex-shrink-0"
               />
               <h3 className="text-xl font-bold text-white">Serviteka San Pedro</h3>
             </div>

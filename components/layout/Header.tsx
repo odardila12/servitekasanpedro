@@ -39,10 +39,7 @@ export function Header({ onSearch }: HeaderProps) {
               <img
                 src="/favicon.png"
                 alt="Serviteka San Pedro"
-                className={cn(
-                  'transition-all duration-200',
-                  isSticky ? 'w-20 h-20' : 'w-32 h-32'
-                )}
+                className="w-28 h-20"
               />
               <span className={cn(
                 'font-bold text-white transition-all duration-200 hidden sm:inline',
