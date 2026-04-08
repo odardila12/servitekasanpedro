@@ -87,7 +87,7 @@ export function ProductCard({
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Image Container */}
-      <div className="relative h-56 bg-neutral-100 overflow-hidden group shrink-0">
+      <div className="relative h-44 bg-neutral-100 overflow-hidden group shrink-0">
         <Image
           src={galleryImages[activeIndex]}
           alt={`${name} - imagen ${activeIndex + 1}`}
@@ -98,7 +98,7 @@ export function ProductCard({
             isHovering && !isTransitioning ? 'scale-105' : 'scale-100',
             isTransitioning ? 'opacity-0' : 'opacity-100'
           )}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
 
         {/* Badge */}
@@ -119,10 +119,10 @@ export function ProductCard({
 
 
       {/* Content */}
-      <div className={cn('px-6 pb-6 flex flex-col flex-1', hasMultipleImages ? 'pt-4' : 'pt-6')}>
+      <div className={cn('px-4 pb-4 flex flex-col flex-1', hasMultipleImages ? 'pt-3' : 'pt-4')}>
         {/* Product Name */}
         <h3 className={cn(
-          'font-semibold text-base text-neutral-900 min-h-12',
+          'font-semibold text-sm text-neutral-900 line-clamp-2 min-h-10',
           'transition-colors duration-200',
           isHovering ? 'text-[#0F3E99]' : ''
         )}
@@ -136,12 +136,12 @@ export function ProductCard({
         )}
 
         {/* Price */}
-        <div className="mt-auto pt-4 flex items-baseline gap-3">
-          <span className="text-2xl font-bold text-[#0F3E99]">
+        <div className="mt-auto pt-3 flex items-baseline gap-2 flex-wrap">
+          <span className="text-xl font-bold text-[#0F3E99]">
             ${price.toLocaleString('es-CO')}
           </span>
           {originalPrice && (
-            <span className="text-sm text-neutral-500 line-through">
+            <span className="text-xs text-neutral-500 line-through">
               ${originalPrice.toLocaleString('es-CO')}
             </span>
           )}
@@ -151,7 +151,7 @@ export function ProductCard({
         <button
           onClick={handleAddToCart}
           className={cn(
-            'w-full mt-6 py-4 px-4 font-bold rounded-2xl',
+            'w-full mt-3 py-3 px-4 font-bold rounded-2xl',
             'transition-all duration-200 active:scale-95 text-sm',
             justAdded
               ? 'bg-green-500 text-white shadow-md'

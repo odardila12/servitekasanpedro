@@ -38,8 +38,8 @@ export function FilterSidebar({
   }, [isMobileOpen]);
 
   const sidebarContent = (
-    <div className="p-5">
-      <div className="flex items-center justify-between mb-5">
+    <div className="p-3">
+      <div className="flex items-center justify-between mb-3">
         <h3 className="text-base font-bold text-neutral-900">Filtros</h3>
         {/* Mobile close button */}
         {onMobileClose && (
@@ -86,7 +86,7 @@ export function FilterSidebar({
       <aside
         className={cn(
           'hidden xl:block',
-          'w-56 shrink-0',
+          'w-44 shrink-0',
           'bg-white border border-neutral-200 rounded-xl shadow-sm'
         )}
       >
