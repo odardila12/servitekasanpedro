@@ -34,7 +34,7 @@ export function ProductCard({
   badge,
   priority = false,
 }: ProductCardProps) {
-  const { items, openCartModal } = useCart();
+  const { items, addToCart, openCart, updateQuantity } = useCart();
   const [isHovering, setIsHovering] = React.useState(false);
   const [justAdded, setJustAdded] = React.useState(false);
 
@@ -50,9 +50,22 @@ export function ProductCard({
   const inCart = !!cartItem;
 
   function handleAddToCart() {
-    openCartModal({ id, name, price, image });
+    addToCart({ id, name, price, image });
+    openCart();
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1500);
+  }
+
+  function handleDecreaseQuantity() {
+    if (cartItem && cartItem.quantity > 1) {
+      updateQuantity(id, cartItem.quantity - 1);
+    }
+  }
+
+  function handleIncreaseQuantity() {
+    if (cartItem) {
+      updateQuantity(id, cartItem.quantity + 1);
+    }
   }
 
   const goToIndex = (index: number) => {
@@ -147,26 +160,43 @@ export function ProductCard({
           )}
         </div>
 
-        {/* CTA Button */}
-        <button
-          onClick={handleAddToCart}
-          className={cn(
-            'w-full mt-3 py-3 px-4 font-bold rounded-2xl',
-            'transition-all duration-200 active:scale-95 text-sm',
-            justAdded
-              ? 'bg-green-500 text-white shadow-md'
-              : inCart
-              ? 'bg-[#0F3E99] text-[#FFB81C] hover:bg-opacity-90 shadow-md'
-              : 'bg-[#FFB81C] text-[#0F3E99] hover:bg-opacity-90 hover:shadow-md'
-          )}
-          style={{ letterSpacing: '0.02em' }}
-        >
-          {justAdded
-            ? '✓ AGREGADO'
-            : inCart
-            ? `EN CARRITO (${cartItem.quantity})`
-            : 'AGREGAR'}
-        </button>
+        {/* CTA Button or Quantity Controls */}
+        {!inCart ? (
+          <button
+            onClick={handleAddToCart}
+            className={cn(
+              'w-full mt-3 py-3 px-4 font-bold rounded-2xl',
+              'transition-all duration-200 active:scale-95 text-sm',
+              justAdded
+                ? 'bg-green-500 text-white shadow-md'
+                : 'bg-[#FFB81C] text-[#0F3E99] hover:bg-opacity-90 hover:shadow-md'
+            )}
+            style={{ letterSpacing: '0.02em' }}
+          >
+            {justAdded ? '✓ AGREGADO' : 'AGREGAR'}
+          </button>
+        ) : (
+          /* Inline quantity controls */
+          <div className="w-full mt-3 flex items-center gap-2 bg-[#0F3E99] rounded-2xl p-2 border border-[#FFB81C]/40">
+            <button
+              onClick={handleDecreaseQuantity}
+              className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-[#062854] text-[#FFB81C] font-bold hover:bg-[#FFB81C] hover:text-[#0F3E99] transition-colors duration-200 rounded-lg text-lg leading-none"
+              aria-label="Reducir cantidad"
+            >
+              −
+            </button>
+            <span className="flex-1 text-center text-white font-bold text-base bg-[#062854] py-2 px-2 rounded-lg">
+              {cartItem.quantity}
+            </span>
+            <button
+              onClick={handleIncreaseQuantity}
+              className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-[#062854] text-[#FFB81C] font-bold hover:bg-[#FFB81C] hover:text-[#0F3E99] transition-colors duration-200 rounded-lg text-lg leading-none"
+              aria-label="Aumentar cantidad"
+            >
+              +
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
