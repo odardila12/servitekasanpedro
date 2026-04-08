@@ -14,13 +14,13 @@ const categories = [
 
 export function SubHeader() {
   return (
-    <nav className="hidden md:block sticky top-16 z-40 bg-[#1a3a52] border-t border-white/10">
-      <div className="container px-4 sm:px-6 flex items-center gap-6 sm:gap-8 h-16">
+    <nav className="hidden md:block sticky top-[64px] z-40 bg-white border-b border-neutral-100 shadow-sm w-full">
+      <div className="container px-4 sm:px-6 flex items-center justify-center gap-6 sm:gap-8 h-14">
         {categories.map((category) => (
           <Link
             key={category.href}
             href={category.href}
-            className="text-white font-medium text-sm sm:text-base hover:text-[#f4c430] transition-colors duration-300 whitespace-nowrap py-4"
+            className="text-[#0F3E99] font-medium text-sm sm:text-base hover:text-[#FFB81C] transition-colors duration-300 whitespace-nowrap py-4"
           >
             {category.label}
           </Link>

@@ -30,10 +30,10 @@ export function Header({ onSearch }: HeaderProps) {
       <header suppressHydrationWarning className={cn(
         'sticky top-0 z-50 transition-all duration-200',
         isSticky
-          ? 'py-4 bg-[#0F3E99]/95 backdrop-blur-md shadow-md border-b border-neutral-200'
-          : 'py-6 bg-[#0F3E99] border-b border-neutral-200'
+          ? 'py-4 bg-[#0F3E99]/95 backdrop-blur-md'
+          : 'py-6 bg-[#0F3E99]'
       )}>
-        <div className="container flex items-center gap-4 h-16">
+        <div className="container flex items-center justify-between h-16">
           {/* Left: Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export function Header({ onSearch }: HeaderProps) {
           </div>
 
           {/* Center: Desktop Search */}
-          <div className="hidden md:flex flex-1 max-w-lg mx-4">
+          <div className="hidden md:flex flex-1 max-w-xl mx-8 justify-center">
             <SearchDropdown
               className="w-full"
               inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#FFB81C] focus:bg-white/15 transition-all duration-200 pr-8"
@@ -146,6 +146,30 @@ export function Header({ onSearch }: HeaderProps) {
           </nav>
         )}
       </header>
+
+      {/* SubHeader - Desktop Categories */}
+      <nav className="hidden md:block bg-white sticky top-20 z-40" style={{ boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)' }}>
+        <div className="container flex items-center justify-center gap-8 sm:gap-10 h-20 px-4 sm:px-6">
+          <Link href="/productos" className="text-[#0F3E99] font-medium text-sm sm:text-base hover:text-[#FFB81C] transition-colors duration-300 whitespace-nowrap py-6">
+            Llantas
+          </Link>
+          <Link href="/categoria/baterias" className="text-[#0F3E99] font-medium text-sm sm:text-base hover:text-[#FFB81C] transition-colors duration-300 whitespace-nowrap py-6">
+            Baterías
+          </Link>
+          <Link href="/categoria/lubricantes" className="text-[#0F3E99] font-medium text-sm sm:text-base hover:text-[#FFB81C] transition-colors duration-300 whitespace-nowrap py-4">
+            Lubricantes
+          </Link>
+          <Link href="/categoria/filtros" className="text-[#0F3E99] font-medium text-sm sm:text-base hover:text-[#FFB81C] transition-colors duration-300 whitespace-nowrap py-4">
+            Filtros
+          </Link>
+          <Link href="/categoria/aceites" className="text-[#0F3E99] font-medium text-sm sm:text-base hover:text-[#FFB81C] transition-colors duration-300 whitespace-nowrap py-4">
+            Aceites
+          </Link>
+          <Link href="/categoria/servicios" className="text-[#0F3E99] font-medium text-sm sm:text-base hover:text-[#FFB81C] transition-colors duration-300 whitespace-nowrap py-4">
+            Servicios
+          </Link>
+        </div>
+      </nav>
     </>
   );
 }
