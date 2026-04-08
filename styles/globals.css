@@ -130,6 +130,15 @@
   .transition-fast { @apply transition-all duration-300; }
   .transition-normal { @apply transition-all duration-500; }
   .transition-slow { @apply transition-all duration-1000; }
+
+  /* Hide scrollbar while keeping scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @theme inline {

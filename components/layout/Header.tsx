@@ -67,13 +67,15 @@ export function Header({ onSearch }: HeaderProps) {
             />
           </div>
 
-          {/* Right: Desktop Navigation Links + Cart */}
-          <div className="hidden md:flex items-center gap-6 flex-shrink-0">
-            <nav className="flex items-center gap-6">
-              <Link href="/categoria/llantas" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Llantas</Link>
-              <Link href="/categoria/baterias" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Baterías</Link>
-              <Link href="/categoria/lubricantes" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Lubricantes</Link>
-            </nav>
+          {/* Right: Actions */}
+          <div className="hidden md:flex items-center gap-4 flex-shrink-0">
+            {/* Agendar Cita — visible solo en lg+ */}
+            <Link
+              href="/puntos-atencion"
+              className="hidden lg:flex items-center gap-2 bg-[#FFB81C] text-[#0F3E99] font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#FFB81C]/90 transition-colors duration-200 whitespace-nowrap flex-shrink-0"
+            >
+              Agendar Cita
+            </Link>
 
             {/* Cart Icon */}
             <button
@@ -148,12 +150,6 @@ export function Header({ onSearch }: HeaderProps) {
                   placeholder="Buscar..."
                 />
               </div>
-
-              {/* Mobile Nav Links */}
-              <Link href="/categoria/llantas" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Llantas</Link>
-              <Link href="/categoria/baterias" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Baterías</Link>
-              <Link href="/categoria/lubricantes" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Lubricantes</Link>
-              <Link href="/categoria/accesorios" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Accesorios</Link>
 
               <div className="px-4 pt-4 pb-2 border-t border-white/20 mt-2">
                 <Link

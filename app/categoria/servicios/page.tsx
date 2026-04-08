@@ -10,9 +10,9 @@ import { useProductFilters } from '@/lib/hooks/useProductFilters';
 import { getFiltersForCategory } from '@/lib/filters/filterDefinitions';
 import ProductSubheader from '@/components/filters/ProductSubheader';
 
-const SLUG = 'baterias';
+const SLUG = 'servicios';
 
-export default function BateriasPage() {
+export default function ServiciosPage() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
   const categoryProducts = SAMPLE_PRODUCTS.filter((p) => p.category === SLUG);
@@ -39,11 +39,11 @@ export default function BateriasPage() {
             items={[
               { label: 'Inicio', href: '/' },
               { label: 'Productos', href: '/productos' },
-              { label: 'Baterías' },
+              { label: 'Servicios' },
             ]}
           />
           <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 mt-3">
-            Baterías
+            Servicios
           </h1>
         </div>
       </div>

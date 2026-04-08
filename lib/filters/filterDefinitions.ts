@@ -216,17 +216,58 @@ const lubricantesFilters: FilterDefinition[] = [
   },
 ];
 
-// ─── Accesorios ───────────────────────────────────────────────────────────────
+// ─── Servicios ───────────────────────────────────────────────────────────────
 
-const accesoriosFilters: FilterDefinition[] = [
+const serviciosFilters: FilterDefinition[] = [
+  {
+    id: 'price',
+    label: 'Precio',
+    type: 'range',
+    min: 0,
+    max: 250000,
+    step: 5000,
+    unit: 'COP',
+  },
+];
+
+// ─── Aceites ──────────────────────────────────────────────────────────────────
+
+const aceitesFilters: FilterDefinition[] = [
   {
     id: 'brand',
     label: 'Marca',
     type: 'checkbox',
     options: [
-      { value: 'generico', label: 'Genérico' },
-      { value: 'racing', label: 'Racing' },
-      { value: 'premium', label: 'Premium' },
+      { value: 'mobil', label: 'Mobil' },
+      { value: 'castrol', label: 'Castrol' },
+      { value: 'shell', label: 'Shell' },
+      { value: 'pennzoil', label: 'Pennzoil' },
+      { value: 'bosch', label: 'Bosch' },
+    ],
+  },
+  {
+    id: 'viscosidad',
+    label: 'Viscosidad',
+    type: 'checkbox',
+    options: [
+      { value: '0W20', label: '0W-20' },
+      { value: '0W40', label: '0W-40' },
+      { value: '5W30', label: '5W-30' },
+      { value: '5W40', label: '5W-40' },
+      { value: '10W40', label: '10W-40' },
+      { value: '15W40', label: '15W-40' },
+      { value: '20W50', label: '20W-50' },
+    ],
+  },
+  {
+    id: 'tipo',
+    label: 'Tipo',
+    type: 'checkbox',
+    options: [
+      { value: 'sintetico', label: 'Sintético' },
+      { value: 'semisintetico', label: 'Semisintético' },
+      { value: 'mineral', label: 'Mineral' },
+      { value: 'convencional', label: 'Convencional' },
     ],
   },
   {
@@ -234,8 +275,50 @@ const accesoriosFilters: FilterDefinition[] = [
     label: 'Precio',
     type: 'range',
     min: 0,
-    max: 200000,
+    max: 60000,
     step: 5000,
+    unit: 'COP',
+  },
+];
+
+// ─── Filtros (auto parts) ─────────────────────────────────────────────────────
+
+const filtrosFilters: FilterDefinition[] = [
+  {
+    id: 'brand',
+    label: 'Marca',
+    type: 'checkbox',
+    options: [
+      { value: 'bosch', label: 'Bosch' },
+      { value: 'mann', label: 'Mann' },
+      { value: 'fram', label: 'Fram' },
+      { value: 'wix', label: 'WIX' },
+      { value: 'purolator', label: 'Purolator' },
+      { value: 'kn', label: 'K&N' },
+      { value: 'mobil', label: 'Mobil' },
+      { value: 'racor', label: 'Racor' },
+      { value: 'acdelco', label: 'ACDelco' },
+    ],
+  },
+  {
+    id: 'tipo',
+    label: 'Tipo Filtro',
+    type: 'checkbox',
+    options: [
+      { value: 'aire', label: 'Aire' },
+      { value: 'aceite', label: 'Aceite' },
+      { value: 'cabina', label: 'Cabina' },
+      { value: 'diesel', label: 'Diesel' },
+      { value: 'gasolina', label: 'Gasolina' },
+    ],
+  },
+  {
+    id: 'price',
+    label: 'Precio',
+    type: 'range',
+    min: 0,
+    max: 100000,
+    step: 2000,
     unit: 'COP',
   },
 ];
@@ -246,7 +329,9 @@ export const CATEGORY_FILTER_CONFIGS: Record<string, CategoryFilterConfig> = {
   llantas: { id: 'llantas', filters: llantasFilters },
   baterias: { id: 'baterias', filters: bateriasFilters },
   lubricantes: { id: 'lubricantes', filters: lubricantesFilters },
-  accesorios: { id: 'accesorios', filters: accesoriosFilters },
+  servicios: { id: 'servicios', filters: serviciosFilters },
+  aceites: { id: 'aceites', filters: aceitesFilters },
+  filtros: { id: 'filtros', filters: filtrosFilters },
 };
 
 export function getFiltersForCategory(slug: string): FilterDefinition[] {

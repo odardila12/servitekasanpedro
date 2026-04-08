@@ -9,12 +9,12 @@ export function Categories() {
     llantas: '🛞',
     baterias: '🔋',
     lubricantes: '🛢️',
+    servicios: '🔧',
+    filtros: '🔩',
+    aceites: '🫙',
   };
 
-  // Filter to only show llantas, baterias, lubricantes (remove accesorios)
-  const filteredCategories = CATEGORIES.filter(
-    (cat) => cat.slug !== 'accesorios'
-  );
+  const filteredCategories = CATEGORIES;
 
   return (
     <section className="py-12 sm:py-16 bg-slate-50">

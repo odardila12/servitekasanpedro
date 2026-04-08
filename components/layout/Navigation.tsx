@@ -11,7 +11,7 @@ const navItems: NavItem[] = [
   { label: 'Llantas', href: '/productos?category=llantas' },
   { label: 'Baterías', href: '/productos?category=baterias' },
   { label: 'Lubricantes', href: '/productos?category=lubricantes' },
-  { label: 'Accesorios', href: '/productos?category=accesorios' },
+  { label: 'Servicios', href: '/productos?category=servicios' },
 ];
 
 export function Navigation() {

@@ -32,7 +32,7 @@ export const SAMPLE_PRODUCTS = [
     id: '99',
     name: 'Mi Nuevo Producto',
     slug: 'mi-nuevo-producto',
-    category: 'llantas', // llantas | baterias | lubricantes | accesorios
+    category: 'llantas', // llantas | baterias | lubricantes | servicios
     price: 150000,
     originalPrice: 180000, // null si no hay descuento
     image: 'https://images.unsplash.com/photo-xxx?w=800&h=800&fit=crop',

@@ -8,6 +8,7 @@ import { ProductGridContainer } from '@/components/product/ProductGridContainer'
 import { SAMPLE_PRODUCTS } from '@/lib/constants';
 import { useProductFilters } from '@/lib/hooks/useProductFilters';
 import { getFiltersForCategory } from '@/lib/filters/filterDefinitions';
+import ProductSubheader from '@/components/filters/ProductSubheader';
 
 const SLUG = 'lubricantes';
 
@@ -46,6 +47,18 @@ export default function LubricantesPage() {
           </h1>
         </div>
       </div>
+
+      {/* ── Quick filter subheader ───────────────────────────────────── */}
+      <ProductSubheader
+        category={SLUG}
+        activeFilters={activeFilters}
+        setFilter={setFilter}
+        setPriceRange={setPriceRange}
+        clearAllFilters={clearAllFilters}
+        hasActiveFilters={hasActiveFilters}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
 
       {/* ── Active filter chips ───────────────────────────────────────── */}
       {hasActiveFilters && (

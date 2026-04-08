@@ -9,6 +9,7 @@ import { ProductGridContainer } from '@/components/product/ProductGridContainer'
 import { SAMPLE_PRODUCTS, CATEGORIES } from '@/lib/constants';
 import { useProductFilters } from '@/lib/hooks/useProductFilters';
 import { getFiltersForCategory } from '@/lib/filters/filterDefinitions';
+import ProductSubheader from '@/components/filters/ProductSubheader';
 
 export default function CategoryPage() {
   const params = useParams();
@@ -68,6 +69,18 @@ export default function CategoryPage() {
           </h1>
         </div>
       </div>
+
+      {/* ── Quick filter subheader ───────────────────────────────────── */}
+      <ProductSubheader
+        category={categorySlug}
+        activeFilters={activeFilters}
+        setFilter={setFilter}
+        setPriceRange={setPriceRange}
+        clearAllFilters={clearAllFilters}
+        hasActiveFilters={hasActiveFilters}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
 
       {/* ── Active filter chips ───────────────────────────────────────── */}
       {hasActiveFilters && (
