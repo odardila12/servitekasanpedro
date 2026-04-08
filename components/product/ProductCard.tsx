@@ -34,7 +34,7 @@ export function ProductCard({
   badge,
   priority = false,
 }: ProductCardProps) {
-  const { addToCart, items } = useCart();
+  const { items, openCartModal } = useCart();
   const [isHovering, setIsHovering] = React.useState(false);
   const [justAdded, setJustAdded] = React.useState(false);
 
@@ -50,7 +50,7 @@ export function ProductCard({
   const inCart = !!cartItem;
 
   function handleAddToCart() {
-    addToCart({ id, name, price, image });
+    openCartModal({ id, name, price, image });
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1500);
   }

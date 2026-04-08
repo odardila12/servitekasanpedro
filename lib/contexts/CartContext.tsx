@@ -21,6 +21,10 @@ interface CartContextValue {
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
+  isModalOpen: boolean;
+  modalProduct: CartItem | null;
+  openCartModal: (product: Omit<CartItem, 'quantity'>) => void;
+  closeCartModal: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -30,6 +34,8 @@ const STORAGE_KEY = 'serviteka_cart';
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalProduct, setModalProduct] = useState<CartItem | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   // Hydrate from localStorage on mount
@@ -93,6 +99,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
 
+  const openCartModal = useCallback((product: Omit<CartItem, 'quantity'>) => {
+    // Add product to cart first
+    addToCart(product);
+    // Then open modal showing the added product
+    setModalProduct({ ...product, quantity: 1 });
+    setIsModalOpen(true);
+  }, [addToCart]);
+
+  const closeCartModal = useCallback(() => {
+    setIsModalOpen(false);
+    setModalProduct(null);
+  }, []);
+
   return (
     <CartContext.Provider
       value={{
@@ -106,6 +125,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         isOpen,
         openCart,
         closeCart,
+        isModalOpen,
+        modalProduct,
+        openCartModal,
+        closeCartModal,
       }}
     >
       {children}

@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Navigation } from '@/components/layout/Navigation';
 import { CartProvider } from '@/lib/contexts/CartContext';
 import { CartDrawer } from '@/components/cart/CartDrawer';
+import { CartModalWrapper } from '@/components/cart/CartModalWrapper';
 import { WhatsappContact } from '@/components/sections/WhatsappContact';
 import '@/styles/globals.css';
 
@@ -39,6 +40,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <CartDrawer />
+          <CartModalWrapper />
           <WhatsappContact phoneNumber="573205882008" message="Hola, tengo una pregunta sobre los productos de Serviteka San Pedro" />
         </CartProvider>
       </body>
