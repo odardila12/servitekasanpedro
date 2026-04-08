@@ -67,16 +67,8 @@ export function Header({ onSearch }: HeaderProps) {
             />
           </div>
 
-          {/* Right: Actions */}
+          {/* Right: Cart Icon Only */}
           <div className="hidden md:flex items-center gap-4 flex-shrink-0">
-            {/* Agendar Cita — visible solo en lg+ */}
-            <Link
-              href="/puntos-atencion"
-              className="hidden lg:flex items-center gap-2 bg-[#FFB81C] text-[#0F3E99] font-bold px-4 py-2 rounded-xl text-sm hover:bg-[#FFB81C]/90 transition-colors duration-200 whitespace-nowrap flex-shrink-0"
-            >
-              Agendar Cita
-            </Link>
-
             {/* Cart Icon */}
             <button
               onClick={openCart}
@@ -149,15 +141,6 @@ export function Header({ onSearch }: HeaderProps) {
                   inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#FFB81C] focus:bg-white/15 transition-all duration-200 pr-8"
                   placeholder="Buscar..."
                 />
-              </div>
-
-              <div className="px-4 pt-4 pb-2 border-t border-white/20 mt-2">
-                <Link
-                  href="/puntos-atencion"
-                  className="flex items-center justify-center w-full bg-[#FFB81C] text-[#0F3E99] font-bold px-5 py-4 rounded-2xl hover:bg-opacity-90 transition-colors duration-200"
-                >
-                  Puntos de Atención
-                </Link>
               </div>
             </div>
           </nav>

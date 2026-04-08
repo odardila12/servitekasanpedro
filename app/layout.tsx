@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
+import { SubHeader } from '@/components/layout/SubHeader';
 import { Footer } from '@/components/layout/Footer';
 import { Navigation } from '@/components/layout/Navigation';
 import { CartProvider } from '@/lib/contexts/CartContext';
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body className="bg-neutral-50 font-inter" suppressHydrationWarning>
         <CartProvider>
           <Header />
+          <SubHeader />
           <Navigation />
           <main className="min-h-screen">
             {children}
