@@ -1,99 +1,125 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { CategoryFilter } from '@/components/filters/CategoryFilter';
-import { PriceRangeFilter } from '@/components/filters/PriceRangeFilter';
+import { CategoryFilters } from '@/components/filters/CategoryFilters';
+import type { ActiveFilters } from '@/lib/filters/filterDefinitions';
 
 interface FilterSidebarProps {
-  onFilterChange?: (filters: Record<string, unknown>) => void;
+  categorySlug: string;
+  activeFilters: ActiveFilters;
+  onCheckboxChange: (filterId: string, value: string, checked: boolean) => void;
+  onRangeChange: (filterId: string, range: [number, number]) => void;
+  onClearAll: () => void;
+  // Mobile drawer
   isMobileOpen?: boolean;
   onMobileClose?: () => void;
 }
 
 export function FilterSidebar({
-  onFilterChange,
+  categorySlug,
+  activeFilters,
+  onCheckboxChange,
+  onRangeChange,
+  onClearAll,
   isMobileOpen = false,
   onMobileClose,
 }: FilterSidebarProps) {
-  const [filters, setFilters] = useState({
-    categories: [] as string[],
-    priceRange: { min: 0, max: 1000000 },
-  });
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileOpen]);
 
-  const handleCategoryChange = (categories: string[]) => {
-    const newFilters = { ...filters, categories };
-    setFilters(newFilters);
-    onFilterChange?.(newFilters);
-  };
+  const sidebarContent = (
+    <div className="p-5">
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="text-base font-bold text-neutral-900">Filtros</h3>
+        {/* Mobile close button */}
+        {onMobileClose && (
+          <button
+            onClick={onMobileClose}
+            className={cn(
+              'xl:hidden -mr-1 p-1.5 rounded-lg',
+              'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100',
+              'transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400'
+            )}
+            aria-label="Cerrar filtros"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        )}
+      </div>
 
-  const handlePriceChange = (min: number, max: number) => {
-    const newFilters = { ...filters, priceRange: { min, max } };
-    setFilters(newFilters);
-    onFilterChange?.(newFilters);
-  };
+      <CategoryFilters
+        categorySlug={categorySlug}
+        activeFilters={activeFilters}
+        onCheckboxChange={onCheckboxChange}
+        onRangeChange={onRangeChange}
+        onClearAll={onClearAll}
+      />
+    </div>
+  );
 
   return (
     <>
-      {/* Mobile Overlay */}
-      {isMobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={onMobileClose}
-        />
-      )}
-
-      {/* Sidebar */}
+      {/* ── Desktop: sticky sidebar (xl and above) ───────────────────────── */}
       <aside
         className={cn(
-          'sticky md:static top-0 left-0 max-h-screen w-64 bg-white z-40',
-          'transition-transform duration-300 md:transition-none',
-          'border-r border-neutral-200 p-4 md:p-6',
-          'overflow-y-auto',
-          isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+          'hidden xl:block',
+          'w-56 shrink-0',
+          'sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto',
+          'bg-white border border-neutral-200 rounded-xl shadow-sm'
         )}
       >
-        {/* Close Button (Mobile) */}
-        <button
-          onClick={onMobileClose}
-          className="md:hidden mb-4 text-2xl"
-        >
-          ✕
-        </button>
-
-        {/* Filters */}
-        <div className="space-y-6">
-          <h3 className="font-bold text-lg">Filtros</h3>
-
-          {/* Category Filter */}
-          <CategoryFilter
-            onCategoryChange={handleCategoryChange}
-            selectedCategories={filters.categories}
-          />
-
-          {/* Price Range Filter */}
-          <PriceRangeFilter
-            onPriceChange={handlePriceChange}
-            minPrice={filters.priceRange.min}
-            maxPrice={filters.priceRange.max}
-          />
-
-          {/* Reset Button */}
-          <button
-            onClick={() => {
-              const reset = {
-                categories: [] as string[],
-                priceRange: { min: 0, max: 1000000 },
-              };
-              setFilters(reset);
-              onFilterChange?.(reset);
-            }}
-            className="w-full py-2 border-2 border-primary text-primary rounded-full hover:bg-primary-50 transition-colors font-semibold"
-          >
-            Limpiar Filtros
-          </button>
-        </div>
+        {sidebarContent}
       </aside>
+
+      {/* ── Mobile/Tablet: slide-in drawer (below xl) ────────────────────── */}
+      <>
+        {/* Overlay */}
+        <div
+          className={cn(
+            'fixed inset-0 bg-black/40 z-40 xl:hidden',
+            'transition-opacity duration-300',
+            isMobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          )}
+          onClick={onMobileClose}
+          aria-hidden="true"
+        />
+
+        {/* Drawer panel */}
+        <aside
+          className={cn(
+            'fixed top-0 left-0 h-full w-72 bg-white z-50 xl:hidden',
+            'shadow-2xl overflow-y-auto',
+            'transition-transform duration-300 ease-in-out',
+            isMobileOpen ? 'translate-x-0' : '-translate-x-full'
+          )}
+          aria-label="Filtros"
+        >
+          {sidebarContent}
+        </aside>
+      </>
     </>
   );
 }
