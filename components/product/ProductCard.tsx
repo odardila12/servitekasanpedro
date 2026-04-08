@@ -80,13 +80,14 @@ export function ProductCard({
     <div
       className={cn(
         'bg-white rounded-3xl overflow-hidden transition-all duration-200',
-        'shadow-sm hover:shadow-lg hover:-translate-y-2'
+        'shadow-sm hover:shadow-lg hover:-translate-y-2',
+        'flex flex-col h-full'
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Image Container */}
-      <div className="relative h-56 bg-neutral-100 overflow-hidden group">
+      <div className="relative h-56 bg-neutral-100 overflow-hidden group shrink-0">
         <Image
           src={galleryImages[activeIndex]}
           alt={`${name} - imagen ${activeIndex + 1}`}
@@ -118,7 +119,7 @@ export function ProductCard({
 
 
       {/* Content */}
-      <div className={cn('px-6 pb-6', hasMultipleImages ? 'pt-4' : 'pt-6')}>
+      <div className={cn('px-6 pb-6 flex flex-col flex-1', hasMultipleImages ? 'pt-4' : 'pt-6')}>
         {/* Product Name */}
         <h3 className={cn(
           'font-semibold text-base text-neutral-900 min-h-12',
@@ -135,7 +136,7 @@ export function ProductCard({
         )}
 
         {/* Price */}
-        <div className="mt-4 flex items-baseline gap-3">
+        <div className="mt-auto pt-4 flex items-baseline gap-3">
           <span className="text-2xl font-bold text-[#0F3E99]">
             ${price.toLocaleString('es-CO')}
           </span>

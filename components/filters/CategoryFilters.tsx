@@ -35,14 +35,13 @@ export function CategoryFilters({
   return (
     <div className="space-y-4">
       {/* Filter groups */}
-      {filters.map((filter, index) => (
+      {filters.map((filter) => (
         <FilterGroup
           key={filter.id}
           filter={filter}
           activeFilters={activeFilters}
           onCheckboxChange={onCheckboxChange}
           onRangeChange={onRangeChange}
-          defaultOpen={index < 2}
         />
       ))}
 

@@ -82,12 +82,11 @@ export function FilterSidebar({
 
   return (
     <>
-      {/* ── Desktop: sticky sidebar (xl and above) ───────────────────────── */}
+      {/* ── Desktop: static sidebar (xl and above) ───────────────────────── */}
       <aside
         className={cn(
           'hidden xl:block',
           'w-56 shrink-0',
-          'sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto',
           'bg-white border border-neutral-200 rounded-xl shadow-sm'
         )}
       >

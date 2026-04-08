@@ -85,7 +85,7 @@ export default function CategoryPage() {
 
       {/* ── Main two-column layout ────────────────────────────────────── */}
       <div className="container px-4 sm:px-6 py-6 sm:py-8">
-        <div className="flex gap-6 xl:gap-8 items-start">
+        <div className="flex gap-6 xl:gap-8 items-top">
           {/* Filter sidebar (desktop sticky, mobile drawer) */}
           <FilterSidebar
             categorySlug={categorySlug}

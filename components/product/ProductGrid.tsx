@@ -32,7 +32,7 @@ export function ProductGrid({ products, onAddToCart, className }: ProductGridPro
       {products.map((product, index) => (
         <div
           key={product.id}
-          className="animate-fade-in-up"
+          className="animate-fade-in-up h-full"
           style={{ animationDelay: `${index * 60}ms`, animationFillMode: 'both' }}
         >
           <ProductCard
