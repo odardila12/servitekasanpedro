@@ -33,8 +33,8 @@ export function Header({ onSearch }: HeaderProps) {
           ? 'py-4 bg-[#0F3E99]/95 backdrop-blur-md shadow-md border-b border-neutral-200'
           : 'py-6 bg-[#0F3E99] border-b border-neutral-200'
       )}>
-        <div className="container flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="container flex items-center gap-4 h-16">
+          {/* Left: Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-3">
               <Image
@@ -49,7 +49,7 @@ export function Header({ onSearch }: HeaderProps) {
                 priority
               />
               <span className={cn(
-                'font-bold text-white transition-all duration-200',
+                'font-bold text-white transition-all duration-200 hidden sm:inline',
                 isSticky ? 'text-lg' : 'text-xl'
               )}
               style={{ letterSpacing: '0.01em' }}>
@@ -58,15 +58,23 @@ export function Header({ onSearch }: HeaderProps) {
             </Link>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-10 mx-10">
-            <Link href="/categoria/llantas" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Llantas</Link>
-            <Link href="/categoria/baterias" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Baterías</Link>
-            <Link href="/categoria/lubricantes" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Lubricantes</Link>
-          </nav>
+          {/* Center: Desktop Search */}
+          <div className="hidden md:flex flex-1 max-w-lg mx-4">
+            <SearchDropdown
+              className="w-full"
+              inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#FFB81C] focus:bg-white/15 transition-all duration-200 pr-8"
+              placeholder="Buscar llantas, baterías..."
+            />
+          </div>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-4 sm:gap-6">
+          {/* Right: Desktop Navigation Links + Cart */}
+          <div className="hidden md:flex items-center gap-6 flex-shrink-0">
+            <nav className="flex items-center gap-6">
+              <Link href="/categoria/llantas" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Llantas</Link>
+              <Link href="/categoria/baterias" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Baterías</Link>
+              <Link href="/categoria/lubricantes" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 text-sm" style={{ letterSpacing: '0.01em' }}>Lubricantes</Link>
+            </nav>
+
             {/* Cart Icon */}
             <button
               onClick={openCart}
@@ -90,34 +98,63 @@ export function Header({ onSearch }: HeaderProps) {
                 </span>
               )}
             </button>
+          </div>
+
+          {/* Mobile: Hamburger + Cart */}
+          <div className="flex md:hidden items-center gap-3 ml-auto flex-shrink-0">
+            {/* Cart Icon Mobile */}
+            <button
+              onClick={openCart}
+              aria-label={`Carrito de compras${itemCount > 0 ? ` - ${itemCount} artículos` : ''}`}
+              className="relative text-white hover:text-[#FFB81C] transition-all duration-200 group flex items-center justify-center p-2 rounded-full"
+            >
+              <svg
+                className="w-6 h-6 group-hover:scale-110 transition-transform duration-200"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                viewBox="0 0 24 24"
+              >
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#FFB81C] text-[#0F3E99] text-xs rounded-full w-5 h-5 flex items-center justify-center font-black shadow-md border-2 border-[#0F3E99]">
+                  {itemCount > 99 ? '99+' : itemCount}
+                </span>
+              )}
+            </button>
 
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-white text-2xl hover:text-[#FFB81C] transition-colors duration-200 ml-2"
+              className="text-white text-2xl hover:text-[#FFB81C] transition-colors duration-200"
             >
               ☰
             </button>
           </div>
         </div>
 
-        {/* Mobile Search (visible only on mobile) */}
-        <div className="sm:hidden px-6 pb-3 pt-3">
-          <SearchDropdown
-            className="w-full"
-            inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-[#FFB81C] focus:bg-white/15 transition-all duration-200 pr-8"
-            placeholder="Buscar..."
-          />
-        </div>
-
         {/* Mobile Menu */}
         {isMenuOpen && (
           <nav className="md:hidden bg-[#0F3E99] border-t border-white/20 py-4 absolute w-full left-0 shadow-lg">
             <div className="container flex flex-col gap-2">
-              <Link href="/productos" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Llantas</Link>
+              {/* Mobile Search */}
+              <div className="px-4 pb-4 border-b border-white/20">
+                <SearchDropdown
+                  className="w-full"
+                  inputClassName="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#FFB81C] focus:bg-white/15 transition-all duration-200 pr-8"
+                  placeholder="Buscar..."
+                />
+              </div>
+
+              {/* Mobile Nav Links */}
+              <Link href="/categoria/llantas" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Llantas</Link>
               <Link href="/categoria/baterias" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Baterías</Link>
               <Link href="/categoria/lubricantes" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Lubricantes</Link>
               <Link href="/categoria/accesorios" className="text-white hover:text-[#FFB81C] font-medium transition-colors duration-200 py-3 px-4 rounded-xl hover:bg-white/10">Accesorios</Link>
+
               <div className="px-4 pt-4 pb-2 border-t border-white/20 mt-2">
                 <Link
                   href="/puntos-atencion"
