@@ -14,7 +14,7 @@ interface FeaturedProductsProps {
 export function FeaturedProducts({
   title = 'Productos Destacados',
   subtitle = 'Nuestras ofertas especiales del mes',
-  limit = 8,
+  limit = 6,
 }: FeaturedProductsProps) {
   const featured = SAMPLE_PRODUCTS.slice(0, limit).map((p) => ({
     ...p,
