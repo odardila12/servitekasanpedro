@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   title: 'Serviteka San Pedro - Llantas, Baterías y Accesorios Automotrices',
   description: 'Serviteka San Pedro: expertos en llantas, baterías, lubricantes y servicio técnico automotriz de primera calidad.',
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
   },
 };
 

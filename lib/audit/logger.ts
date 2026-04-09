@@ -1,7 +1,6 @@
 'use server';
 
-import { adminDb } from '@/lib/firebase/admin';
-import { Timestamp } from 'firebase-admin/firestore';
+import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
 import { headers } from 'next/headers';
 
 export type AdminAction = 'CREATE' | 'UPDATE' | 'DELETE' | 'UPLOAD';
@@ -85,7 +84,7 @@ export async function logAdminAction(
       collection: 'audit_logs',
     };
 
-    await adminDb.collection('audit_logs').add(logEntry);
+    await addDoc(collection(db, 'audit_logs'), logEntry);
 
     // Log to console for local dev/debugging
     console.log('[AUDIT] Admin Action:', {
@@ -121,7 +120,7 @@ export async function logAuthFailure(
       collection: 'auth_failures',
     };
 
-    await adminDb.collection('auth_failures').add(logEntry);
+    await addDoc(collection(db, 'auth_failures'), logEntry);
 
     console.log('[AUDIT] Auth Failure:', {
       reason,
@@ -158,7 +157,7 @@ export async function logPaymentAttempt(
       collection: 'payment_logs',
     };
 
-    await adminDb.collection('payment_logs').add(logEntry);
+    await addDoc(collection(db, 'payment_logs'), logEntry);
 
     console.log('[AUDIT] Payment Attempt:', {
       status,

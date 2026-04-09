@@ -6,7 +6,7 @@
  * This prevents exposing queries in browser Network tab
  */
 
-import { adminDb } from '@/lib/firebase/admin';
+import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
 import type { Product } from '@/lib/types';
 
 /**
@@ -14,10 +14,12 @@ import type { Product } from '@/lib/types';
  */
 export async function getProducts(): Promise<Product[]> {
   try {
-    const snapshot = await adminDb
-      .collection('products')
-      .where('isActive', '==', true)
-      .get();
+    const snapshot = await getDocs(
+      query(
+        collection(db, 'products'),
+        where('isActive', '==', true)
+      )
+    );
 
     return snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -34,11 +36,11 @@ export async function getProducts(): Promise<Product[]> {
  */
 export async function getProductById(id: string): Promise<Product | null> {
   try {
-    const doc = await adminDb.collection('products').doc(id).get();
-    if (!doc.exists) return null;
+    const docSnap = await getDoc(doc(db, 'products', id));
+    if (!docSnap.exists()) return null;
     return {
-      id: doc.id,
-      ...doc.data(),
+      id: docSnap.id,
+      ...docSnap.data(),
     } as Product;
   } catch (error) {
     console.error('Error fetching product by ID:', error);
@@ -51,11 +53,13 @@ export async function getProductById(id: string): Promise<Product | null> {
  */
 export async function getProductsByCategory(category: string): Promise<Product[]> {
   try {
-    const snapshot = await adminDb
-      .collection('products')
-      .where('isActive', '==', true)
-      .where('category', '==', category)
-      .get();
+    const snapshot = await getDocs(
+      query(
+        collection(db, 'products'),
+        where('isActive', '==', true),
+        where('category', '==', category)
+      )
+    );
 
     return snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -72,11 +76,13 @@ export async function getProductsByCategory(category: string): Promise<Product[]
  */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const snapshot = await adminDb
-      .collection('products')
-      .where('slug', '==', slug)
-      .limit(1)
-      .get();
+    const snapshot = await getDocs(
+      query(
+        collection(db, 'products'),
+        where('slug', '==', slug),
+        limit(1)
+      )
+    );
 
     if (snapshot.empty) return null;
     const doc = snapshot.docs[0];
@@ -95,10 +101,12 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
  */
 export async function getActiveFeaturedProducts(): Promise<Product[]> {
   try {
-    const snapshot = await adminDb
-      .collection('featured_products')
-      .where('isActive', '==', true)
-      .get();
+    const snapshot = await getDocs(
+      query(
+        collection(db, 'featured_products'),
+        where('isActive', '==', true)
+      )
+    );
 
     return snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -115,11 +123,11 @@ export async function getActiveFeaturedProducts(): Promise<Product[]> {
  */
 export async function getFeaturedProductById(id: string): Promise<Product | null> {
   try {
-    const doc = await adminDb.collection('featured_products').doc(id).get();
-    if (!doc.exists) return null;
+    const docSnap = await getDoc(doc(db, 'featured_products', id));
+    if (!docSnap.exists()) return null;
     return {
-      id: doc.id,
-      ...doc.data(),
+      id: docSnap.id,
+      ...docSnap.data(),
     } as Product;
   } catch (error) {
     console.error('Error fetching featured product by ID:', error);
@@ -132,7 +140,7 @@ export async function getFeaturedProductById(id: string): Promise<Product | null
  */
 export async function getAllFeaturedProducts(): Promise<Product[]> {
   try {
-    const snapshot = await adminDb.collection('featured_products').get();
+    const snapshot = await getDocs(collection(db, 'featured_products'));
     return snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -146,16 +154,18 @@ export async function getAllFeaturedProducts(): Promise<Product[]> {
 /**
  * Search products by name or description
  */
-export async function searchProducts(query: string): Promise<Product[]> {
-  if (!query || query.length < 2) return [];
+export async function searchProducts(queryStr: string): Promise<Product[]> {
+  if (!queryStr || queryStr.length < 2) return [];
 
   try {
-    const snapshot = await adminDb
-      .collection('products')
-      .where('isActive', '==', true)
-      .get();
+    const snapshot = await getDocs(
+      query(
+        collection(db, 'products'),
+        where('isActive', '==', true)
+      )
+    );
 
-    const queryLower = query.toLowerCase();
+    const queryLower = queryStr.toLowerCase();
     return snapshot.docs
       .map((doc) => ({
         id: doc.id,

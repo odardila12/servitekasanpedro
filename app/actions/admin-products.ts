@@ -5,7 +5,7 @@
  * Includes role verification before any write operations
  */
 
-import { adminDb, adminAuth } from '@/lib/firebase/admin';
+import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
 import { jwtVerify } from 'jose';
 import type { Product } from '@/lib/types';
 
@@ -33,7 +33,7 @@ export async function getAllProducts(token?: string): Promise<Product[]> {
       throw new Error('Invalid or expired token');
     }
 
-    const snapshot = await adminDb.collection('products').get();
+    const snapshot = await getDocs(collection(db, 'products'));
     return snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -67,11 +67,11 @@ export async function getProductById(id: string, token?: string): Promise<Produc
       throw new Error('Invalid or expired token');
     }
 
-    const doc = await adminDb.collection('products').doc(id).get();
-    if (!doc.exists) return null;
+    const docSnap = await getDoc(doc(db, 'products', id));
+    if (!docSnap.exists()) return null;
     return {
-      id: doc.id,
-      ...doc.data(),
+      id: docSnap.id,
+      ...docSnap.data(),
     } as Product;
   } catch (error) {
     console.error('Error fetching product by ID:', error);
@@ -95,7 +95,7 @@ export async function getAllFeaturedProducts(token?: string): Promise<Product[]>
       throw new Error('Invalid or expired token');
     }
 
-    const snapshot = await adminDb.collection('featured_products').get();
+    const snapshot = await getDocs(collection(db, 'featured_products'));
     return snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -129,11 +129,11 @@ export async function getFeaturedProductById(id: string, token?: string): Promis
       throw new Error('Invalid or expired token');
     }
 
-    const doc = await adminDb.collection('featured_products').doc(id).get();
-    if (!doc.exists) return null;
+    const docSnap = await getDoc(doc(db, 'featured_products', id));
+    if (!docSnap.exists()) return null;
     return {
-      id: doc.id,
-      ...doc.data(),
+      id: docSnap.id,
+      ...docSnap.data(),
     } as Product;
   } catch (error) {
     console.error('Error fetching featured product by ID:', error);
@@ -160,8 +160,7 @@ export async function createFeaturedProduct(
       throw new Error('Invalid or expired token');
     }
 
-    const { Timestamp } = require('firebase-admin/firestore');
-    const docRef = await adminDb.collection('featured_products').add({
+    const docRef = await addDoc(collection(db, 'featured_products'), {
       ...data,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
@@ -194,8 +193,8 @@ export async function updateFeaturedProduct(
       throw new Error('Invalid or expired token');
     }
 
-    const { Timestamp } = require('firebase-admin/firestore');
-    await adminDb.collection('featured_products').doc(id).set(
+    await setDoc(
+      doc(db, 'featured_products', id),
       {
         ...partial,
         updatedAt: Timestamp.now(),
@@ -224,8 +223,8 @@ export async function deleteFeaturedProduct(id: string, token?: string): Promise
       throw new Error('Invalid or expired token');
     }
 
-    const { Timestamp } = require('firebase-admin/firestore');
-    await adminDb.collection('featured_products').doc(id).set(
+    await setDoc(
+      doc(db, 'featured_products', id),
       {
         isActive: false,
         updatedAt: Timestamp.now(),
@@ -254,8 +253,8 @@ export async function restoreFeaturedProduct(id: string, token?: string): Promis
       throw new Error('Invalid or expired token');
     }
 
-    const { Timestamp } = require('firebase-admin/firestore');
-    await adminDb.collection('featured_products').doc(id).set(
+    await setDoc(
+      doc(db, 'featured_products', id),
       {
         isActive: true,
         updatedAt: Timestamp.now(),
@@ -288,8 +287,8 @@ export async function updateProduct(
       throw new Error('Invalid or expired token');
     }
 
-    const { Timestamp } = require('firebase-admin/firestore');
-    await adminDb.collection('products').doc(id).set(
+    await setDoc(
+      doc(db, 'products', id),
       {
         ...partial,
         updatedAt: Timestamp.now(),
@@ -318,8 +317,8 @@ export async function deleteProduct(id: string, token?: string): Promise<void> {
       throw new Error('Invalid or expired token');
     }
 
-    const { Timestamp } = require('firebase-admin/firestore');
-    await adminDb.collection('products').doc(id).set(
+    await setDoc(
+      doc(db, 'products', id),
       {
         isActive: false,
         updatedAt: Timestamp.now(),
@@ -351,8 +350,7 @@ export async function createProduct(
       throw new Error('Invalid or expired token');
     }
 
-    const { Timestamp } = require('firebase-admin/firestore');
-    const docRef = await adminDb.collection('products').add({
+    const docRef = await addDoc(collection(db, 'products'), {
       ...data,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),

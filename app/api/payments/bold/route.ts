@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { adminDb } from '@/lib/firebase/admin';
+import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
 import { logPaymentAttempt } from '@/lib/audit/logger';
 
 // Input validation schema
@@ -45,19 +45,16 @@ export async function POST(request: Request) {
     // 2. Fetch real-time prices from Firestore and verify cart integrity
     let totalFromDb = 0;
     const productPromises = cartItems.map((item) =>
-      adminDb.collection('products').doc(item.productId).get()
+      getDoc(doc(db, 'products', item.productId))
     );
 
-    const snapshots = (await Promise.all(productPromises)) as unknown[] as Array<{
-      exists: () => boolean;
-      data: () => Record<string, unknown> | undefined;
-    }>;
+    const snapshots = await Promise.all(productPromises);
 
     for (let i = 0; i < snapshots.length; i++) {
-      const snapshot = snapshots[i];
+      const docSnap = snapshots[i];
       const item = cartItems[i];
 
-      if (!snapshot.exists()) {
+      if (!docSnap.exists()) {
         console.error(`Fraud detection: Product ${item.productId} does not exist in database`);
         await logPaymentAttempt('unknown', amount, currency, 'FRAUD_DETECTED', {
           reason: 'Product not found',
@@ -69,7 +66,7 @@ export async function POST(request: Request) {
         );
       }
 
-      const dbProduct = snapshot.data();
+      const dbProduct = docSnap.data();
       const dbPrice = dbProduct?.price;
       const dbStock = dbProduct?.stock;
 

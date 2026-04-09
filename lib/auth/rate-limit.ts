@@ -1,7 +1,6 @@
 'use server';
 
-import { adminDb } from '@/lib/firebase/admin';
-import { Timestamp } from 'firebase-admin/firestore';
+import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
 import { logAuthFailure } from '@/lib/audit/logger';
 
 const MAX_ATTEMPTS = 3;
@@ -22,9 +21,9 @@ export async function checkRateLimit(
   userId: string
 ): Promise<{ isLocked: boolean; remainingTime?: number }> {
   try {
-    const attemptDoc = await adminDb.collection('otp_attempts').doc(userId).get();
+    const attemptDoc = await getDoc(doc(db, 'otp_attempts', userId));
 
-    if (!attemptDoc.exists) {
+    if (!attemptDoc.exists()) {
       return { isLocked: false };
     }
 
@@ -41,7 +40,7 @@ export async function checkRateLimit(
         return { isLocked: true, remainingTime: remainingSeconds };
       } else {
         // Lockout has expired, clear the record
-        await adminDb.collection('otp_attempts').doc(userId).delete();
+        await deleteDoc(doc(db, 'otp_attempts', userId));
         return { isLocked: false };
       }
     }
@@ -62,13 +61,13 @@ export async function recordFailedAttempt(
   userId: string
 ): Promise<{ success: boolean; isNowLocked: boolean; remainingAttempts: number }> {
   try {
-    const attemptRef = adminDb.collection('otp_attempts').doc(userId);
-    const attemptDoc = await attemptRef.get();
+    const attemptDocRef = doc(db, 'otp_attempts', userId);
+    const attemptDoc = await getDoc(attemptDocRef);
 
     let attempts = 1;
     let isNowLocked = false;
 
-    if (attemptDoc.exists) {
+    if (attemptDoc.exists()) {
       const data = attemptDoc.data() as OtpAttempt;
       attempts = (data.attempts || 0) + 1;
     }
@@ -76,7 +75,8 @@ export async function recordFailedAttempt(
     // Lock if max attempts reached
     if (attempts >= MAX_ATTEMPTS) {
       isNowLocked = true;
-      await attemptRef.set(
+      await setDoc(
+        attemptDocRef,
         {
           userId,
           attempts,
@@ -87,7 +87,8 @@ export async function recordFailedAttempt(
       );
     } else {
       // Update attempt count without locking
-      await attemptRef.set(
+      await setDoc(
+        attemptDocRef,
         {
           userId,
           attempts,
@@ -113,7 +114,7 @@ export async function recordFailedAttempt(
  */
 export async function clearAttempts(userId: string): Promise<void> {
   try {
-    await adminDb.collection('otp_attempts').doc(userId).delete();
+    await deleteDoc(doc(db, 'otp_attempts', userId));
   } catch (error) {
     console.error('Error clearing attempts:', error);
     // Don't throw - this is non-critical
@@ -125,8 +126,8 @@ export async function clearAttempts(userId: string): Promise<void> {
  */
 export async function getAttemptCount(userId: string): Promise<number> {
   try {
-    const attemptDoc = await adminDb.collection('otp_attempts').doc(userId).get();
-    if (!attemptDoc.exists) {
+    const attemptDoc = await getDoc(doc(db, 'otp_attempts', userId));
+    if (!attemptDoc.exists()) {
       return 0;
     }
     const data = attemptDoc.data() as OtpAttempt;

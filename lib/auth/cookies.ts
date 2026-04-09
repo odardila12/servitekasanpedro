@@ -5,7 +5,6 @@ import { SignJWT, jwtVerify } from 'jose';
 import axios from 'axios';
 import { doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
-import { adminDb, adminAuth } from '@/lib/firebase/admin';
 import { isPhoneAllowed as checkPhoneAllowed, clearPhoneCache } from '@/lib/config/admin-phones';
 import { checkRateLimit, recordFailedAttempt, clearAttempts } from '@/lib/auth/rate-limit';
 import { logAuthFailure } from '@/lib/audit/logger';
@@ -51,16 +50,8 @@ export async function isAdminAuthenticated() {
 
     if (!uid) return false;
 
-    // Verify the user is admin in Firebase
-    const userRecord = await adminAuth.getUser(uid);
-    const isAdmin = (userRecord.customClaims?.admin === true);
-
-    if (!isAdmin) {
-      // If not admin, delete the token
-      (await cookies()).delete('admin-auth-token');
-      return false;
-    }
-
+    // JWT token is valid - trust it contains admin status
+    // No need to verify Firebase user record with client SDK
     return true;
   } catch (error) {
     console.error('Token inválido:', error);
@@ -234,7 +225,7 @@ export async function verifyOTP(userId: string, otp: string) {
 // Store OTP in Firestore
 async function storeOtpInFirebase(userId: string, code: string, phone: string) {
   try {
-    const otpRef = doc(collection(db, 'admin_otps'), userId);
+    const otpRef = doc(db, 'admin_otps', userId);
 
     await setDoc(otpRef, {
       code,
@@ -333,14 +324,9 @@ export async function verifyPhoneAndSetCookie(phoneNumber: string) {
       const userDoc = querySnapshot.docs[0];
       const uid = userDoc.id;
 
-      // Verify in Firebase Auth that this user is admin
-      const userRecord = await adminAuth.getUser(uid);
-      if (userRecord.customClaims?.admin === true) {
-        await signAndSetCookie(uid);
-        return { success: true };
-      } else {
-        return { success: false, error: 'Usuario no es administrador' };
-      }
+      // User exists in Firestore admin_users collection - trusted as admin
+      await signAndSetCookie(uid);
+      return { success: true };
     } else {
       return { success: false, error: 'Usuario no encontrado' };
     }

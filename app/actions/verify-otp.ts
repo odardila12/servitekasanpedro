@@ -1,7 +1,7 @@
 'use server';
 
+import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
 import { cookies } from 'next/headers';
-import { adminDb } from '@/lib/firebase/admin';
 import { SignJWT } from 'jose';
 import { checkRateLimit, recordFailedAttempt, clearAttempts } from '@/lib/auth/rate-limit';
 
@@ -44,14 +44,11 @@ export async function verifyOTPServerAction(
       };
     }
 
-    // ── Query admin_otps from Firestore (server-only, admin SDK) ─────────────
+    // ── Query admin_otps from Firestore (server-only) ──────────────────────────
     // Client CANNOT access this because Firebase Rules deny non-admin reads
-    const otpQuery = await adminDb
-      .collection('admin_otps')
-      .doc(userId)
-      .get();
+    const otpDocSnap = await getDoc(doc(db, 'admin_otps', userId));
 
-    if (!otpQuery.exists) {
+    if (!otpDocSnap.exists()) {
       // Record failed attempt
       await recordFailedAttempt(userId);
       return {
@@ -60,7 +57,7 @@ export async function verifyOTPServerAction(
       };
     }
 
-    const otpData = otpQuery.data() as Record<string, unknown> | undefined;
+    const otpData = otpDocSnap.data() as Record<string, unknown> | undefined;
     if (!otpData || typeof otpData !== 'object') {
       return {
         success: false,
@@ -109,7 +106,7 @@ export async function verifyOTPServerAction(
     if (expiresAt < new Date()) {
       // OTP expired
       await recordFailedAttempt(userId);
-      await adminDb.collection('admin_otps').doc(userId).delete();
+      await deleteDoc(doc(db, 'admin_otps', userId));
       return {
         success: false,
         error: 'OTP expirado',
@@ -136,7 +133,7 @@ export async function verifyOTPServerAction(
     });
 
     // ── Clean up OTP (one-time use) ──────────────────────────────────────────
-    await adminDb.collection('admin_otps').doc(userId).delete();
+    await deleteDoc(doc(db, 'admin_otps', userId));
 
     // ── Clear rate limit tracking ────────────────────────────────────────────
     await clearAttempts(userId);

@@ -1,13 +1,13 @@
-import 'server-only';
+import "server-only";
 
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION ?? 'us-east-1',
+  region: process.env.AWS_REGION ?? "us-east-1",
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? '',
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? '',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
   },
 });
 
@@ -44,7 +44,7 @@ export async function generatePresignedUploadUrl(
     expiresIn: PRESIGNED_URL_TTL,
   });
 
-  const publicUrl = `${process.env.NEXT_PUBLIC_S3_BASE_URL}/${key}`;
+  const publicUrl = `${process.env.S3_BASE_URL}/${key}`;
 
   return { presignedUrl, publicUrl, key };
 }

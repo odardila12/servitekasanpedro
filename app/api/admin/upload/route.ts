@@ -1,8 +1,16 @@
 import { NextResponse } from 'next/server';
-import { adminAuth } from '@/lib/firebase/admin';
+import { jwtVerify } from 'jose';
 import { generatePresignedUploadUrl } from '@/lib/aws/s3';
 import { fileTypeFromBuffer } from 'file-type';
 import { logAdminAction } from '@/lib/audit/logger';
+
+const SECRET_KEY: Uint8Array = (() => {
+  const key = process.env.JWT_SECRET;
+  if (!key) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+  }
+  return new TextEncoder().encode(key);
+})();
 
 const ALLOWED_CONTENT_TYPES = new Set([
   'image/jpeg',
@@ -23,14 +31,15 @@ export async function POST(request: Request) {
     const token = authorization.slice('Bearer '.length);
     let decodedToken;
     try {
-      decodedToken = await adminAuth.verifyIdToken(token);
+      const { payload } = await jwtVerify(token, SECRET_KEY);
+      decodedToken = payload;
     } catch {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // ── Admin role verification ──────────────────────────────────────────────
     if (!decodedToken.admin) {
-      console.warn(`[SECURITY] Unauthorized upload attempt by non-admin user: ${decodedToken.uid}`);
+      console.warn(`[SECURITY] Unauthorized upload attempt by non-admin user: ${decodedToken.uid as string}`);
       return NextResponse.json(
         { error: 'Forbidden: Admin role required' },
         { status: 403 }
@@ -107,7 +116,7 @@ export async function POST(request: Request) {
     const result = await generatePresignedUploadUrl(productId, fileName, detectedType.mime);
 
     // ── Audit logging ────────────────────────────────────────────────────────
-    await logAdminAction(decodedToken.uid, 'UPLOAD', 'image', productId, {
+    await logAdminAction(decodedToken.uid as string, 'UPLOAD', 'image', productId, {
       fileName,
       detectedMime: detectedType.mime,
     });

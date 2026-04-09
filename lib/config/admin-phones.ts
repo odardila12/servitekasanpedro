@@ -1,6 +1,6 @@
 'use server';
 
-import { adminDb } from '@/lib/firebase/admin';
+import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
 
 // Cache for admin phones (refreshed every 5 minutes)
 let phoneCache: string[] = [];
@@ -20,11 +20,11 @@ export async function getAdminPhones(): Promise<string[]> {
   }
 
   try {
-    const snapshot = await adminDb.collection('admin_phones').get();
+    const snapshot = await getDocs(collection(db, 'admin_phones'));
 
     const phones: string[] = [];
-    snapshot.forEach((doc) => {
-      const data = doc.data();
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
       // Only include active phones
       if (data.active === true && data.phone) {
         phones.push(data.phone);
