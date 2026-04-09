@@ -156,7 +156,16 @@ export async function createPhoneToken(formattedPhone: string) {
   }
 }
 
-// Verify OTP with rate limiting
+/**
+ * DEPRECATED: Use verifyOTPServerAction from /app/actions/verify-otp.ts instead
+ *
+ * SECURITY ISSUE: This function uses the client-side Firestore SDK (db)
+ * which can be queried by attackers to access the admin_otps collection.
+ * All OTP verification must happen server-side using the admin SDK.
+ *
+ * This function is kept only for backwards compatibility.
+ * New code should use the server action.
+ */
 export async function verifyOTP(userId: string, otp: string) {
   try {
     // Check if user is rate-limited

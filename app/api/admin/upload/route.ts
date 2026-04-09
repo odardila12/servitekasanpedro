@@ -39,15 +39,16 @@ export async function POST(request: Request) {
 
     // ── Body validation ──────────────────────────────────────────────────────
     const body = await request.json();
-    const { fileName, contentType, productId } = body as {
+    const { fileName, contentType, productId, fileBuffer } = body as {
       fileName: string;
       contentType: string;
       productId: string;
+      fileBuffer: string; // Base64 encoded file bytes
     };
 
-    if (!fileName || !contentType || !productId) {
+    if (!fileName || !contentType || !productId || !fileBuffer) {
       return NextResponse.json(
-        { error: 'Missing required fields: fileName, contentType, productId' },
+        { error: 'Missing required fields: fileName, contentType, productId, fileBuffer' },
         { status: 400 }
       );
     }
@@ -61,9 +62,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // ── File size validation ─────────────────────────────────────────────────
-    // Note: This validates the fileName string length as a proxy; actual file size
-    // is validated by S3 presigned URL parameters and bucket policies
+    // ── File name validation ─────────────────────────────────────────────────
     if (fileName.length > 255) {
       return NextResponse.json(
         { error: 'File name too long (max 255 characters)' },
@@ -71,13 +70,52 @@ export async function POST(request: Request) {
       );
     }
 
+    // ── Magic byte validation (CRITICAL SECURITY FIX) ──────────────────────────
+    // Validate actual file type from magic bytes, not from client-provided MIME type
+    // This prevents attacks like uploading .exe as .jpg by renaming
+    let buffer: Buffer;
+    try {
+      buffer = Buffer.from(fileBuffer, 'base64');
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid file buffer encoding' },
+        { status: 400 }
+      );
+    }
+
+    // Check actual file size before processing
+    if (buffer.length > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: `File size exceeds maximum of ${MAX_FILE_SIZE / (1024 * 1024)}MB` },
+        { status: 413 }
+      );
+    }
+
+    // Validate file type from magic bytes (not from client header)
+    const detectedType = await fileTypeFromBuffer(buffer);
+    if (!detectedType || !ALLOWED_CONTENT_TYPES.has(detectedType.mime)) {
+      console.warn(
+        `[SECURITY] File type mismatch detected. Expected: ${contentType}, Actual: ${detectedType?.mime || 'unknown'}, File: ${fileName}, User: ${decodedToken.uid}`
+      );
+      await logAdminAction(decodedToken.uid, 'UPLOAD_REJECTED', 'image', productId, {
+        fileName,
+        claimedType: contentType,
+        detectedType: detectedType?.mime || 'unknown',
+        reason: 'magic_bytes_mismatch',
+      });
+      return NextResponse.json(
+        { error: 'Invalid file type. Only JPEG, PNG, WebP allowed.' },
+        { status: 400 }
+      );
+    }
+
     // ── Generate presigned URL ───────────────────────────────────────────────
-    const result = await generatePresignedUploadUrl(productId, fileName, contentType);
+    const result = await generatePresignedUploadUrl(productId, fileName, detectedType.mime);
 
     // ── Audit logging ────────────────────────────────────────────────────────
     await logAdminAction(decodedToken.uid, 'UPLOAD', 'image', productId, {
       fileName,
-      contentType,
+      detectedMime: detectedType.mime,
     });
 
     return NextResponse.json(result, { status: 200 });

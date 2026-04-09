@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { createPhoneToken, verifyOTP, verifyPhoneAndSetCookie } from '@/lib/auth/cookies';
+import { createPhoneToken, verifyPhoneAndSetCookie } from '@/lib/auth/cookies';
+import { verifyOTPServerAction } from '@/app/actions/verify-otp';
 import { getAdminPhones } from '@/lib/config/admin-phones';
 
 export default function AdminLogin() {
@@ -80,8 +81,11 @@ export default function AdminLogin() {
     setError(null);
 
     try {
-      const result = await verifyOTP(userId!, otp);
+      // Call server action to verify OTP (all verification happens server-side)
+      const result = await verifyOTPServerAction(userId!, otp);
       if (result.success) {
+        // OTP verified and auth cookie set by server action
+        // Now verify phone and complete login flow
         const userResult = await verifyPhoneAndSetCookie(phoneNumber);
         if (userResult.success) {
           router.push('/admin/productos');
@@ -90,9 +94,10 @@ export default function AdminLogin() {
           setError(userResult.error || 'Error verificando usuario');
         }
       } else {
-        setError('Código inválido');
+        setError(result.error || 'Código inválido');
       }
-    } catch {
+    } catch (err) {
+      console.error('Error verifying OTP:', err);
       setError('Error de verificación');
     }
     setIsVerifying(false);
