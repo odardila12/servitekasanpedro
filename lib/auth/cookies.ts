@@ -3,8 +3,7 @@
 import { cookies } from 'next/headers';
 import { SignJWT, jwtVerify } from 'jose';
 import axios from 'axios';
-import { doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase/config';
+import { db, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, Timestamp } from '@/lib/services/firestore';
 import { isPhoneAllowedServerAction as checkPhoneAllowed, clearPhoneCacheServerAction as clearPhoneCache } from '@/app/actions/get-admin-phones';
 import { checkRateLimit, recordFailedAttempt, clearAttempts } from '@/lib/auth/rate-limit';
 import { logAuthFailure } from '@/app/actions/audit-logger';
@@ -230,8 +229,8 @@ async function storeOtpInFirebase(userId: string, code: string, phone: string) {
     await setDoc(otpRef, {
       code,
       phone,
-      createdAt: new Date(),
-      expiresAt: new Date(Date.now() + 600000), // 10 minutos
+      createdAt: Timestamp.now(),
+      expiresAt: Timestamp.fromDate(new Date(Date.now() + 600000)), // 10 minutos
     });
 
     console.log('OTP almacenado para:', userId);
