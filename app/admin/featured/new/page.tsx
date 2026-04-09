@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/lib/firebase/config';
-import { createFeaturedProduct } from '@/lib/firebase/firestore';
+import { createFeaturedProduct } from '@/app/actions/admin-products';
 import { Button } from '@/components/common/Button';
 import { CATEGORIES } from '@/lib/constants';
 import { z } from 'zod';

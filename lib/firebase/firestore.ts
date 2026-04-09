@@ -1,3 +1,17 @@
+/**
+ * ⚠️  DEPRECATED: DO NOT USE FROM CLIENT-SIDE COMPONENTS
+ *
+ * All product queries must go through Server Actions to prevent exposing Firestore
+ * queries in the browser Network tab (security vulnerability).
+ *
+ * Use instead:
+ * - @/app/actions/products.ts (public product queries)
+ * - @/app/actions/admin-products.ts (admin product operations)
+ *
+ * This file is kept for reference only. Client-side imports will expose your Firestore
+ * schema and allow direct database queries from the browser.
+ */
+
 import {
   collection,
   getDocs,

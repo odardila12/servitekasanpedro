@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { auth } from '@/lib/firebase/config';
-import { getFeaturedProductById, updateFeaturedProduct, deleteFeaturedProduct } from '@/lib/firebase/firestore';
+import { getFeaturedProductById, updateFeaturedProduct, deleteFeaturedProduct } from '@/app/actions/admin-products';
 import { Button } from '@/components/common/Button';
 import { CATEGORIES } from '@/lib/constants';
 import { z } from 'zod';

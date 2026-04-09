@@ -7,7 +7,7 @@ import { FilterSidebar } from '@/components/filters/FilterSidebar';
 import { ActiveFilterChips } from '@/components/filters/ActiveFilterChips';
 import { ProductGridContainer } from '@/components/product/ProductGridContainer';
 import { CATEGORIES } from '@/lib/constants';
-import { getProductsByCategory } from '@/lib/products';
+import { getProductsByCategory } from '@/app/actions/products';
 import { useProductFilters } from '@/lib/hooks/useProductFilters';
 import { getFiltersForCategory } from '@/lib/filters/filterDefinitions';
 import ProductSubheader from '@/components/filters/ProductSubheader';

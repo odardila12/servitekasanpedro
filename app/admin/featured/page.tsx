@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { getFeaturedProducts, deleteFeaturedProduct, restoreFeaturedProduct } from '@/lib/firebase/firestore';
+import { getFeaturedProducts, deleteFeaturedProduct, restoreFeaturedProduct } from '@/app/actions/admin-products';
 import { Button } from '@/components/common/Button';
 import { CATEGORIES } from '@/lib/constants';
 import type { Product } from '@/lib/types';
