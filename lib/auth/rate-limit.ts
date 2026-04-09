@@ -1,7 +1,7 @@
 'use server';
 
 import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
-import { logAuthFailure } from '@/lib/audit/logger';
+import { logAuthFailure } from '@/app/actions/audit-logger';
 
 const MAX_ATTEMPTS = 3;
 const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes

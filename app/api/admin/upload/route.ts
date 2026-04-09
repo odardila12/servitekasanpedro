@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 import { generatePresignedUploadUrl } from '@/lib/aws/s3';
 import { fileTypeFromBuffer } from 'file-type';
-import { logAdminAction } from '@/lib/audit/logger';
+import { logAdminAction } from '@/app/actions/audit-logger';
 
 const SECRET_KEY: Uint8Array = (() => {
   const key = process.env.JWT_SECRET;

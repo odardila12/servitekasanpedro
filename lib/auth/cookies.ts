@@ -7,7 +7,7 @@ import { doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs } fro
 import { db } from '@/lib/firebase/config';
 import { isPhoneAllowed as checkPhoneAllowed, clearPhoneCache } from '@/lib/config/admin-phones';
 import { checkRateLimit, recordFailedAttempt, clearAttempts } from '@/lib/auth/rate-limit';
-import { logAuthFailure } from '@/lib/audit/logger';
+import { logAuthFailure } from '@/app/actions/audit-logger';
 
 // Encoding the secret key from the environment variable to use it for signing JWTs
 const SECRET_KEY: Uint8Array = (() => {

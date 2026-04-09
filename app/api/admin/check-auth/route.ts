@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
-import { logAuthFailure } from '@/lib/audit/logger';
+import { logAuthFailure } from '@/app/actions/audit-logger';
 
 const SECRET_KEY: Uint8Array = (() => {
   const key = process.env.JWT_SECRET;
