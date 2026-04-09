@@ -5,7 +5,7 @@ import { SignJWT, jwtVerify } from 'jose';
 import axios from 'axios';
 import { doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
-import { isPhoneAllowed as checkPhoneAllowed, clearPhoneCache } from '@/lib/config/admin-phones';
+import { isPhoneAllowedServerAction as checkPhoneAllowed, clearPhoneCacheServerAction as clearPhoneCache } from '@/app/actions/get-admin-phones';
 import { checkRateLimit, recordFailedAttempt, clearAttempts } from '@/lib/auth/rate-limit';
 import { logAuthFailure } from '@/app/actions/audit-logger';
 

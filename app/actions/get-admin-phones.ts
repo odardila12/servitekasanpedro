@@ -1,6 +1,11 @@
 'use server';
 
-import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
+/**
+ * Server Action to fetch admin phones from Firestore
+ * Runs ONLY on server, so it can access protected collections
+ */
+
+import { db, getDocs, collection } from '@/lib/services/firestore';
 
 // Cache for admin phones (refreshed every 5 minutes)
 let phoneCache: string[] = [];
@@ -11,7 +16,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
  * Fetch admin phone allowlist from Firestore
  * Structure: collection `admin_phones` with docs containing {phone: string, userId: string, active: boolean}
  */
-export async function getAdminPhones(): Promise<string[]> {
+export async function getAdminPhonesServerAction(): Promise<string[]> {
   const now = Date.now();
 
   // Return cached result if still valid
@@ -49,9 +54,9 @@ export async function getAdminPhones(): Promise<string[]> {
 /**
  * Check if a phone number is allowed to access admin panel
  */
-export async function isPhoneAllowed(phone: string): Promise<boolean> {
+export async function isPhoneAllowedServerAction(phone: string): Promise<boolean> {
   try {
-    const allowedPhones = await getAdminPhones();
+    const allowedPhones = await getAdminPhonesServerAction();
     return allowedPhones.includes(phone);
   } catch (error) {
     console.error('Error checking phone allowlist:', error);
@@ -62,7 +67,7 @@ export async function isPhoneAllowed(phone: string): Promise<boolean> {
 /**
  * Clear the phone cache (useful after updates)
  */
-export async function clearPhoneCache(): Promise<void> {
+export async function clearPhoneCacheServerAction(): Promise<void> {
   phoneCache = [];
   lastCacheTime = 0;
 }
