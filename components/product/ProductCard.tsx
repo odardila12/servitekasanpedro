@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/common/Badge';
 import { Rating } from '@/components/product/Rating';
@@ -10,6 +11,7 @@ import { useCart } from '@/lib/contexts/CartContext';
 interface ProductCardProps {
   id: string;
   name: string;
+  slug: string;
   price: number;
   originalPrice?: number;
   image: string;
@@ -25,6 +27,7 @@ interface ProductCardProps {
 export function ProductCard({
   id,
   name,
+  slug,
   price,
   originalPrice,
   image,
@@ -94,15 +97,16 @@ export function ProductCard({
   const hasMultipleImages = galleryImages.length > 1;
 
   return (
-    <div
-      className={cn(
-        'bg-white rounded-3xl overflow-hidden transition-all duration-200',
-        'shadow-sm hover:shadow-lg hover:-translate-y-2',
-        'flex flex-col h-full'
-      )}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
+    <Link href={`/productos/${slug}`}>
+      <div
+        className={cn(
+          'bg-white rounded-3xl overflow-hidden transition-all duration-200',
+          'shadow-sm hover:shadow-lg hover:-translate-y-2',
+          'flex flex-col h-full cursor-pointer'
+        )}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
       {/* Image Container */}
       <div className="relative h-44 bg-neutral-100 overflow-hidden group shrink-0">
         <Image
@@ -202,6 +206,7 @@ export function ProductCard({
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </Link>
   );
 }
