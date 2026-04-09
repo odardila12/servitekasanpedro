@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { adminDb } from '@/lib/firebase/admin';
+import { logPaymentAttempt } from '@/lib/audit/logger';
 
 // Input validation schema
 const BoldPaymentSchema = z.object({
@@ -52,6 +53,10 @@ export async function POST(request: Request) {
 
       if (!snapshot.exists()) {
         console.error(`Fraud detection: Product ${item.productId} does not exist in database`);
+        await logPaymentAttempt('unknown', amount, currency, 'FRAUD_DETECTED', {
+          reason: 'Product not found',
+          productId: item.productId,
+        });
         return NextResponse.json(
           { error: 'Cart out of date, refresh and try again' },
           { status: 400 }
@@ -67,6 +72,12 @@ export async function POST(request: Request) {
         console.warn(
           `Fraud detection: Price mismatch for product ${item.productId}. Client: ${item.price}, DB: ${dbPrice}`
         );
+        await logPaymentAttempt('unknown', amount, currency, 'FRAUD_DETECTED', {
+          reason: 'Price mismatch',
+          productId: item.productId,
+          clientPrice: item.price,
+          dbPrice,
+        });
         return NextResponse.json(
           { error: 'Cart out of date, refresh and try again' },
           { status: 400 }
@@ -78,6 +89,12 @@ export async function POST(request: Request) {
         console.warn(
           `Fraud detection: Insufficient stock for product ${item.productId}. Available: ${dbStock}, Requested: ${item.quantity}`
         );
+        await logPaymentAttempt('unknown', amount, currency, 'FRAUD_DETECTED', {
+          reason: 'Insufficient stock',
+          productId: item.productId,
+          availableStock: dbStock,
+          requestedQuantity: item.quantity,
+        });
         return NextResponse.json(
           { error: 'Cart out of date, refresh and try again' },
           { status: 400 }
@@ -93,6 +110,11 @@ export async function POST(request: Request) {
       console.error(
         `Fraud detection: Amount mismatch. Client: ${amount}, Calculated from DB: ${totalFromDb}`
       );
+      await logPaymentAttempt('unknown', amount, currency, 'FRAUD_DETECTED', {
+        reason: 'Amount mismatch',
+        clientAmount: amount,
+        calculatedAmount: totalFromDb,
+      });
       return NextResponse.json(
         { error: 'Cart out of date, refresh and try again' },
         { status: 400 }
@@ -103,6 +125,12 @@ export async function POST(request: Request) {
     if (!BOLD_SECRET_KEY) {
       console.warn('BOLD_SECRET_KEY is not set. Using mock payment flow.');
     }
+
+    // Log successful payment initialization
+    await logPaymentAttempt('unknown', amount, currency, 'SUCCESS', {
+      description,
+      itemCount: cartItems.length,
+    });
 
     // For the scope of this project, we return a mock URL if not fully integrated
     const paymentUrl = `https://checkout.bold.co/mock?amount=${amount}&curr=${currency}&desc=${encodeURIComponent(description)}`;

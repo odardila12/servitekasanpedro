@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { adminAuth } from '@/lib/firebase/admin';
 import { generatePresignedUploadUrl } from '@/lib/aws/s3';
+import { fileTypeFromBuffer } from 'file-type';
+import { logAdminAction } from '@/lib/audit/logger';
 
 const ALLOWED_CONTENT_TYPES = new Set([
   'image/jpeg',
@@ -73,7 +75,10 @@ export async function POST(request: Request) {
     const result = await generatePresignedUploadUrl(productId, fileName, contentType);
 
     // ── Audit logging ────────────────────────────────────────────────────────
-    console.log(`[AUDIT] File upload initiated: user=${decodedToken.uid}, productId=${productId}, fileName=${fileName}, contentType=${contentType}`);
+    await logAdminAction(decodedToken.uid, 'UPLOAD', 'image', productId, {
+      fileName,
+      contentType,
+    });
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
