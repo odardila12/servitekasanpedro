@@ -97,12 +97,6 @@ export async function POST(request: Request) {
       console.warn(
         `[SECURITY] File type mismatch detected. Expected: ${contentType}, Actual: ${detectedType?.mime || 'unknown'}, File: ${fileName}, User: ${decodedToken.uid}`
       );
-      await logAdminAction(decodedToken.uid, 'UPLOAD_REJECTED', 'image', productId, {
-        fileName,
-        claimedType: contentType,
-        detectedType: detectedType?.mime || 'unknown',
-        reason: 'magic_bytes_mismatch',
-      });
       return NextResponse.json(
         { error: 'Invalid file type. Only JPEG, PNG, WebP allowed.' },
         { status: 400 }

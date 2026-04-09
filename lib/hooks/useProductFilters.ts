@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import type { ActiveFilters } from '@/lib/filters/filterDefinitions';
+import type { Product } from '@/lib/types';
 
 export type SortOption =
   | 'relevance'
@@ -9,21 +10,6 @@ export type SortOption =
   | 'price-desc'
   | 'rating-desc'
   | 'newest';
-
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  images?: string[];
-  rating?: number;
-  reviews?: number;
-  badge?: string;
-  category?: string;
-  brand?: string;
-  specs?: Record<string, string | undefined>;
-}
 
 interface UseProductFiltersResult {
   activeFilters: ActiveFilters;

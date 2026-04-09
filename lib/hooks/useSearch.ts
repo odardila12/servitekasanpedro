@@ -1,22 +1,10 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { SAMPLE_PRODUCTS } from '@/lib/constants';
+import { FEATURED_PRODUCTS } from '@/lib/constants';
+import type { Product } from '@/lib/types';
 
-export interface SearchProduct {
-  id: string;
-  name: string;
-  slug: string;
-  category: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  rating: number;
-  reviews: number;
-  badge?: string;
-}
-
-export function useSearch(query: string): { results: SearchProduct[]; loading: boolean } {
+export function useSearch(query: string): { results: Product[]; loading: boolean } {
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +21,7 @@ export function useSearch(query: string): { results: SearchProduct[]; loading: b
   const results = useMemo(() => {
     const q = debouncedQuery.trim().toLowerCase();
     if (!q) return [];
-    return SAMPLE_PRODUCTS.filter(
+    return FEATURED_PRODUCTS.filter(
       (p) =>
         p.name.toLowerCase().includes(q) ||
         p.category.toLowerCase().includes(q)

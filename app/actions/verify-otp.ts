@@ -60,14 +60,22 @@ export async function verifyOTPServerAction(
       };
     }
 
-    const otpData = otpQuery.data() as {
+    const otpData = otpQuery.data() as Record<string, unknown> | undefined;
+    if (!otpData || typeof otpData !== 'object') {
+      return {
+        success: false,
+        error: 'OTP expirado o inválido',
+      };
+    }
+
+    const { code, phone, expiresAt: expiresAtRaw } = otpData as {
       code: string;
       phone: string;
-      expiresAt: any; // Firestore Timestamp
+      expiresAt: unknown;
     };
 
     // ── Verify OTP code matches ──────────────────────────────────────────────
-    if (otpData.code !== otpCode) {
+    if (code !== otpCode) {
       // Failed attempt - record and check if locked
       const attempt = await recordFailedAttempt(userId);
       if (attempt.isNowLocked) {
@@ -85,12 +93,17 @@ export async function verifyOTPServerAction(
 
     // ── Check expiration ─────────────────────────────────────────────────────
     let expiresAt: Date;
-    if (otpData.expiresAt.toDate) {
+    if (
+      expiresAtRaw &&
+      typeof expiresAtRaw === 'object' &&
+      'toDate' in expiresAtRaw &&
+      typeof (expiresAtRaw as Record<string, unknown>).toDate === 'function'
+    ) {
       // Firestore Timestamp
-      expiresAt = otpData.expiresAt.toDate();
+      expiresAt = ((expiresAtRaw as Record<string, unknown>).toDate as () => Date)();
     } else {
       // Plain timestamp number
-      expiresAt = new Date(otpData.expiresAt);
+      expiresAt = new Date(expiresAtRaw as string | number);
     }
 
     if (expiresAt < new Date()) {
@@ -105,7 +118,7 @@ export async function verifyOTPServerAction(
 
     // ── OTP is valid - set authentication cookie ────────────────────────────
     // Generate JWT token with the phone number
-    const jwtToken = await new SignJWT({ phone: otpData.phone })
+    const jwtToken = await new SignJWT({ phone })
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime('30d')
       .sign(SECRET_KEY);

@@ -1,7 +1,7 @@
 'use server';
 
 import { adminDb } from '@/lib/firebase/admin';
-import { collection, addDoc, Timestamp } from 'firebase-admin/firestore';
+import { Timestamp } from 'firebase-admin/firestore';
 import { headers } from 'next/headers';
 
 export type AdminAction = 'CREATE' | 'UPDATE' | 'DELETE' | 'UPLOAD';
@@ -10,7 +10,7 @@ export type AuthFailureReason = 'INVALID_OTP' | 'RATE_LIMITED' | 'EXPIRED' | 'IN
 export type PaymentStatus = 'SUCCESS' | 'FAILED' | 'FRAUD_DETECTED';
 
 interface AuditLogEntry {
-  timestamp: Timestamp;
+  timestamp: FirebaseFirestore.Timestamp;
   userId?: string;
   action?: AdminAction;
   resourceType?: ResourceType;
@@ -30,9 +30,9 @@ interface AuditLogEntry {
  * Extract client IP from request headers
  * Tries x-forwarded-for first (for proxied requests), falls back to other headers
  */
-function getClientIp(): string {
+async function getClientIp(): Promise<string> {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const xForwardedFor = headersList.get('x-forwarded-for');
     if (xForwardedFor) {
       return xForwardedFor.split(',')[0].trim();
@@ -52,9 +52,9 @@ function getClientIp(): string {
 /**
  * Extract user agent from request headers
  */
-function getUserAgent(): string {
+async function getUserAgent(): Promise<string> {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     return headersList.get('user-agent') ?? 'unknown';
   } catch {
     return 'unknown';
@@ -80,12 +80,12 @@ export async function logAdminAction(
       resourceType,
       resourceId,
       details,
-      ip: getClientIp(),
-      userAgent: getUserAgent(),
+      ip: await getClientIp(),
+      userAgent: await getUserAgent(),
       collection: 'audit_logs',
     };
 
-    await addDoc(collection(adminDb, 'audit_logs'), logEntry);
+    await adminDb.collection('audit_logs').add(logEntry);
 
     // Log to console for local dev/debugging
     console.log('[AUDIT] Admin Action:', {
@@ -116,12 +116,12 @@ export async function logAuthFailure(
       phone,
       reason,
       details,
-      ip: getClientIp(),
-      userAgent: getUserAgent(),
+      ip: await getClientIp(),
+      userAgent: await getUserAgent(),
       collection: 'auth_failures',
     };
 
-    await addDoc(collection(adminDb, 'auth_failures'), logEntry);
+    await adminDb.collection('auth_failures').add(logEntry);
 
     console.log('[AUDIT] Auth Failure:', {
       reason,
@@ -153,12 +153,12 @@ export async function logPaymentAttempt(
       currency,
       status,
       details,
-      ip: getClientIp(),
-      userAgent: getUserAgent(),
+      ip: await getClientIp(),
+      userAgent: await getUserAgent(),
       collection: 'payment_logs',
     };
 
-    await addDoc(collection(adminDb, 'payment_logs'), logEntry);
+    await adminDb.collection('payment_logs').add(logEntry);
 
     console.log('[AUDIT] Payment Attempt:', {
       status,

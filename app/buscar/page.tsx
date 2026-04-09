@@ -3,9 +3,11 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { Breadcrumb } from '@/components/common/Breadcrumb';
-import { SAMPLE_PRODUCTS, CATEGORIES } from '@/lib/constants';
+import { CATEGORIES } from '@/lib/constants';
+import { getAllProducts } from '@/lib/products';
 import { useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import type { Product } from '@/lib/types';
 
 const PRICE_RANGES = [
   { label: 'Todos los precios', min: 0, max: Infinity },
@@ -22,6 +24,12 @@ function SearchPageInner() {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedPriceIndex, setSelectedPriceIndex] = useState(0);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+
+  // Load merged product set on mount
+  useEffect(() => {
+    getAllProducts().then(setAllProducts);
+  }, []);
 
   // Sync query from URL on navigation
   useEffect(() => {
@@ -30,7 +38,7 @@ function SearchPageInner() {
 
   const priceRange = PRICE_RANGES[selectedPriceIndex];
 
-  const results = SAMPLE_PRODUCTS.filter((p) => {
+  const results = allProducts.filter((p) => {
     const q = searchQuery.trim().toLowerCase();
     const matchesQuery =
       !q ||
@@ -113,7 +121,7 @@ function SearchPageInner() {
                           : 'bg-neutral-100 text-neutral-500'
                       )}
                     >
-                      {SAMPLE_PRODUCTS.filter((p) => p.category === cat.slug).length}
+                      {allProducts.filter((p) => p.category === cat.slug).length}
                     </span>
                   </button>
                 </li>

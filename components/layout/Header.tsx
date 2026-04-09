@@ -143,7 +143,7 @@ export function Header({ onSearch }: HeaderProps) {
       {/* SubHeader - Desktop Categories */}
       <nav className="hidden md:block bg-white sticky top-20 z-40" style={{ boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)' }}>
         <div className="container flex items-center justify-center gap-8 sm:gap-10 h-20 px-4 sm:px-6">
-          <Link href="/productos" className="text-primary-600 font-medium text-sm sm:text-base hover:text-secondary-500 transition-colors duration-300 whitespace-nowrap py-6">
+          <Link href="/categoria/llantas" className="text-primary-600 font-medium text-sm sm:text-base hover:text-secondary-500 transition-colors duration-300 whitespace-nowrap py-6">
             Llantas
           </Link>
           <Link href="/categoria/baterias" className="text-primary-600 font-medium text-sm sm:text-base hover:text-secondary-500 transition-colors duration-300 whitespace-nowrap py-6">

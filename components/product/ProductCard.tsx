@@ -19,6 +19,16 @@ interface ProductCardProps {
   rating?: number;
   reviews?: number;
   badge?: string;
+  brand?: string;
+  category?: string;
+  description?: string;
+  isActive?: boolean;
+  isFeatured?: boolean;
+  source?: 'local' | 'firestore';
+  createdAt?: string;
+  updatedAt?: string;
+  specs?: Record<string, string | undefined>;
+  stock?: number;
   /** @deprecated — cart is managed via CartContext; this prop is ignored */
   onAddToCart?: (id: string) => void;
   priority?: boolean;

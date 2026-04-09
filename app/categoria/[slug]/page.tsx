@@ -1,26 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Breadcrumb } from '@/components/common/Breadcrumb';
 import { FilterSidebar } from '@/components/filters/FilterSidebar';
 import { ActiveFilterChips } from '@/components/filters/ActiveFilterChips';
 import { ProductGridContainer } from '@/components/product/ProductGridContainer';
-import { SAMPLE_PRODUCTS, CATEGORIES } from '@/lib/constants';
+import { CATEGORIES } from '@/lib/constants';
+import { getProductsByCategory } from '@/lib/products';
 import { useProductFilters } from '@/lib/hooks/useProductFilters';
 import { getFiltersForCategory } from '@/lib/filters/filterDefinitions';
 import ProductSubheader from '@/components/filters/ProductSubheader';
+import type { Product } from '@/lib/types';
 
 export default function CategoryPage() {
   const params = useParams();
   const categorySlug = params.slug as string;
 
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getProductsByCategory(categorySlug).then(setCategoryProducts);
+  }, [categorySlug]);
 
   const category = CATEGORIES.find((c) => c.slug === categorySlug);
-  const categoryProducts = SAMPLE_PRODUCTS.filter(
-    (p) => p.category === categorySlug
-  );
 
   const {
     activeFilters,

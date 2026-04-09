@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ProductGrid } from '@/components/product/ProductGrid';
-import { SAMPLE_PRODUCTS } from '@/lib/constants';
+import { FEATURED_PRODUCTS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 interface FeaturedProductsProps {
@@ -16,7 +16,7 @@ export function FeaturedProducts({
   subtitle = 'Nuestras ofertas especiales del mes',
   limit = 6,
 }: FeaturedProductsProps) {
-  const featured = SAMPLE_PRODUCTS.slice(0, limit).map((p) => ({
+  const featured = FEATURED_PRODUCTS.slice(0, limit).map((p) => ({
     ...p,
     originalPrice: p.originalPrice ?? undefined,
     badge: p.badge ?? undefined,

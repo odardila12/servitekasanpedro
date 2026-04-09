@@ -8,13 +8,16 @@ const BoldPaymentSchema = z.object({
   amount: z.number().int().min(100).max(10000000), // 100 COP minimum, 10M max
   currency: z.enum(['COP']), // Whitelist: only COP allowed
   description: z.string().max(255).regex(/^[a-zA-Z0-9\s\-.,ñáéíóúÑÁÉÍÓÚ]*$/), // No special chars
-  cartItems: z.array(
-    z.object({
-      productId: z.string().min(1),
-      quantity: z.number().int().min(1),
-      price: z.number().int().min(0), // Client-provided price for verification
-    })
-  ),
+  cartItems: z
+    .array(
+      z.object({
+        productId: z.string().min(1),
+        quantity: z.number().int().min(1),
+        price: z.number().int().min(0), // Client-provided price for verification
+      })
+    )
+    .optional()
+    .default([]),
 });
 
 type BoldPaymentRequest = z.infer<typeof BoldPaymentSchema>;
@@ -30,7 +33,7 @@ export async function POST(request: Request) {
     } catch (error) {
       if (error instanceof z.ZodError) {
         return NextResponse.json(
-          { error: 'Invalid input', details: error.errors },
+          { error: 'Invalid input', details: error.issues },
           { status: 400 }
         );
       }
@@ -45,7 +48,10 @@ export async function POST(request: Request) {
       adminDb.collection('products').doc(item.productId).get()
     );
 
-    const snapshots = await Promise.all(productPromises);
+    const snapshots = (await Promise.all(productPromises)) as unknown[] as Array<{
+      exists: () => boolean;
+      data: () => Record<string, unknown> | undefined;
+    }>;
 
     for (let i = 0; i < snapshots.length; i++) {
       const snapshot = snapshots[i];

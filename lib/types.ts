@@ -32,17 +32,24 @@ export interface Product {
   name: string;
   slug: string;
   category: string;
-  brand: string;
+  brand?: string;
   price: number;
   originalPrice?: number;
   image: string;
-  images: string[];
+  images?: string[];
   rating?: number;
   reviews?: number;
   badge?: string;
-  specs?: Record<string, string>;
+  specs?: Record<string, string | undefined>;
+  description?: string;
   // Extended data (optional — populated from PRODUCT_EXTENDED_DATA)
   stock?: number;
   specifications?: ProductSpecifications;
   productReviews?: ProductReview[];
+  // Firebase/migration fields
+  isActive?: boolean;
+  isFeatured?: boolean;
+  source?: 'local' | 'firestore';
+  createdAt?: string;
+  updatedAt?: string;
 }

@@ -15,7 +15,7 @@ interface ProductSubheaderProps {
   setSortBy: (sort: SortOption) => void;
 }
 
-// Brands available per category — values must be lowercase to match SAMPLE_PRODUCTS brand field
+// Brands available per category — values must be lowercase to match FEATURED_PRODUCTS brand field
 const BRAND_BY_CATEGORY: Record<string, { value: string; label: string }[]> = {
   llantas: [
     { value: 'michelin', label: 'Michelin' },
@@ -63,7 +63,7 @@ const BRAND_BY_CATEGORY: Record<string, { value: string; label: string }[]> = {
   servicios: [],
 };
 
-// Per-category dropdown config — values must match filterDefinitions options AND SAMPLE_PRODUCTS data exactly
+// Per-category dropdown config — values must match filterDefinitions options AND FEATURED_PRODUCTS data exactly
 const FILTER_OPTIONS: Record<
   string,
   { label: string; filterId: string; options: { value: string; label: string }[] }
@@ -71,7 +71,7 @@ const FILTER_OPTIONS: Record<
   viscosidad: {
     label: 'Grado Aceite',
     filterId: 'viscosidad',
-    // values must match specs.viscosidad in SAMPLE_PRODUCTS (no dash format for aceites category)
+    // values must match specs.viscosidad in FEATURED_PRODUCTS (no dash format for aceites category)
     options: [
       { value: '0W20', label: '0W-20' },
       { value: '0W40', label: '0W-40' },
@@ -87,7 +87,7 @@ const FILTER_OPTIONS: Record<
   tipo: {
     label: 'Tipo',
     filterId: 'tipo',
-    // values must match filterDefinitions option values and SAMPLE_PRODUCTS specs.tipo
+    // values must match filterDefinitions option values and FEATURED_PRODUCTS specs.tipo
     options: [
       { value: 'sintetico', label: 'Sintético' },
       { value: 'semisintetico', label: 'Semisintético' },
@@ -113,7 +113,7 @@ const FILTER_OPTIONS: Record<
       { value: '255', label: '255' },
     ],
   },
-  // Filtros (auto parts filters) — uses same filterId 'tipo' as it maps to specs.tipo in SAMPLE_PRODUCTS
+  // Filtros (auto parts filters) — uses same filterId 'tipo' as it maps to specs.tipo in FEATURED_PRODUCTS
   tipoFiltro: {
     label: 'Tipo Filtro',
     filterId: 'tipo',

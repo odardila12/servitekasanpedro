@@ -9,7 +9,7 @@ import { SearchBar } from '@/components/common/SearchBar';
 import { SortDropdown } from '@/components/filters/SortDropdown';
 import { Categories } from '@/components/sections/Categories';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { SAMPLE_PRODUCTS } from '@/lib/constants';
+import { FEATURED_PRODUCTS } from '@/lib/constants';
 
 export default function ShowcasePage() {
   return (
@@ -83,7 +83,7 @@ export default function ShowcasePage() {
       <section className="container space-y-6">
         <h2 className="text-3xl font-bold">Product Card</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SAMPLE_PRODUCTS.slice(0, 4).map((product, index) => (
+          {FEATURED_PRODUCTS.slice(0, 4).map((product, index) => (
             <ProductCard
               key={product.id}
               {...product}

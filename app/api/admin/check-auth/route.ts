@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { SignJWT, jwtVerify } from 'jose';
+import { jwtVerify } from 'jose';
 import { logAuthFailure } from '@/lib/audit/logger';
 
 const SECRET_KEY: Uint8Array = (() => {

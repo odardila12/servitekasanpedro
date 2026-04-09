@@ -1,21 +1,26 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumb } from '@/components/common/Breadcrumb';
 import { FilterSidebar } from '@/components/filters/FilterSidebar';
 import { ActiveFilterChips } from '@/components/filters/ActiveFilterChips';
 import { ProductGridContainer } from '@/components/product/ProductGridContainer';
-import { SAMPLE_PRODUCTS } from '@/lib/constants';
+import { getProductsByCategory } from '@/lib/products';
 import { useProductFilters } from '@/lib/hooks/useProductFilters';
 import { getFiltersForCategory } from '@/lib/filters/filterDefinitions';
 import ProductSubheader from '@/components/filters/ProductSubheader';
+import type { Product } from '@/lib/types';
 
 const SLUG = 'lubricantes';
 
 export default function LubricantesPage() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
 
-  const categoryProducts = SAMPLE_PRODUCTS.filter((p) => p.category === SLUG);
+  useEffect(() => {
+    getProductsByCategory(SLUG).then(setCategoryProducts);
+  }, []);
+
   const filterDefinitions = getFiltersForCategory(SLUG);
 
   const {

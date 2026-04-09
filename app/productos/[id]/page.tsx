@@ -10,18 +10,27 @@ import { ProductSpecifications } from '@/components/product/ProductSpecification
 import { ProductAvailability } from '@/components/product/ProductAvailability';
 import { ProductReviews } from '@/components/product/ProductReviews';
 import { DeliveryOptions } from '@/components/product/DeliveryOptions';
-import { SAMPLE_PRODUCTS } from '@/lib/constants';
 import { getProductExtendedData } from '@/lib/product-extended-data';
+import { getProductBySlug, getAllProducts } from '@/lib/products';
 import { useParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { generateBoldPaymentLink } from '@/lib/payments/bold';
 import { ShieldCheck, MessageCircle, Truck, X } from 'lucide-react';
 import { useCart } from '@/lib/contexts/CartContext';
+import type { Product } from '@/lib/types';
+import type { ProductExtendedData } from '@/lib/types';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const productId = params.id as string;
-  const product = SAMPLE_PRODUCTS.find((p) => p.slug === productId);
+
+  const [product, setProduct] = React.useState<Product | null | undefined>(
+    undefined
+  );
+  const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
+  const [extendedData, setExtendedData] =
+    React.useState<ProductExtendedData | null>(null);
+
   const [quantity, setQuantity] = React.useState(1);
   const [isProcessingPayment, setIsProcessingPayment] = React.useState(false);
   const [toast, setToast] = React.useState<{ visible: boolean; message: string }>({
@@ -31,6 +40,52 @@ export default function ProductDetailPage() {
 
   const { addToCart, openCart } = useCart();
 
+  React.useEffect(() => {
+    let cancelled = false;
+
+    async function loadProduct() {
+      const found = await getProductBySlug(productId);
+      if (cancelled) return;
+      setProduct(found);
+
+      if (!found) return;
+
+      // Load extended data based on source
+      if (found.source === 'firestore') {
+        // Firestore products carry specs + reviews inline
+        setExtendedData({
+          stock: found.stock ?? 10,
+          specifications: found.specifications ?? {},
+          productReviews: found.productReviews ?? [],
+        });
+      } else {
+        // Local products use the extended data library
+        const data = getProductExtendedData(
+          found.id,
+          found.name,
+          found.brand ?? ''
+        );
+        setExtendedData(data);
+      }
+
+      // Load related products from merged set
+      try {
+        const all = await getAllProducts();
+        const related = all
+          .filter((p) => p.category === found.category && p.id !== found.id)
+          .slice(0, 4);
+        if (!cancelled) setRelatedProducts(related);
+      } catch {
+        // Related products are non-critical — fail silently
+      }
+    }
+
+    loadProduct();
+    return () => {
+      cancelled = true;
+    };
+  }, [productId]);
+
   const showToast = (message: string) => {
     setToast({ visible: true, message });
     setTimeout(() => setToast({ visible: false, message: '' }), 3000);
@@ -38,9 +93,13 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (!product) return;
-    // Add to cart with quantity
     for (let i = 0; i < quantity; i++) {
-      addToCart({ id: product.id, name: product.name, price: product.price, image: product.image });
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+      });
     }
     openCart();
     showToast('Se ha agregado el producto al carrito');
@@ -56,7 +115,6 @@ export default function ProductDetailPage() {
         description: `${quantity}x ${product.name}`,
         currency: 'COP',
       });
-
       window.location.href = paymentUrl;
     } catch (error) {
       console.error('Payment error:', error);
@@ -66,22 +124,31 @@ export default function ProductDetailPage() {
     }
   };
 
-  if (!product) {
+  // Loading state
+  if (product === undefined) {
+    return (
+      <div className="container py-12 text-center text-neutral-500">
+        Cargando...
+      </div>
+    );
+  }
+
+  // Not found
+  if (product === null) {
     return (
       <div className="container py-12 text-center">
         <h1 className="text-2xl font-bold text-neutral-900 mb-4">
           Producto no encontrado
         </h1>
-        <a href="/productos" className="text-primary hover:text-primary-700 underline">
+        <a
+          href="/productos"
+          className="text-primary hover:text-primary-700 underline"
+        >
           Volver a Productos
         </a>
       </div>
     );
   }
-
-  const relatedProducts = SAMPLE_PRODUCTS.filter(
-    (p) => p.category === product.category && p.id !== product.id
-  ).slice(0, 4);
 
   const discountPercent = product.originalPrice
     ? Math.round(
@@ -93,14 +160,6 @@ export default function ProductDetailPage() {
     ? product.originalPrice - product.price
     : 0;
 
-  // Extended data: stock, specifications, productReviews
-  const extendedData = getProductExtendedData(
-    product.id,
-    product.name,
-    product.brand ?? ''
-  );
-
-  // Ensure images array is valid
   const galleryImages =
     product.images && product.images.length > 0
       ? product.images
@@ -158,9 +217,11 @@ export default function ProductDetailPage() {
             )}
 
             {/* Availability */}
-            <div className="mt-4">
-              <ProductAvailability stock={extendedData.stock} />
-            </div>
+            {extendedData && (
+              <div className="mt-4">
+                <ProductAvailability stock={extendedData.stock} />
+              </div>
+            )}
 
             {/* Price */}
             <div className="mt-5 mb-6">
@@ -188,8 +249,8 @@ export default function ProductDetailPage() {
 
             {/* Description */}
             <p className="text-neutral-600 mb-6">
-              Producto de alta calidad con garantía y servicio al cliente
-              excepcional. Envío rápido a todo el país.
+              {product.description ??
+                'Producto de alta calidad con garantía y servicio al cliente excepcional. Envío rápido a todo el país.'}
             </p>
 
             {/* Quantity and Add to Cart */}
@@ -234,7 +295,9 @@ export default function ProductDetailPage() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full bg-[#1a3a52] text-white border-none hover:bg-[#254d6d]"
+                  className={cn(
+                    'w-full bg-[#1a3a52] text-white border-none hover:bg-[#254d6d]'
+                  )}
                   onClick={handleBuyNow}
                   disabled={isProcessingPayment}
                 >
@@ -245,12 +308,10 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Delivery Options + Benefits — separate row, 2-col on desktop */}
+        {/* Delivery Options + Benefits */}
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left: Delivery Options */}
           <DeliveryOptions productId={product.id} />
 
-          {/* Right: Benefits */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-50 rounded-lg shrink-0">
@@ -282,11 +343,13 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Specifications + Reviews — 2-col on desktop, stacked on mobile */}
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <ProductSpecifications specifications={extendedData.specifications} />
-          <ProductReviews reviews={extendedData.productReviews} />
-        </div>
+        {/* Specifications + Reviews */}
+        {extendedData && (
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <ProductSpecifications specifications={extendedData.specifications} />
+            <ProductReviews reviews={extendedData.productReviews} />
+          </div>
+        )}
       </div>
 
       {/* Related Products */}

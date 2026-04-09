@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { EmptyState } from '@/components/product/EmptyState';
 import type { SortOption } from '@/lib/hooks/useProductFilters';
-import type { Product } from '@/lib/hooks/useProductFilters';
+import type { Product } from '@/lib/types';
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: 'relevance', label: 'Relevancia' },
