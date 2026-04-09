@@ -9,7 +9,7 @@ export type AuthFailureReason = 'INVALID_OTP' | 'RATE_LIMITED' | 'EXPIRED' | 'IN
 export type PaymentStatus = 'SUCCESS' | 'FAILED' | 'FRAUD_DETECTED';
 
 interface AuditLogEntry {
-  timestamp: FirebaseFirestore.Timestamp;
+  timestamp: Timestamp;
   userId?: string;
   action?: AdminAction;
   resourceType?: ResourceType;
