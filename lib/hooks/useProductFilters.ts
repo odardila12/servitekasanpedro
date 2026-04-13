@@ -13,6 +13,7 @@ export type SortOption =
 export interface Product {
   id: string;
   name: string;
+  slug: string;
   price: number;
   originalPrice?: number;
   image: string;
