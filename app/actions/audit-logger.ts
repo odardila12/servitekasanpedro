@@ -1,6 +1,11 @@
 'use server';
 
-import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
+/**
+ * Server Action for Audit Logging
+ * This runs ONLY on the server, so it can write to Firestore without Client SDK restrictions
+ */
+
+import { db, Timestamp, addDoc, collection } from '@/lib/services/firestore';
 import { headers } from 'next/headers';
 
 export type AdminAction = 'CREATE' | 'UPDATE' | 'DELETE' | 'UPLOAD';
@@ -25,10 +30,6 @@ interface AuditLogEntry {
   collection: 'audit_logs' | 'auth_failures' | 'payment_logs';
 }
 
-/**
- * Extract client IP from request headers
- * Tries x-forwarded-for first (for proxied requests), falls back to other headers
- */
 async function getClientIp(): Promise<string> {
   try {
     const headersList = await headers();
@@ -36,21 +37,16 @@ async function getClientIp(): Promise<string> {
     if (xForwardedFor) {
       return xForwardedFor.split(',')[0].trim();
     }
-
     const xRealIp = headersList.get('x-real-ip');
     if (xRealIp) {
       return xRealIp;
     }
-
     return 'unknown';
   } catch {
     return 'unknown';
   }
 }
 
-/**
- * Extract user agent from request headers
- */
 async function getUserAgent(): Promise<string> {
   try {
     const headersList = await headers();
@@ -61,81 +57,7 @@ async function getUserAgent(): Promise<string> {
 }
 
 /**
- * Log admin actions (CREATE, UPDATE, DELETE, UPLOAD)
- * Call this after successful admin operations
- */
-export async function logAdminAction(
-  userId: string,
-  action: AdminAction,
-  resourceType: ResourceType,
-  resourceId: string,
-  details?: Record<string, any>
-): Promise<void> {
-  try {
-    const logEntry: AuditLogEntry = {
-      timestamp: Timestamp.now(),
-      userId,
-      action,
-      resourceType,
-      resourceId,
-      details,
-      ip: await getClientIp(),
-      userAgent: await getUserAgent(),
-      collection: 'audit_logs',
-    };
-
-    await addDoc(collection(db, 'audit_logs'), logEntry);
-
-    // Log to console for local dev/debugging
-    console.log('[AUDIT] Admin Action:', {
-      action,
-      resourceType,
-      resourceId,
-      userId,
-      ip: logEntry.ip,
-    });
-  } catch (error) {
-    console.error('[AUDIT] Error logging admin action:', error);
-    // Don't throw - audit logging should not break the main operation
-  }
-}
-
-/**
- * Log authentication failures (invalid OTP, rate limiting, expired tokens, etc.)
- * Call this when auth verification fails
- */
-export async function logAuthFailure(
-  phone: string,
-  reason: AuthFailureReason,
-  details?: Record<string, any>
-): Promise<void> {
-  try {
-    const logEntry: AuditLogEntry = {
-      timestamp: Timestamp.now(),
-      phone,
-      reason,
-      details,
-      ip: await getClientIp(),
-      userAgent: await getUserAgent(),
-      collection: 'auth_failures',
-    };
-
-    await addDoc(collection(db, 'auth_failures'), logEntry);
-
-    console.log('[AUDIT] Auth Failure:', {
-      reason,
-      phone,
-      ip: logEntry.ip,
-    });
-  } catch (error) {
-    console.error('[AUDIT] Error logging auth failure:', error);
-    // Don't throw
-  }
-}
-
-/**
- * Log payment attempts (success, failure, fraud detection)
- * Call this after payment processing
+ * Log payment attempts (runs on server only)
  */
 export async function logPaymentAttempt(
   userId: string,
@@ -168,6 +90,74 @@ export async function logPaymentAttempt(
     });
   } catch (error) {
     console.error('[AUDIT] Error logging payment attempt:', error);
-    // Don't throw
+    // Don't throw - audit logging should not break the main operation
+  }
+}
+
+/**
+ * Log authentication failures (runs on server only)
+ */
+export async function logAuthFailure(
+  phone: string,
+  reason: AuthFailureReason,
+  details?: Record<string, any>
+): Promise<void> {
+  try {
+    const logEntry: AuditLogEntry = {
+      timestamp: Timestamp.now(),
+      phone,
+      reason,
+      details,
+      ip: await getClientIp(),
+      userAgent: await getUserAgent(),
+      collection: 'auth_failures',
+    };
+
+    await addDoc(collection(db, 'auth_failures'), logEntry);
+
+    console.log('[AUDIT] Auth Failure:', {
+      reason,
+      phone,
+      ip: logEntry.ip,
+    });
+  } catch (error) {
+    console.error('[AUDIT] Error logging auth failure:', error);
+  }
+}
+
+/**
+ * Log admin actions (runs on server only)
+ */
+export async function logAdminAction(
+  userId: string,
+  action: AdminAction,
+  resourceType: ResourceType,
+  resourceId: string,
+  details?: Record<string, any>
+): Promise<void> {
+  try {
+    const logEntry: AuditLogEntry = {
+      timestamp: Timestamp.now(),
+      userId,
+      action,
+      resourceType,
+      resourceId,
+      details,
+      ip: await getClientIp(),
+      userAgent: await getUserAgent(),
+      collection: 'audit_logs',
+    };
+
+    await addDoc(collection(db, 'audit_logs'), logEntry);
+
+    console.log('[AUDIT] Admin Action:', {
+      action,
+      resourceType,
+      resourceId,
+      userId,
+      ip: logEntry.ip,
+    });
+  } catch (error) {
+    console.error('[AUDIT] Error logging admin action:', error);
   }
 }

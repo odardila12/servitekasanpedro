@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db, Timestamp, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit } from '@/lib/services/firestore';
-import { logPaymentAttempt } from '@/lib/audit/logger';
+import { logPaymentAttempt } from '@/app/actions/audit-logger';
 
 // Input validation schema
 const BoldPaymentSchema = z.object({

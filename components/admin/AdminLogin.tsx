@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { createPhoneToken, verifyPhoneAndSetCookie } from '@/lib/auth/cookies';
 import { verifyOTPServerAction } from '@/app/actions/verify-otp';
-import { getAdminPhones } from '@/lib/config/admin-phones';
+import { getAdminPhonesServerAction } from '@/app/actions/get-admin-phones';
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function AdminLogin() {
   useEffect(() => {
     const fetchPhones = async () => {
       try {
-        const phones = await getAdminPhones();
+        const phones = await getAdminPhonesServerAction();
         // Strip the +57 prefix to match input format
         const cleanedPhones = phones.map((phone) => phone.replace(/^57/, ''));
         setAllowedPhones(cleanedPhones);
