@@ -1,19 +1,20 @@
-import { MapPin, Phone, Clock } from 'lucide-react';
+import { MapPin, Phone, Clock } from "lucide-react";
 
 export const metadata = {
-  title: 'Puntos de Atención | Serviteka San Pedro',
-  description: 'Visitanos en nuestros puntos de atención en San Pedro',
+  title: "Puntos de Atención | Serviteka San Pedro",
+  description: "Visitanos en nuestros puntos de atención en San Pedro",
 };
 
 export default function PuntosAtencion() {
   const ubicaciones = [
     {
       id: 1,
-      nombre: 'Serviteka San Pedro',
-      direccion: 'Calle Principal 123, San Pedro',
-      telefono: '+57 (310) 123-4567',
-      horarios: 'Lunes a Viernes: 8:00 AM - 6:00 PM\nSábado: 9:00 AM - 4:00 PM\nDomingo: Cerrado',
-      email: 'sanpedro@serviteka.com',
+      nombre: "Serviteka San Pedro",
+      direccion: "Calle Principal 123, San Pedro",
+      telefono: "+57 (310) 123-4567",
+      horarios:
+        "Lunes a Viernes: 8:00 AM - 6:00 PM\nSábado: 9:00 AM - 4:00 PM\nDomingo: Cerrado",
+      email: "contacto@servitekasanpedro.com",
     },
   ];
 
@@ -22,9 +23,12 @@ export default function PuntosAtencion() {
       <div className="container max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-[#1a3a52] mb-4">Puntos de Atención</h1>
+          <h1 className="text-5xl font-bold text-[#1a3a52] mb-4">
+            Puntos de Atención
+          </h1>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-            Visitanos en nuestros ubicaciones para conocer todos nuestros productos y servicios de calidad.
+            Visitanos en nuestros ubicaciones para conocer todos nuestros
+            productos y servicios de calidad.
           </p>
         </div>
 
@@ -37,7 +41,9 @@ export default function PuntosAtencion() {
             >
               {/* Card Header */}
               <div className="bg-gradient-to-r from-[#1a3a52] to-[#2a4a6a] p-8">
-                <h2 className="text-2xl font-bold text-white">{ubicacion.nombre}</h2>
+                <h2 className="text-2xl font-bold text-white">
+                  {ubicacion.nombre}
+                </h2>
               </div>
 
               {/* Card Content */}
@@ -50,8 +56,12 @@ export default function PuntosAtencion() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-neutral-500 uppercase tracking-wide">Dirección</p>
-                    <p className="text-neutral-800 font-medium">{ubicacion.direccion}</p>
+                    <p className="text-sm font-semibold text-neutral-500 uppercase tracking-wide">
+                      Dirección
+                    </p>
+                    <p className="text-neutral-800 font-medium">
+                      {ubicacion.direccion}
+                    </p>
                   </div>
                 </div>
 
@@ -63,7 +73,9 @@ export default function PuntosAtencion() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-neutral-500 uppercase tracking-wide">Teléfono</p>
+                    <p className="text-sm font-semibold text-neutral-500 uppercase tracking-wide">
+                      Teléfono
+                    </p>
                     <a
                       href={`tel:${ubicacion.telefono}`}
                       className="text-[#1a3a52] font-medium hover:text-[#f4c430] transition-colors"
@@ -81,8 +93,12 @@ export default function PuntosAtencion() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-neutral-500 uppercase tracking-wide">Horarios</p>
-                    <p className="text-neutral-800 text-sm whitespace-pre-line">{ubicacion.horarios}</p>
+                    <p className="text-sm font-semibold text-neutral-500 uppercase tracking-wide">
+                      Horarios
+                    </p>
+                    <p className="text-neutral-800 text-sm whitespace-pre-line">
+                      {ubicacion.horarios}
+                    </p>
                   </div>
                 </div>
 
@@ -105,16 +121,25 @@ export default function PuntosAtencion() {
           <div className="w-full h-96 bg-neutral-100 flex items-center justify-center">
             <div className="text-center">
               <MapPin className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-              <p className="text-neutral-500 text-lg font-medium">Ubicación en mapa</p>
-              <p className="text-neutral-400 text-sm mt-2">Integración de Google Maps próximamente</p>
+              <p className="text-neutral-500 text-lg font-medium">
+                Ubicación en mapa
+              </p>
+              <p className="text-neutral-400 text-sm mt-2">
+                Integración de Google Maps próximamente
+              </p>
             </div>
           </div>
         </div>
 
         {/* CTA Section */}
         <div className="mt-16 bg-gradient-to-r from-[#1a3a52] to-[#2a4a6a] rounded-2xl p-12 text-center">
-          <h3 className="text-3xl font-bold text-white mb-4">¿No encuentras lo que buscas?</h3>
-          <p className="text-white/80 text-lg mb-8">Visítanos en Serviteka San Pedro y encontrá todo lo que necesitás para tu vehículo.</p>
+          <h3 className="text-3xl font-bold text-white mb-4">
+            ¿No encuentras lo que buscas?
+          </h3>
+          <p className="text-white/80 text-lg mb-8">
+            Visítanos en Serviteka San Pedro y encontrá todo lo que necesitás
+            para tu vehículo.
+          </p>
           <button className="px-8 py-4 bg-[#f4c430] hover:bg-[#e0b000] text-[#1a3a52] font-bold rounded-lg transition-colors duration-300 text-lg">
             Consultar Disponibilidad
           </button>
