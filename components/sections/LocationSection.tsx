@@ -30,7 +30,7 @@ export function LocationSection({
                 Visítanos
               </h2>
               <p className="text-neutral-600 text-base sm:text-lg">
-                Estamos ubicados en el corazón de San Pedro, listos para atender tus necesidades automotrices.
+                Estamos ubicados en Barranquilla, listos para atender tus necesidades automotrices.
               </p>
             </div>
 
